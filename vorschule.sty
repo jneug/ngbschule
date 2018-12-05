@@ -1,0 +1,13 @@
+
+%% -----------------
+%%
+%% Eigene Erweiterungen zum 'schule' Paket
+%%
+%% -----------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{vorschule}[2018/11/28  Paket mit eigenen Erweiterungen, die vor dem schule-Paket geladen werden müssen]
+
+
+% Optionen an Pakete weitergeben, die von schule geladen werden
+\PassOptionsToPackage{ngerman, outer}{struktex}
+\PassOptionsToPackage{skins}{tcolorbox}

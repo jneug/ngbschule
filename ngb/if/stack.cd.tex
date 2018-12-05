@@ -1,0 +1,16 @@
+\begin{tikzpicture}\small
+  \begin{klasse}[text width=6cm]{Stack<ContentType>}{0,0}
+    \methode{+ push(content : ContentType) : void}
+    \methode{+ pop() : void}
+    \methode{+ isEmpty() : boolean}
+    \methode{+ top() : ContentType}
+  \end{klasse}
+  \begin{klasse}[text width=7cm]{Node<ContentType>}{8.5,0}
+    \attribut{- content : ContentType}
+    \methode{+ setNext(pNext : Node<ContentType>) : void}
+    \methode{+ getNext() : Node<ContentType>}
+    \methode{+ getContent() : ContentType}
+  \end{klasse}
+  \benutzt{Stack<ContentType>}{head}{0,1}{Node<ContentType>}
+  \benutztSelbst{Node<ContentType>}{next}{0,1}
+\end{tikzpicture}

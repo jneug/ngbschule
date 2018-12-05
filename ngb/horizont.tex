@@ -1,0 +1,122 @@
+
+%% Kopfzeile anpassen
+\dokumententypName{Erwartungshorizont}
+\ihead{\Fach \Lerngruppe}
+%\chead{Erwartungshorizont \DokumentNummer}
+\chead{}
+\ohead{\Kuerzel}
+
+
+\renewcommand{\arraystretch}{1.2}
+
+\newcommand{\HorizontTitel}{\begin{center}\Large\rmfamily\Titel\end{center}}
+
+\newcommand{\Notenfeld}{\begin{flushright}%
+		Punkte: \linie[2cm] von \ngb@punkteTotal\\[0,5cm]%
+		Notenpunkte: \linie[4cm]\\[0,5cm]%
+		\underline{\Heute, \hspace{4cm}}%
+	\end{flushright}\par%
+}
+
+\newcommand{\Bewertungsschema}[1][tendenzen]{
+	\ifthenelse{\boolean{schule@kmkPunkte}}{
+		\begin{center}\tiny\begin{tabular}{|l||c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
+			\rowcolor{black!20}
+			\textbf{Notenpunkte} & 15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline
+			\textbf{Schwelle} & 95\% & 90\% & 85\% & 80\% & 75\% & 70\% & 65\% & 60\% & 55\% & 50\% & 45\% & 39\% & 33\% & 27\% & 20\% & 0\% \\ \hline
+			\rowcolor{black!10}
+			\textbf{Punkte}
+			& \schule@punkteZuNote{15} 
+			& \schule@punkteZuNote{14} 
+			& \schule@punkteZuNote{13} 
+			& \schule@punkteZuNote{12} 
+			& \schule@punkteZuNote{11} 
+			& \schule@punkteZuNote{10} 
+			& \schule@punkteZuNote{9} 
+			& \schule@punkteZuNote{8} 
+			& \schule@punkteZuNote{7} 
+			& \schule@punkteZuNote{6} 
+			& \schule@punkteZuNote{5} 
+			& \schule@punkteZuNote{4} 
+			& \schule@punkteZuNote{3} 
+			& \schule@punkteZuNote{2} 
+			& \schule@punkteZuNote{1} 
+			& 0 \\ \hline
+		\end{tabular}\end{center}
+	}{
+		\ifthenelse{\equal{#1}{tendenzen}}{
+		\begin{center}\renewcommand{\arraystretch}{1.2}\tiny\begin{tabular}{|l||c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
+				\rowcolor{black!20}
+				\textbf{Note} & 1+ & 1 & 1- & 2+ & 2 & 2- & 3+ & 3 & 3- & 4+ & 4 & 4- & 5+ & 5 & 5- & 6 \\ \hline
+				\textbf{Schwelle} & 95\% & 90\% & 85\% & 80\% & 75\% & 70\% & 65\% & 60\% & 55\% & 50\% & 45\% & 39\% & 33\% & 27\% & 20\% & 0\% \\ \hline
+				\rowcolor{black!10}
+				\textbf{Punkte}
+				& \schule@punkteZuNote{15} 
+				& \schule@punkteZuNote{14} 
+				& \schule@punkteZuNote{13} 
+				& \schule@punkteZuNote{12} 
+				& \schule@punkteZuNote{11} 
+				& \schule@punkteZuNote{10} 
+				& \schule@punkteZuNote{9} 
+				& \schule@punkteZuNote{8} 
+				& \schule@punkteZuNote{7} 
+				& \schule@punkteZuNote{6} 
+				& \schule@punkteZuNote{5} 
+				& \schule@punkteZuNote{4} 
+				& \schule@punkteZuNote{3} 
+				& \schule@punkteZuNote{2} 
+				& \schule@punkteZuNote{1} 
+				& 0 \\ \hline
+		\end{tabular}\end{center}
+		}{
+		\begin{center}\renewcommand{\arraystretch}{1.1}\small\begin{tabular}{|l||c|c|c|c|c|c|} \hline
+				\rowcolor{black!20}
+				\textbf{Note} & 1 & 2 & 3 & 4 & 5 & 6 \\ \hline
+				\textbf{Schwelle} & 85\% & 70\% & 55\% & 39\% & 20\% & 0\% \\ \hline
+				\rowcolor{black!10}
+				\textbf{Punkte}
+				& \schule@punkteZuNote{13}
+				& \schule@punkteZuNote{10}
+				& \schule@punkteZuNote{7}
+				& \schule@punkteZuNote{4}
+				& \schule@punkteZuNote{1}
+				& 0 \\ \hline
+		\end{tabular}\end{center}
+		}
+	}
+}
+
+%% Makros und Umgebungen für Horizonte ohne das xsim/schule Paket
+\newcounter{ngbPunkteTotal}
+
+\newcommand{\ngb@punkteTotal}[1][]{%
+	\IfExerciseGoalsSumTF{points}{=0}
+		{\ExerciseGoalValuePrint{\value{ngbPunkteTotal}}{}{}}
+		{\TotalExerciseGoal{points}{}{}}%
+}
+
+\newcommand{\ngb@punkte}[2][0]{#2 \ifnum#1>0 \space(+#1)\fi}
+\newcommand{\ngb@aufgabe}[3][0]{\subsection*{Aufgabe #2 (Punkte: \ngb@punkte[#1]{#3})}}
+
+\newcommand{\ngb@horafg}{}
+\newcommand{\ngb@horafgBonus}{}
+
+\newenvironment{horizont}[3][0]{%
+	\renewcommand{\ngb@horafg}{ngbHorizont-\detokenize{#2}}\newcounter{\ngb@horafg}%
+	\renewcommand{\ngb@horafgBonus}{ngbHorizontBonus-\detokenize{#2}}\newcounter{\ngb@horafgBonus}%
+	\ngb@aufgabe[#1]{#2}{#3}\vspace*{-2ex}
+	\begin{longtable}{|p{.65\linewidth}|c|c|} \hline
+		\rowcolor{black!20}
+		\textbf{Erwartung} & \textbf{Mögl. Punkte} & \textbf{Punkte} \\ 
+		\hline\hline\endhead%
+}{%
+		\hline\rowcolor{black!10}
+		\textbf{Gesamt:} & \textbf{\ngb@punkte[\arabic{\ngb@horafgBonus}]{\arabic{\ngb@horafg}}}%
+			\addtocounter{ngbPunkteTotal}{\value{\ngb@horafg}} & \\ \hline
+	\end{longtable}%
+}
+
+\newcommand{\erwart}[3][0]{\addtocounter{\ngb@horafg}{#3}\addtocounter{\ngb@horafgBonus}{#1}%
+	#2 & \textsf{\ngb@punkte[#1]{#3}} & \\ \hline}
+
+\newcommand{\teiler}[1]{\multicolumn{3}{||l||}{\color{gray}\sffamily\bfseries #1} \\ \hline}

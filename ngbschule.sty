@@ -1,0 +1,120 @@
+
+%% -----------------
+%%
+%% Eigene Erweiterungen zum 'schule' Paket
+%%
+%% -----------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{ngbschule}[2018/11/28  Paket mit eigenen Erweiterungen zum schule-Paket]
+
+
+%% Packetoptionen
+%% ------------------------------
+\newcommand{\ngb@typ}{\schule@typ}
+\newcommand{\ngb@afgPool}{ngb/afg}
+
+\newcommand{\ngb@kuerzel}{}
+\newcommand{\ngb@dauer}{}
+\newcommand{\ngb@reihe}{}
+
+\newboolean{ngb@ohneLochung}
+
+\pgfkeys{
+	/ngb/.cd,
+	typ/.store in=\ngb@typ,
+	aufgaben/.store in=\ngb@afgPool,
+	kuerzel/.store in=\ngb@kuerzel, 
+	dauer/.store in=\ngb@dauer, 
+	reihe/.store in=\ngb@reihe, 
+	autor/.code=\author{#1},
+	datum/.code=\date{#1},
+	titel/.code=\title{#1},
+	ohneLochung/.value forbidden,
+	ohneLochung/.code=\setboolean{ngb@ohneLochung}{true},
+	.unknown/.code={}, % Unbekannte Optionen ignorieren.
+}
+
+\ProcessPgfPackageOptions{/ngb}
+
+%% Zusatzpakete
+%% ------------------------------
+
+% Seitenabmessungen
+% Todo: Per Option Papiergröße beachten (a4paper)
+\ifthenelse{\boolean{ngb@ohneLochung}}{
+	\RequirePackage[top=3cm,left=2cm,bottom=2cm,right=2cm]{geometry}
+}{
+	\RequirePackage[top=3cm,left=2.2cm,bottom=2cm,right=2cm]{geometry}
+}
+%% Abstand zur Kopfzeile verringern
+%% https://texwelt.de/wissen/fragen/15050/abstand-zwischen-kopfzeile-und-textkorper
+\AfterCalculatingTypearea{%
+\addtolength{\headsep}{-1\baselineskip}%
+\addtolength{\topmargin}{.5\baselineskip}%
+}
+%\recalctypearea
+
+% Unterstützung für Deutsche Texte
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[ngerman]{babel}
+
+% Paket zur Formatierung von Überschriften
+%\RequirePackage[explicit]{titlesec}
+
+% Includes basierend auf Typ und Fach
+\InputIfFileExists{ngb/\ngb@typ.tex}{}{}
+\InputIfFileExists{ngb/\schule@fach.tex}{}{}
+
+% Schriftarten und Farben einbinden
+\definecolor{ReiheVg}{gray}{0.33}
+\input{ngb/theme.tex} % Überschreibt ggf. die Farben
+
+%% Paket schule anpassen
+\loadxsimstyle{ngb-default,ngb-ruled}
+\setzeAufgabentemplate{ngb-ruled}
+
+% Weitere Pakete
+\RequirePackage{wrapfig}
+
+%% Makros
+%% ------------------------------
+
+%%% Weitere Dokumentinfos
+\newcommand{\Kuerzel}{\makeatletter\ngb@kuerzel\makeatother\xspace}
+\newcommand{\Dauer}{\makeatletter\ngb@dauer\makeatother\xspace}
+\newcommand{\Reihe}{\makeatletter\ngb@reihe\makeatother\xspace}
+
+\IfEqCase{\ngb@typ}{
+	{kl}{
+		\newcommand{\DokumentTyp}{Klausur\xspace}
+	}%
+	{ka}{
+		\newcommand{\DokumentTyp}{Klassenarbeit\xspace}
+	}%
+}[%
+	\newcommand{\DokumentTyp}{\makeatletter\schule@dokumentTypBezeichnung\makeatother\xspace}
+]
+
+%% Heutiges Datum formatiert
+\def\Heute{\leavevmode\hbox{\twodigits\day.\twodigits\month.\the\year}}
+\def\twodigits#1{\ifnum#1<10 0\fi\the#1}
+
+%%% Überschriften und Titel für die verschiedenen Typen
+\newcommand{\TITEL}{\begin{center}\LARGE\Titel\end{center}}
+
+\newcommand{\ReiheTitel}{\begin{center}\rmfamily\textcolor{ReiheVg}{\Reihe}\\[-1ex]\Large\Titel\titlerule\end{center}}
+
+%%% Allgemeine Makros
+\newcommand{\linie}[1][6cm]{\underline{\hspace{#1}}}
+\newcommand{\hr}{\hrule}
+\newcommand{\tab}{\hspace{1cm}}
+\newcommand{\titlerule}{\noindent\\[-2ex]\rule{\textwidth}{1pt}}
+\newcommand{\code}[1]{\texttt{\small #1}}
+\newcommand{\Namensfeld}[1][5cm]{Name: \linie[#1]}
+\def\nl{\newline}
+
+\newcommand{\operator}[1]{\textsc{#1}}
+
+%%% Einbettung von vordefinierten Aufgaben aus dem Aufgabenpool
+%% Todo: Anders regeln? Als eigenes Paket? Einfach per \input?
+%\newcommand{\aufg}[1]{\InputIfFileExists{\ngb@afgPool/#1.tex}{}{}}

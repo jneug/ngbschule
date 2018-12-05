@@ -1,0 +1,59 @@
+
+%% -----------------
+%%
+%% Makros für Dokumente im Fach Informatik
+%% Vor allem Eindeutschung und Kuerzel für Struktogramm und UML Makros
+%%
+%% -----------------
+
+%% Styling von Quelltexten
+\lstset{
+	basicstyle=\small\ttfamily,
+	keywordstyle=\color{black}\bfseries,
+	identifierstyle=, % nothing happens
+	commentstyle=\color{gray},
+	stringstyle=,
+	showstringspaces=false,
+	numbers=left,
+}
+
+\def\zeilennummernAus{\lstset{numbers=none}}
+\def\zeilennummernEin{\lstset{numbers=left}}
+\def\setzeSprache#1{\lstset{language=#1}}
+
+% Struktogramme (struktex)
+\sBoolValue{\texttt{true}}{\texttt{false}}
+\newcommand{\wenndann}[4][8]{\ifthenelse[#1]{#2}{#3}{#4}{\sTrue}{\sFalse}}
+\newcommand{\anweisung}[2][8]{\assign[#1]{#2}}
+\newcommand{\leer}[1][8]{\assign[#1]{}}
+\def\sonst{\change}
+\def\wennende{\ifend}
+
+% UML (pgf-umlcd)
+\def\attribut{\attribute}
+\def\methode{\operation}
+\newenvironment{klasse}[3][text]{\begin{class}[#1]{#2}{#3}}{\end{class}}
+\def\benutzt{\unidirectionalAssociation}
+% Selbstassoziation
+% Von: https://tex.stackexchange.com/questions/98021/how-to-extend-pgf-umlcd-with-self-association-connection#98023
+\newcommand{\benutztSelbst}[3]{%
+\coordinate (a) at ($(#1.east) + (0,1)$);
+\coordinate (b) at ($(#1.east) + (1,1)$);
+\coordinate (d) at ($(#1.east) + (1,-1)$);
+\coordinate (e) at ($(#1.east) + (0,-1)$);
+\coordinate (t) at ($(#1.east) + (1,0)$);
+\coordinate (c) at ($(d)!(b)!(t)$);
+  \draw [umlcd style,<-] (a) -- (b)
+  node[midway, above]{#2}
+  node[midway, below]{#3};
+  \draw [umlcd style] (b) -- (c);
+  \draw [umlcd style] (c) -- (d);
+  \draw [umlcd style] (d) -- (e);
+}
+
+%% Laden von vordefinierten Struktogrammen, 
+%% Klassendiagrammen und Quelltexten aus der internen
+%% Bibliothek
+\newcommand{\nss}[1]{\centernssfile{if/#1}}
+\newcommand{\cd}[1]{\input{if/#1.cd.tex}}
+\newcommand{\lst}[1]{\input{if/#1.lst.tex}}

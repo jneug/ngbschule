@@ -1,0 +1,8 @@
+% See: https://tex.stackexchange.com/questions/223694/how-to-draw-a-text-box-with-shadow-borders-i-have-tried-the-following-but-it-gi#223738
+\newcommand{\KlausurTitel}{%
+	\begin{tcolorbox}[enhanced,center upper,%
+		fontupper=\rmfamily\bfseries,colback=white,%
+		drop shadow southeast,sharp corners]
+		\Large\DokumentNummer. Klausur (\Dauer Minuten)\\
+		\large\Fach\ \Lerngruppe\ (\Kuerzel)
+\end{tcolorbox}}
