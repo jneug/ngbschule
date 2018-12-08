@@ -1,0 +1,164 @@
+
+%% -----------------
+%%
+%% Darstellung von Tasten des TI-NSPIRE
+%%
+%% -----------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tinspire}[2018/12/05  Paket zur Darstellung von Tasten des TI-NSPIRE Taschenrechners]
+
+% option keepBorder keeps black border for ctrl key
+% option keepSecondarySpace keeps space for secondary function even if empty
+
+%\RequirePackage{pgfopts}
+\RequirePackage{xcolor}
+\RequirePackage{tikz}
+
+\usetikzlibrary{shadows}
+
+%% Color of the ctrl-key and secondary functions
+\definecolor{lightblue}{RGB}{214,248,255}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%              Style definitions              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{
+	tinbutton/.style={
+		rectangle,
+		white,
+		draw=black,
+		fill=black!90,
+		rounded corners=1pt,
+		text height=1.5ex,
+		text depth=.25ex,
+		text=white,
+		inner sep=3pt,
+		minimum width=4ex,
+		font=\sffamily,
+	},
+	tinkey/.style={
+		tinbutton,
+		drop shadow={
+			fill=black,
+			opacity=0.75,
+			shadow xshift=0.15ex,
+			shadow yshift=-0.15ex,
+		},
+	},
+	tinsecondary/.style={
+		lightblue!60!black,
+		yshift=-.3ex,
+		font=\fontsize{1ex}{0}\selectfont\sffamily\bfseries,
+		text depth=0pt
+	},
+	tinshadow/.style={
+		tinbutton,
+		black,
+		fill=black,
+		xshift=1pt,
+		yshift=-1pt,
+	}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%              Helper macros              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\tin@button}[3][]{%
+	\node at (0,0) [tinbutton,label={[tinsecondary]above:#3},#1] (btn) {#2\strut}
+}
+\newcommand{\tin@shadow}[2][]{%\node at (0,0) [tinshadow] (shadow) {\phantom{#1}\strut}
+	\node at (0,0) [tinshadow] (shadow) {\phantom{#2}\strut}
+}
+\newcommand{\tin@key}[3][]{%
+	\node at (0,0) [tinkey,label={[tinsecondary]above:#3},#1] (key) {#2\strut}
+}
+\newcommand{\tin@sec}[2][]{%
+	\node at (0,0) [tinsecondary,label={above:#2},#1] (sec) {\strut}
+}
+
+%% Main macros
+\newcommand{\TINkey}[3][]{\tikz[baseline=(key.base)]{%
+	\tin@key[#1]{#2}{#3};
+}\xspace}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                 Symbols                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\calculator{\tikz{
+		\node (c) [inner sep=0pt, draw, fill=black, anchor=south west]{\phantom{N}};
+		\begin{scope}[x=(c.south east),y=(c.north west)]
+			\fill[white] (.1,.7) rectangle (.9,.9);
+			\foreach \x in {.1, .33, .55, .79}{
+				\foreach \y in {.1, .24, .38, .53}{
+					\fill[white] (\x,\y) rectangle +(.11,.07);}}
+		\end{scope}
+}}
+%
+\newcommand\house{\tikz[baseline,thick,scale={\f@size/11pt},]{
+	\draw (.05,0) -- (.15,0) -- (.15,.1) -- (.25,.1) -- (.25,0) -- (.35,0)
+		-- (.35,.15) -- (.4,.15) -- (.35,.19) -- (.35,.3) -- (.29,.3) -- (.29,.23) -- (.2,.3) -- (0,.15) -- (.05,.15) -- (.05,0)
+}}
+\newcommand\caret{\tikz[baseline,scale={\f@size/11pt},]{
+	\fill (0,.2) -- (.3,.2) -- (.15,0) -- (0,.2);
+}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newcommand{\tin@right}[3][]{%
+%	\node at (0,0) [anchor=south west] (tin) {\phantom{#2}\strut};
+%	\begin{scope}[x=(tin.south east),y=(tin.north west)]
+%		\fill[black] (0,0) {[rounded corners=1pt] -- ++(1,0) -- ++(0,1)} -- ++(-1,0) -- cycle {};
+%	\end{scope}
+%	\node at (0,0) [text=white] (btn) {#2\strut};
+%}
+%\newcommand{\TIRounded}[2][]{\tikz[baseline=(key.base)]{\node at (0,0) [inner sep=0pt, anchor=south west] (key) {\phantom{#2}\strut};
+%		\begin{scope}[x=(key.south east),y=(key.north west)]
+%			\fill[black] (0,0) {[rounded corners=1pt] -- ++(1,0) -- ++(0,1)} -- ++(-1,0) -- cycle {};
+%\end{scope}}}
+%%{\fill (0,0) -- ++(10pt,0) -- ++(0,\f@size pt) -- ++(-10pt,0) -- cycle {};}}
+%\newcommand{\TIKeyDouble}[3][]{\tikz[baseline=(key.base)]{\node at (0,0) [key,minimum width=7ex,#1] (key) {#2\hspace{1ex}\strut#3};\draw[white] (key.north) -- (key.south);}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               Key macros               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\TIN}{{\sffamily TI-{$n$}\textbf{spire \textcolor{lightblue!60!black}{\textit{CX}}}}}
+
+\newcommand{\TINsmall}[2][]{\TINkey[minimum size=2ex,#1]{#2}{}}
+
+\newcommand{\TINwhite}[2]{\TINkey[black,fill=white,text=black]{#1}{#2}}
+
+\newcommand{\TINnum}[1]{\TINwhite{#1}{}}
+
+\newcommand{\TINdot}{\TINwhite{.}{capture}}
+
+\newcommand{\TINneg}{\TINwhite{(-)}{ans}}
+
+\newcommand{\TINctrl}{\TINkey[lightblue,fill=lightblue,text=black]{ctrl}{}}
+
+\newcommand{\TINon}{\TINkey{\house\xspace on}{off}}
+
+\newcommand{\TINdoc}{\TINkey{doc \caret}{+ page}}
+
+\newcommand{\TINenter}{\TINkey[minimum width=8ex]{enter}{$\approx$}}
+
+\newcommand{\TINsqrt}{\TINkey[]{$\sqrt[X]{\hspace{.2em}}$}{}}
+
+\newcommand{\TINx}{\TINsmall[black,fill=white,text=black]{X}}
+\newcommand{\TINy}{\TINsmall[black,fill=white,text=black]{Y}}
+\newcommand{\TINz}{\TINsmall[black,fill=white,text=black]{Z}}
+
+\newcommand{\TINnumpad}{%
+\begin{tabular}{ccc}
+	\TINwhite{1}{} & \TINwhite{2}{} & \TINwhite{3}{} \\
+	\TINwhite{4}{} & \TINwhite{5}{} & \TINwhite{6}{} \\
+	\TINwhite{7}{} & \TINwhite{8}{} & \TINwhite{9}{} \\
+	\TINwhite{0}{} & \TINdot & \TINneg \\
+\end{tabular}}
