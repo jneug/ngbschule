@@ -36,6 +36,8 @@
 \newenvironment{koordinatensystemN}[4][1cm]{\begin{koordinatensystem}[#1]{#2}{#3}{0}{#4}}{\end{koordinatensystem}}
 
 \def\geogrid{5mm}
+\def\geogridcolor{gray!50}
+\def\geoaxiscolor{black}
 
 \newenvironment{koordinatensystem}[5][1cm]{%
 	\begin{tikzpicture}[cross/.style={draw, cross out, 
@@ -56,27 +58,27 @@
 		{\setboolean{ngbYzero}{true}}
 		{\setboolean{ngbYzero}{false}}
 	%Raster zeichnen
-	\draw [color=gray!50]  [step=\geogrid] ({#2-1},{#4-1}) grid ({#3+1},{#5+1});
+	\draw [color=\geogridcolor]  [step=\geogrid] ({#2-1},{#4-1}) grid ({#3+1},{#5+1});
 	% Achsen zeichnen beschriften
 	\ifthenelse{\boolean{ngbYzero}}
-		{\draw[->,thick] ({#2-.5},0) -- ({#3+.5},0) node[right] {$x$};
+		{\draw[\geoaxiscolor,->,thick] ({#2-.5},0) -- ({#3+.5},0) node[right] {$x$};
 		\ifthenelse{#2<0}{%
 			\foreach \x in {#2,...,-1}
-			\draw (\x,-.1) -- (\x,.1) node[below=4pt] {$\scriptstyle\x$};
+			\draw (\x,-.1) -- (\x,.1) node[below=4pt,text=\geoaxiscolor] {$\scriptstyle\x$};
 		}{}
 		\ifthenelse{#3>0}{%
 			\foreach \x in {1,...,#3}
-			\draw (\x,-.1) -- (\x,.1) node[below=4pt] {$\scriptstyle\x$};
+			\draw[text=\geoaxiscolor] (\x,-.1) -- (\x,.1) node[below=4pt,text=\geoaxiscolor] {$\scriptstyle\x$};
 		}{}}{}
 	\ifthenelse{\boolean{ngbXzero}}
-		{\draw[->,thick] (0,{#4-.5}) -- (0,{#5+.5}) node[above] {$y$};
+		{\draw[\geoaxiscolor,->,thick] (0,{#4-.5}) -- (0,{#5+.5}) node[above] {$y$};
 		\ifthenelse{#4<0}{%
 			\foreach \y in {#4,...,-1}
-			\draw (-.1,\y) -- (.1,\y) node[left=4pt] {$\scriptstyle\y$};
+			\draw[text=\geoaxiscolor] (-.1,\y) -- (.1,\y) node[left=4pt,text=\geoaxiscolor] {$\scriptstyle\y$};
 		}{}
 		\ifthenelse{#5>0}{%
 			\foreach \y in {1,...,#5}
-			\draw (-.1,\y) -- (.1,\y) node[left=4pt] {$\scriptstyle\y$};
+			\draw (-.1,\y) -- (.1,\y) node[left=4pt,text=\geoaxiscolor] {$\scriptstyle\y$};
 		}{}}{}
 	% Ursprung
 	\ifthenelse{\boolean{ngbXzero} \OR \boolean{ngbYzero}}{%
