@@ -19,6 +19,11 @@
 }
 
 \newcommand{\Bewertungsschema}[1][tendenzen]{
+	% Wenn die xsim Umgebung nicht genutzt wurd werden die gesetzten
+	% Punkte jetzt übertragen
+	\IfExerciseGoalsSumTF{points}{=0}
+		{\AddtoExerciseTypeGoal{aufgabe}{ngbpoints}{24}}
+		{}
 	\ifthenelse{\boolean{schule@kmkPunkte}}{
 		\begin{center}\tiny\begin{tabular}{|l||c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
 			\rowcolor{black!20}
