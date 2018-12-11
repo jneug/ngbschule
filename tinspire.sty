@@ -14,7 +14,7 @@
 \RequirePackage[table]{xcolor}
 \RequirePackage{tikz}
 
-\usetikzlibrary{shadows}
+\usetikzlibrary{calc,shadows,backgrounds}
 
 % Paketoptionen
 %\newboolean{tin@keepBorder}
@@ -37,35 +37,42 @@
 \definecolor{tinctrlclr}{RGB}{214,248,255}
 \definecolor{tinsecondaryclr}{RGB}{131,196,209}
 \definecolor{tinselectionclr}{RGB}{116,186,237}
-\definecolor{tindisplayclr}{gray}{.9}
+\definecolor{tindisplayclr}{gray}{.95}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %              Style definitions              %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\tin@corners{1pt}
 \def\tin@minwidth{6ex}
 \tikzset{
-	tinbutton/.style={
-		rectangle,
+	tinbase/.style={
 		white,
-		draw=black,
-		fill=black!90,
-		rounded corners=1pt,
+		rectangle,
+		rounded corners=\tin@corners,
 		text height=1.5ex,
 		text depth=.25ex,
-		text=white,
 		inner sep=3pt,
-		minimum width=\tin@minwidth,
 		font=\sffamily\bfseries,
 	},
-	tinkey/.style={
-		tinbutton,
+	tinshadow/.style={
 		drop shadow={
 			fill=black,
 			opacity=0.75,
 			shadow xshift=0.15ex,
 			shadow yshift=-0.15ex,
-		},
+		}
+	},
+	tinbutton/.style={
+		tinbase,
+		draw=black,
+		fill=black!90,
+		text=white,
+		minimum width=\tin@minwidth,
+	},
+	tinkey/.style={
+		tinbutton,
+		tinshadow,
 	},
 	tinctrl/.style={
 			black,
@@ -79,13 +86,6 @@
 		font=\fontsize{1ex}{0}\selectfont\sffamily\bfseries,
 		text depth=0pt
 	},
-	tinshadow/.style={
-		tinbutton,
-		black,
-		fill=black,
-		xshift=1pt,
-		yshift=-1pt,
-	},
 }
 
 
@@ -94,9 +94,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\tin@button}[3][]{%
 	\node at (0,0) [tinbutton,label={[tinsecondary]above:#3},#1] (btn) {#2\strut}
-}
-\newcommand{\tin@shadow}[2][]{%\node at (0,0) [tinshadow] (shadow) {\phantom{#1}\strut}
-	\node at (0,0) [tinshadow] (shadow) {\phantom{#2}\strut}
 }
 \newcommand{\tin@key}[3][]{%
 	\node at (0,0) [tinkey,label={[tinsecondary]above:#3},#1] (key) {#2\strut}
@@ -110,6 +107,21 @@
 	\tin@key[#1]{#2}{#3};
 }\xspace}
 
+\newcommand{\TINright}[3][]{\tikz[baseline=(shape.base)]{%
+	\node at (0,0)[fill=red,tinbase,minimum width=4ex,anchor=south west] (shape) {\phantom{#2}};
+	\begin{scope}[x=(shape.south east),y=(shape.north west)]
+		\fill[black] (0,0) {[rounded corners=\tin@corners] -- ++(1,0) -- ++(0,1)} -- ++(-1,0) -- cycle {};
+	\end{scope}
+	\node at (0,0) [tinbase,tinshadow,minimum width=4ex,anchor=south west,label={[tinsecondary]above:#3}] (key) {#2\strut};
+}\xspace}
+\newcommand{\TINleft}[3][]{\tikz[baseline=(shape.base)]{%
+	\node at (0,0)[fill=red,tinbase,minimum width=4ex,anchor=south west] (shape) {\phantom{#2}};
+	\begin{scope}[x=(shape.south east),y=(shape.north west)]
+		\fill[black] (1,1) {[rounded corners=\tin@corners] -- ++(-1,0) -- ++(0,-1)} -- ++(1,0) -- cycle {};
+	\end{scope}
+	\node at (0,0) [tinbase,tinshadow,minimum width=4ex,anchor=south west,label={[tinsecondary]above:#3}] (key) {#2\strut};
+}\xspace}
+\newcommand{\TINdouble}[4]{\TINleft{#1}{#2}\hspace{-.5ex}\TINright{#3}{#4}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -174,7 +186,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\TIN}{{\sffamily TI-{$n$}\textbf{spire \textcolor{tinsecondaryclr}{\textit{CX}}}}\xspace}
 
-\newcommand{\TINsmall}[2][]{\TINkey[inner sep=1pt,minimum size={\tin@minwidth/3},#1]{\small #2}{}}
+\newcommand{\TINsmall}[2][]{\TINkey[inner sep=1pt,minimum size=2ex,#1]{\small #2}{}}
 \newcommand{\TINbig}[2][]{\TINkey[minimum width={\tin@minwidth*1.5},#1]{#2}{}}
 
 \newcommand{\TINwhite}[2]{\TINkey[black,fill=white,text=black]{#1}{#2}}
@@ -185,7 +197,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %         Specific key macros            %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\TINesc}{\@ifstar\@@ TINesc\@ TINesc}
+\newcommand{\TINesc}{\@ifstar\@@TINesc\@TINesc}
 \newcommand{\@TINesc}{\TINkey{esc}{$\Lsh$}}
 \newcommand{\@@TINesc}{\TINkey{esc}{}}
 \newcommand{\TINscratch}{\@ifstar\@@TINscratch\@TINscratch}
@@ -219,7 +231,7 @@
 \newcommand{\@TINenter}{\TINkey[minimum width=8ex]{enter}{$\approx$}}
 \newcommand{\@@TINenter}{\TINkey[minimum width=8ex]{enter}{}}
 
-\newcommand{\TINsqrt}{\TINkey[]{$\sqrt[X]{\hspace{.2em}}$}{}}
+\newcommand{\TINsqrt}{\TINleft[]{$\sqrt[n]{\hspace{1ex}}$}{}}
 
 \newcommand{\TINx}{\TINsmall[black,fill=white,text=black]{X}}
 \newcommand{\TINy}{\TINsmall[black,fill=white,text=black]{Y}}
@@ -259,39 +271,43 @@
 \newlength{\tin@menuWidth}
 \def\tin@mWidth{}
 \def\tin@mHeight{}
+\newlength{\tin@wLine}
 
-\newenvironment{TINdisplay}{\begin{tikzpicture}
+\newenvironment{tindisplay}{\begin{tikzpicture}
 	\fill[gray!10,draw=black] (0,0) rectangle (8,6);
 }{\end{tikzpicture}}
-\newenvironment{TINwindow}[1]{\settowidth{\tin@menuWidth}{  #1  }\begin{tikzpicture}
-	\edef\tin@mWidth{\the\tin@menuWidth};
-	\edef\tin@mHeight{{\the\tin@menuWidth*.75}};
-	\fill[gray!10,draw=black] (0,0) rectangle (\tin@mWidth,\tin@mHeight);
-	\node at (0,\tin@mHeight) [anchor=north west,black,fill=black,rectangle,text=white,font=\sffamily,minimum width=\tin@mWidth] {#1\strut};
-}{\end{tikzpicture}}
-\newcommand{\TINfeld}[3][]{%
-	\node at (2.5,#2) [gray,thick,draw,fill=white,text=black,label={left:#3},minimum width=8ex] {#1};
+
+\newenvironment{tinwindow}[1]{\setlength{\tin@wLine}{-2em}\settowidth{\tin@menuWidth}{#1}\begin{tikzpicture}[x=1ex,y=1em,framed,background rectangle/.style={fill=tindisplayclr,draw=black},tight background]
+	\pgfmathparse{\the\tin@menuWidth+2ex}\edef\tin@mWidth{\pgfmathresult}
+	\node at (0,0) [anchor=north west,black,fill=black,rectangle,text=white,font=\sffamily,minimum width=\tin@mWidth,inner sep=1pt] {#1\strut};
+}{\addtolength{\tin@wLine}{.5em}\node at (0,\the\tin@wLine) [anchor=north west] {};
+\end{tikzpicture}}
+
+\newcommand\TINwfield[2][]{%
+	\node at (10,\the\tin@wLine) [anchor=north west,gray,thick,draw,fill=white,text=black,label={left:#2},minimum width=8ex,minimum height=1.5em] {#1};\addtolength{\tin@wLine}{-2em}
 }
-\newcommand{\TINbtnok}{%
-	%\node at (\tin@mWidth,0) [xshift=-2.3,yshift=.3,anchor=south east,gray,thick,draw,fill=white,text=black,minimum width=4ex] (ok) {OK};
-	\node at (2.6,0) [yshift=.5,anchor=south east,gray,thick,draw,fill=white,text=black,minimum width=4ex] (ok) {OK};
-}
-\newcommand{\TINbtncancel}[1][Cancel]{%
-	\node at (\tin@mWidth,0) [xshift=-2pt,yshift=.5pt,anchor=south east,gray,thick,draw,fill=white,text=black,minimum width=4ex] (cancel) {Cancel};
+\def\TINwbtns#1#2{%
+	\node at (10,\the\tin@wLine) [anchor=north west,gray,thick,draw,fill=white,text=black,minimum width=4ex,minimum size=1.5em] (ok) {#1};
+	\node[anchor=north west,gray,thick,draw,fill=white,text=black,minimum width=4ex,right of=ok,xshift=.5em,minimum width=3ex,minimum height=1.5em] (cancel) {#2};
+	\addtolength{\tin@wLine}{-2em}
 }
 
-\newcommand{\texttin}[1]{\textsf{\setlength{\fboxsep}{0pt}\colorbox{tindisplayclr}{\color{black}#1}}}
-\newcommand{\texttins}[1]{\textsf{\setlength{\fboxsep}{0pt}\colorbox{tinselectionclr}{\color{white}#1}}}
-\newcommand{\texttinm}[1]{\textsf{\setlength{\fboxsep}{0pt}\colorbox{tindisplayclr}{\color{black}#1 \tin@rcaret}}}
-\newcommand{\texttinms}[1]{\textsf{\setlength{\fboxsep}{0pt}\colorbox{tinselectionclr}{\color{white}#1 \tin@rcaret}}}
+\newcommand\texttin{\@ifstar\@@texttin\@texttin}
+\newcommand{\@texttin}[1]{\textsf{\setlength{\fboxsep}{0pt}\colorbox{tindisplayclr}{\color{black}#1}}}
+\newcommand{\@@texttin}[1]{\textsf{\setlength{\fboxsep}{0pt}\colorbox{tinselectionclr}{\color{white}#1}}}
 
-\newenvironment{TINsubmenu}{\starttinmenu}{}
+\newenvironment{tinmenu}{\starttinmenu}{}
 \def\starttinmenu#1\end{\begingroup\setlength\fboxsep{0pt}
-	\colorbox{tindisplayclr}{\begin{tabular}{|clr|}\hline
+	\colorbox{tindisplayclr}{\begin{tabular}{|lr|}\hline
 		#1
 \hline\end{tabular}}\endgroup\end}
 
 \newcommand{\TINmenuitem}{\@ifstar\@@TINmenuitem\@TINmenuitem}
-\def\@TINmenuitem#1{& \textsf{\color{black}#1} & \tin@rcaret \\}
+\def\@TINmenuitem#1{\textsf{\color{black}#1} & \\}
 \def\@@TINmenuitem#1{\rowcolor{tinselectionclr}
-& \textsf{\color{white}#1} & \tin@rcaret \\}
+	\textsf{\color{white}#1} & \\}
+
+\newcommand{\TINsubmenuitem}{\@ifstar\@@TINsubmenuitem\@TINsubmenuitem}
+\def\@TINsubmenuitem#1{\textsf{\color{black}#1} & \tin@rcaret \\}
+\def\@@TINsubmenuitem#1{\rowcolor{tinselectionclr}
+	\textsf{\color{white}#1} & \tin@rcaret \\}
