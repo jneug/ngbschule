@@ -11,7 +11,7 @@
 % option keepSecondarySpace keeps space for secondary function even if empty
 
 %\RequirePackage{pgfopts}
-\RequirePackage{xcolor}
+\RequirePackage[table]{xcolor}
 \RequirePackage{tikz}
 
 \usetikzlibrary{shadows}
@@ -36,7 +36,8 @@
 
 \definecolor{tinctrlclr}{RGB}{214,248,255}
 \definecolor{tinsecondaryclr}{RGB}{131,196,209}
-\definecolor{tinselectionclr}{RGB}{41,107,206}
+\definecolor{tinselectionclr}{RGB}{116,186,237}
+\definecolor{tindisplayclr}{gray}{.9}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -136,7 +137,10 @@
 		-- (.35,.15) -- (.4,.15) -- (.35,.19) -- (.35,.3) -- (.29,.3) -- (.29,.23) -- (.2,.3) -- (0,.15) -- (.05,.15) -- (.05,0);
 }}
 \newcommand\tin@caret{\tikz[baseline,scale={\f@size/11pt},]{
-	\fill (0,.15) -- (.2,.15) -- (.075,0) -- (0,.15);
+	\fill (0,.15) -- (.2,.15) -- (.1,0) -- (0,.15);
+}}
+\newcommand\tin@rcaret{\tikz[baseline,scale={\f@size/11pt},]{
+	\fill (0,0) -- (.15,.1) -- (0,.2) -- (0,0);
 }}
 \newcommand\tin@menu{\tikz[baseline,scale={\f@size/11pt},]{
 	\draw[thick] (0,0) rectangle (.5,.4);
@@ -223,10 +227,10 @@
 \newcommand{\TINspace}{\TINsmall[minimum width=\tin@minwidth]{\textvisiblespace}}
 
 \newcommand{\TINee}{\TINsmall{EE}}
-\newcommand{\TINpi}{\TINsmall{$\pi\rhd$}}
+\newcommand{\TINpi}{\TINsmall{$\pi$\tin@rcaret}}
 \newcommand{\TINcomma}{\TINsmall{,}}
 
-\newcommand{\TINsmbols}{\TINsmall{?!$\rhd$}}
+\newcommand{\TINsmbols}{\TINsmall{?!\tin@rcaret}}
 \newcommand{\TINflag}{\TINsmall{F}}
 \newcommand{\TINnewline}{\TINsmall{\rotatebox[origin=c]{180}{$\Rsh$}}}
 
@@ -276,5 +280,18 @@
 	\node at (\tin@mWidth,0) [xshift=-2pt,yshift=.5pt,anchor=south east,gray,thick,draw,fill=white,text=black,minimum width=4ex] (cancel) {Cancel};
 }
 
-\newcommand{\texttin}[1]{\textsf{\setlength{\fboxsep}{0pt}\colorbox{gray!20}{\color{black}#1}}}
+\newcommand{\texttin}[1]{\textsf{\setlength{\fboxsep}{0pt}\colorbox{tindisplayclr}{\color{black}#1}}}
 \newcommand{\texttins}[1]{\textsf{\setlength{\fboxsep}{0pt}\colorbox{tinselectionclr}{\color{white}#1}}}
+\newcommand{\texttinm}[1]{\textsf{\setlength{\fboxsep}{0pt}\colorbox{tindisplayclr}{\color{black}#1 \tin@rcaret}}}
+\newcommand{\texttinms}[1]{\textsf{\setlength{\fboxsep}{0pt}\colorbox{tinselectionclr}{\color{white}#1 \tin@rcaret}}}
+
+\newenvironment{TINsubmenu}{\starttinmenu}{}
+\def\starttinmenu#1\end{\begingroup\setlength\fboxsep{0pt}
+	\colorbox{tindisplayclr}{\begin{tabular}{|clr|}\hline
+		#1
+\hline\end{tabular}}\endgroup\end}
+
+\newcommand{\TINmenuitem}{\@ifstar\@@TINmenuitem\@TINmenuitem}
+\def\@TINmenuitem#1{& \textsf{\color{black}#1} & \tin@rcaret \\}
+\def\@@TINmenuitem#1{\rowcolor{tinselectionclr}
+& \textsf{\color{white}#1} & \tin@rcaret \\}
