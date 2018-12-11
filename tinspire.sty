@@ -16,8 +16,27 @@
 
 \usetikzlibrary{shadows}
 
-%% Color of the ctrl-key and secondary functions
-\definecolor{lightblue}{RGB}{214,248,255}
+% Paketoptionen
+%\newboolean{tin@keepBorder}
+%\newboolean{tin@keepSpaces}
+%\newboolean{tin@colors}
+
+%\pgfkeys{
+%	/tin/.cd,
+%	keepBorder/.value forbidden,
+%	keepBorder/.code=\setboolean{tin@keepBorder}{true},
+%	keepSpaces/.value forbidden,
+%	keepSpaces/.code=\setboolean{tin@keepSpaces}{true},
+%	colors/.value forbidden,
+%	colors/.code=\setboolean{tincolors}{true},
+%	.unknown/.code={}, % Unbekannte Optionen ignorieren.
+%}
+
+%\ProcessPgfPackageOptions{/ngb}
+
+\definecolor{tinctrlclr}{RGB}{214,248,255}
+\definecolor{tinsecondaryclr}{RGB}{131,196,209}
+\definecolor{tinselectionclr}{RGB}{41,107,206}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -36,7 +55,7 @@
 		text=white,
 		inner sep=3pt,
 		minimum width=\tin@minwidth,
-		font=\sffamily,
+		font=\sffamily\bfseries,
 	},
 	tinkey/.style={
 		tinbutton,
@@ -47,8 +66,14 @@
 			shadow yshift=-0.15ex,
 		},
 	},
+	tinctrl/.style={
+			black,
+			draw=tinctrlclr,
+			fill=tinctrlclr,
+			text=black,
+	},
 	tinsecondary/.style={
-		lightblue!60!black,
+		tinsecondaryclr,
 		yshift=-.3ex,
 		font=\fontsize{1ex}{0}\selectfont\sffamily\bfseries,
 		text depth=0pt
@@ -111,7 +136,7 @@
 		-- (.35,.15) -- (.4,.15) -- (.35,.19) -- (.35,.3) -- (.29,.3) -- (.29,.23) -- (.2,.3) -- (0,.15) -- (.05,.15) -- (.05,0);
 }}
 \newcommand\tin@caret{\tikz[baseline,scale={\f@size/11pt},]{
-	\fill (0,.2) -- (.3,.2) -- (.15,0) -- (0,.2);
+	\fill (0,.15) -- (.2,.15) -- (.075,0) -- (0,.15);
 }}
 \newcommand\tin@menu{\tikz[baseline,scale={\f@size/11pt},]{
 	\draw[thick] (0,0) rectangle (.5,.4);
@@ -143,17 +168,22 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %         General key macros             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\TIN}{{\sffamily TI-{$n$}\textbf{spire \textcolor{lightblue!60!black}{\textit{CX}}}}\xspace}
+\newcommand{\TIN}{{\sffamily TI-{$n$}\textbf{spire \textcolor{tinsecondaryclr}{\textit{CX}}}}\xspace}
 
 \newcommand{\TINsmall}[2][]{\TINkey[inner sep=1pt,minimum size={\tin@minwidth/3},#1]{\small #2}{}}
 \newcommand{\TINbig}[2][]{\TINkey[minimum width={\tin@minwidth*1.5},#1]{#2}{}}
 
 \newcommand{\TINwhite}[2]{\TINkey[black,fill=white,text=black]{#1}{#2}}
 
+\newcommand{\TINcombo}[2]{#1+\ #2}
+\newcommand{\TINfollow}[2]{#1$\rightarrow$\ #2}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %         Specific key macros            %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\TINesc}{\TINkey{esc}{$\Lsh$}}
+\newcommand{\TINesc}{\@ifstar\@@ TINesc\@ TINesc}
+\newcommand{\@TINesc}{\TINkey{esc}{$\Lsh$}}
+\newcommand{\@@TINesc}{\TINkey{esc}{}}
 \newcommand{\TINscratch}{\@ifstar\@@TINscratch\@TINscratch}
 \newcommand{\@TINscratch}{\TINkey{\tin@calculator}{save}}
 \newcommand{\@@TINscratch}{\TINkey{\tin@calculator}{}}
@@ -170,7 +200,7 @@
 \newcommand{\@@TINmenu}{\TINkey{menu}{}}
 
 
-\newcommand{\TINctrl}{\TINkey[lightblue,fill=lightblue,text=black]{ctrl}{}}
+\newcommand{\TINctrl}{\TINkey[tinctrl]{ctrl}{}}
 \newcommand{\TINshift}{\TINkey{\tin@uparrow\xspace shift}{CAPS}}
 \newcommand{\TINvar}{\TINkey{var}{sto$\rightarrow$}}
 \newcommand{\TINdel}{\TINkey{$\underleftarrow{\text{del}}$}{clear}}
@@ -206,7 +236,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\TINnumpad}{%
 \begin{tabular}{ccc}
-	\TINnum{1}{} & \TINwhite{2}{} & \TINwhite{3}{} \\
+	\TINnum{1}{} & \TINnum{2}{} & \TINnum{3}{} \\
 	\TINwhite{4}{} & \TINwhite{5}{} & \TINwhite{6}{} \\
 	\TINwhite{7}{} & \TINwhite{8}{} & \TINwhite{9}{} \\
 	\TINwhite{0}{} & \TINdot & \TINneg \\
@@ -245,3 +275,6 @@
 \newcommand{\TINbtncancel}[1][Cancel]{%
 	\node at (\tin@mWidth,0) [xshift=-2pt,yshift=.5pt,anchor=south east,gray,thick,draw,fill=white,text=black,minimum width=4ex] (cancel) {Cancel};
 }
+
+\newcommand{\texttin}[1]{\textsf{\setlength{\fboxsep}{0pt}\colorbox{gray!20}{\color{black}#1}}}
+\newcommand{\texttins}[1]{\textsf{\setlength{\fboxsep}{0pt}\colorbox{tinselectionclr}{\color{white}#1}}}
