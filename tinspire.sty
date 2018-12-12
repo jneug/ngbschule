@@ -302,12 +302,11 @@
 		#1
 \hline\end{tabular}}\endgroup\end}
 
-\newcommand{\TINmenuitem}{\@ifstar\@@TINmenuitem\@TINmenuitem}
-\def\@TINmenuitem#1{\textsf{\color{black}#1} & \\}
-\def\@@TINmenuitem#1{\rowcolor{tinselectionclr}
-	\textsf{\color{white}#1} & \\}
+% https://tex.stackexchange.com/questions/26360/how-to-color-the-font-of-a-single-row-in-a-table
+\def\tin@rowclr{\color{black}}
+\def\tin@endrow{\gdef\tin@rowclr{\color{black}}}
+\def\TINselected{\rowcolor{tinselectionclr}\gdef\tin@rowclr{\color{white}}}
 
-\newcommand{\TINsubmenuitem}{\@ifstar\@@TINsubmenuitem\@TINsubmenuitem}
-\def\@TINsubmenuitem#1{\textsf{\color{black}#1} & \tin@rcaret \\}
-\def\@@TINsubmenuitem#1{\rowcolor{tinselectionclr}
-	\textsf{\color{white}#1} & \tin@rcaret \\}
+\def\TINmenuitem{\@ifstar\@@TINmenuitem\@TINmenuitem}
+\def\@TINmenuitem#1{\tin@rowclr\textsf{#1} & \tin@endrow\tabularnewline}
+\def\@@TINmenuitem#1{\tin@rowclr\textsf{#1} & \tin@rowclr\tin@rcaret\tin@endrow\tabularnewline}
