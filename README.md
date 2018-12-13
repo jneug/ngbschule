@@ -11,3 +11,15 @@ Alle Dateien müssen der TeX-Distribution zur Verfügung gestellt werden. Dazu g
 
 * [`vorschule.sty`](vorschule.sty) modifiziert einige Optionen von Paketen, die von schule geladen werden. Daher muss das Paket vor schule mit `\usepackage{vorschule}` eingebunden werden.
 * [`ngbschule.sty`](ngbschule.sty) übernimmt den Hauptteil der Modifikationen. Sie bekommt einige Optionen ähnlich zum schule-Paket. Außerdem werden weitere Dateien basierend auf der Konfiguration von schule geladen. Zum Beispiel wird (falls vorhanden) die Datei `ngb/<Fach>.tex` geladen, um Erweiterungen für bestimmte Fächer nachzuladen. Genauso wird `ngb/<Typ>.tex` geladen, für spezielle Makros pro Dokumenttyp (z.B. Arbeitsblatt oder Klausur). Ist die Option `typ` auch beim Laden des Pakets `ngbschule` angegeben, wird der Dokumenttyp von `schule` durch den neuen überschrieben. So können auch Zusatzerweiterungen geladen werden. Z.B. für einen Checkup-Bogen zur Klausurvorbereitung.
+
+```
+\usepackage[
+	typ=<subtyp>,
+	autor=<Autor>,
+	kuerzel=<Kuerzel des Autors>,
+	titel=<Titel>,
+	reihe=<Unterrichtsreihe>,
+	datum=<Datum>,
+	ohneLochung
+]{ngbschule}
+```
