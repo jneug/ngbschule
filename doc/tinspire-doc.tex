@@ -1,0 +1,204 @@
+\documentclass[11pt, a4paper]{scrartcl}
+
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[TS1,T1]{fontenc}
+
+\usepackage{fullpage}
+\usepackage{tinspire}
+
+\usepackage{xinttools,xintfrac}
+
+\thispagestyle{empty}
+
+\newcounter{loopi}
+\newcommand{\makro}[1]{\texttt{\textbackslash #1}}
+
+\begin{document}
+
+\begin{center}\Huge \TIN\end{center}
+
+\section{Tasten}
+Für alle Tasten des \TIN stellt das Paket ein eigenes Makro zur verfügung. Die Namen setzen sich aus dem Prefix {\ttfamily TIN} und dem Namen des Taste zusammen. Der Name lässt sich meist aus der Aufschrift der Taste ableiten.
+
+\subsection{Allgemeine Funktionstasten}
+Die Funktionstasten links und rechts neben dem Display haben jeweils eigene Namen.
+\begin{center}
+\begin{tabular}{lc||lc}
+	\xintFor #1 in {esc,on,scratch,doc,tab,menu,ctrl,del,
+		shift,var}
+	\do
+	{\addtocounter{loopi}{1}\xintifOdd{\theloopi}
+			{\makro{TIN#1}\hspace{1cm} & \csname TIN#1\endcsname\hspace{1cm} & \hspace{1cm}}
+			{\makro{TIN#1}\hspace{1cm} & \csname TIN#1\endcsname \\}
+	}
+	&& \hspace{1cm}\makro{TINenter}\hspace{1cm} & \TINenter \\
+\end{tabular}
+\end{center}
+
+Alle Funktionstasten mit einer Sekundärfunktion besitzen eine *-Variente, die die zweite Funktion weg lässt.
+\begin{center}
+\begin{tabular}{lc||lc}
+	\makro{TINesc*}\hspace{1cm} &
+	\TINesc*\hspace{1cm} & \hspace{1cm}
+	\makro{TINon*}\hspace{1cm} & \TINon* \\
+	\makro{TINscratch*}\hspace{1cm} &
+	\TINscratch*\hspace{1cm} & \hspace{1cm}
+	\makro{TINdoc*}\hspace{1cm} & 
+	\TINdoc* \\
+	\makro{TINtab}\hspace{1cm} &
+	\TINtab\hspace{1cm} & \hspace{1cm}
+	\makro{TINmenu*}\hspace{1cm} & 
+	\TINmenu* \\
+	\makro{TINctrl}\hspace{1cm} &
+	\TINctrl\hspace{1cm} & \hspace{1cm}
+	\makro{TINdel*}\hspace{1cm} & 
+	\TINdel* \\
+	\makro{TINshift*}\hspace{1cm} &
+	\TINshift*\hspace{1cm} & \hspace{1cm}
+	\makro{TINvar*}\hspace{1cm} & 
+	\TINvar* \\
+	&& \hspace{1cm}\makro{TINenter*}\hspace{1cm} & \TINenter* \\
+\end{tabular}
+\end{center}
+
+\subsection{Nummernblock}
+Nummerntasten werden mit dem Makro \makro{TINnum} erstellt. Als Parameter wird die Zahl (0-9) übergeben. Die beiden Funktionstasten für den Dezimalpunkt und die Negation haben wieder eigene Makros.
+\begin{center}
+	\begin{tabular}{lc||lc||lc}
+		\makro{TINnum\{1\}} & \TINnum{1} &
+		\makro{TINnum\{2\}} & \TINnum{2} &
+		\makro{TINnum\{3\}} & \TINnum{3} \\
+		\makro{TINnum\{4\}} & \TINnum{4} &
+		\makro{TINnum\{5\}} & \TINnum{5} &
+		\makro{TINnum\{6\}} & \TINnum{6} \\
+		\makro{TINnum\{7\}} & \TINnum{7} &
+		\makro{TINnum\{8\}} & \TINnum{8} &
+		\makro{TINnum\{9\}} & \TINnum{9} \\
+		\makro{TINnum\{0\}} & \TINnum{0} &
+		\makro{TINdot} & \TINdot &
+		\makro{TINneg} & \TINneg \\
+		&&
+		\makro{TINdot*} & \TINdot* &
+		\makro{TINneg*} & \TINneg* \\
+	\end{tabular}
+\end{center}
+
+\subsection{Doppelte Funktionstasten}
+Die zweigeteilten Funktionstasten besitzen jeweils drei Makros. Jeweils eines für die linke und rechte Seite, sowie die Kombination beider Tasten zu einer Doppeltaste. Die Namen setzt sich jeweils aus \texttt{TIN} und einem Bezeichner für die Taste zusammen. Das Doppelmakro setzt sich aus dem Prefix und dem Bezeichner der linken gefolgt vom Bezeichner der rechten Taste zusammen.
+
+Beispielsweise werden die Plus-Minus-Tasten über der Enter-Taste mit den Makros \makro{TINplus} und \makro{TINminus} erzeugt. Die Doppeltaste dann mit \makro{TINplusminus}.
+\begin{center}
+	\begin{tabular}{lc||lc||lc}
+		\xintForpair #1#2 in {(eq,trig), (s,lib), (pow,sq), (times,div), (ex,tenx), (plus,minus), (lbr,rbr)}
+		\do
+		{\makro{TIN#1} & \csname TIN#1\endcsname &
+		\makro{TIN#2} & \csname TIN#2\endcsname  &
+		\makro{TIN#1#2} & \csname TIN#1#2\endcsname \\
+		}
+	\end{tabular}
+\end{center}
+
+Auch diese Funktionstasten besitzen *-Varianten ohne Sekundärfunktion. Zum Beispiel
+\begin{center}
+	\begin{tabular}{lc||lc||lc}
+		\makro{TINplus*} & \TINplus* &
+		\makro{TINminus*} & \TINminus*  &
+		\makro{TINplusminus*} & \TINplusminus* \\
+	\end{tabular}
+\end{center}
+
+\subsection{Buchstabenblock}
+Buchstabentasten werden mit dem Makro \makro{TINletter} erstellt. Als Parameter wird die Buchstaben (a-w) übergeben. Die drei unbekannten \texttt{x}, \texttt{y} und \texttt{z} besitzen eigene Makros.
+\begin{center}
+	\begin{tabular}{lc||lc||lc}
+		\makro{TINletter\{a\}} & \TINletter{a} &
+		\makro{TINletter\{b\}} & \TINletter{b} &
+		\makro{TINletter\{c\}} & \TINletter{c} \\
+		&& usw... &&& \\
+		\makro{TINx} & \TINx &
+		\makro{TINy} & \TINy &
+		\makro{TINz} & \TINz \\
+	\end{tabular}
+\end{center}
+
+Die weiteren Funktionstasten im Buchstabenblock werden wie folgt erzeugt:
+\begin{center}
+	\begin{tabular}{lc||lc||lc}
+		\xintForthree #1#2#3 in {(ee,pi,comma),(symbols,flag,newline)}
+		\do
+		{\makro{TIN#1} & \csname TIN#1\endcsname &
+			\makro{TIN#2} & \csname TIN#2\endcsname  &
+			\makro{TIN#3} & \csname TIN#3\endcsname \\
+		}
+		&&&& \makro{TINspace} & \TINspace \\
+	\end{tabular}
+\end{center}
+
+\section{Menüs und Eingabefenster}
+\subsection{Auswahlmenüs}
+Die Umgebung \texttt{tinmenu} kann zum Erzeugen von Menüs verwendet werden, die ähnlich zu denen des \TIN aussehen.
+\begin{center}
+	\begin{tinmenu}
+		\TINmenuitem*{1: Anzeige}
+		\TINmenuitem*{2: Analysis}
+		\TINselected\TINmenuitem*{3: Algebra}
+		\TINmenuitem*{4: Matrizen}
+	\end{tinmenu}
+\end{center}
+
+\subsection{Eingabefenster}
+Mit der Umgebung \texttt{tinwin} können Eingabefenster gezeichnet werden, die ähnlichkeit zu denen des Taschenrechners haben. Die Darstellung wird durch Tabellen erzeugt und kann daher nicht als Bild exportiert werden.
+\begin{center}
+	\begin{tinwindow}{Wurzeln eines Polynoms}
+		\TINwfield{$a_2$=}
+		\TINwfield{$a_1$=}
+		\TINwfield{$a_0$=}
+		\TINwbtns{OK}{Abbruch}
+	\end{tinwindow}
+\end{center}
+
+\begin{center}
+	\begin{tinwin}
+		\TINwtitle{Wurzeln eines Polynoms}
+		\TINwinput{$a_2$=}{}
+		\TINwinput{$a_1$=}{}
+		\TINwinput{$a_0$=}{}
+	\end{tinwin}
+\end{center}
+
+\section{Beispiele}
+\subsection{Quadratische Gleichungen lösen}
+\begin{enumerate}
+	\item \TIN anschalten (\TINon*).
+	\item Scratchpad mit \TINscratch* aufrufen.
+	\item \TINmenu* aufrufen und \TINnum{3} drücken (\texttin{3: Algebra}).
+	\item Erneut Menüpunkt \TINnum{3} wählen (\texttin{3: Polynomwerkzeuge}).
+	\item Dann einmal \TINenter* betätigen (oder \TINnum{1} drücken) um die Funktion \texttin{1: Wurzeln eines Polynoms finden...} aufzurufen.
+	\item Im Dialogfenster sollten die passenden Einstellungen schon gewählt sein:
+	\begin{center}
+		\begin{tinwindow}{Wurzeln eines Polynoms finden}
+			\TINwfield[2]{Grad}
+			\TINwfield[Reell]{Wurzeln}
+			\TINwbtns{OK}{Abbruch}
+		\end{tinwindow}
+	\end{center}
+	\item Nach dem Betätigen des OK-Buttons erscheint das Fenster zur Eingabe der Koeffizienten $a$, $b$ und $c$, bzw. hier $a_2$, $a_1$ und $a_0$:
+	\begin{center}
+		\begin{tinwindow}{Wurzeln eines Polynoms}
+			\TINwfield{$a_2$=}
+			\TINwfield{$a_1$=}
+			\TINwfield{$a_0$=}
+			\TINwbtns{OK}{Abbruch}
+		\end{tinwindow}
+	\end{center}
+\end{enumerate}
+
+\subsection{Cheatsheet}
+\begin{tabular}{|c|p{8cm}|} \hline
+	\TINon* & Einschalten des Taschenrechners. \\ \hline
+	\TINscratch* & Aufrufen des \emph{Scratchpads} für schnelle Berechnungen. Ein weiterer Druck wechselt zum Plot-Fenster, in dem schnell Funktionsgraphen geplottet werden können. Jeder weitere Druck wechselt zwischen Rechner und Plot hin und her. \\ \hline
+	\TINmenu* & Aufruf des Taschenrechner-Menüs, welches Kontextabhängig Zugriff auf verschiedene Funktionen gibt. \\ \hline
+\end{tabular}
+
+\end{document}
