@@ -39,9 +39,13 @@
 %% Allgemein
 \definecolor{ReiheVg}{gray}{0.33}
 
+% Koma Schriften
+\addtokomafont{title}{\Large}
+%\addtokomafont{reihe}{\normalsize}
+
 %% Informatik
 \ifthenelse{\equal{\schule@fach}{Informatik}}{
-	\definecolor{SyntaxHg}{gray}{0.95}
+	\definecolor{SyntaxHg}{gray}{0.98}
 	\lstset{
 		frame=single,
 		backgroundcolor=\color{SyntaxHg}
