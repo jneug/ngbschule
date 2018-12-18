@@ -69,9 +69,13 @@
 \def\wennende{\ifend}
 
 % UML (pgf-umlcd)
+\newenvironment{klassendiagramm}{\begin{tikzpicture}}{\end{tikzpicture}}
+
+%% Notizen/Templates für Inhaltsobjekte!
 \def\attribut{\attribute}
 \def\methode{\operation}
 \newenvironment{klasse}[3][text]{\begin{class}[#1]{#2}{#3}}{\end{class}}
+\newenvironment{objekt}[3][text]{\begin{object}[#1]{#2}{#3}}{\end{object}}
 \def\benutzt{\unidirectionalAssociation}
 % Selbstassoziation
 % Von: https://tex.stackexchange.com/questions/98021/how-to-extend-pgf-umlcd-with-self-association-connection#98023
