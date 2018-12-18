@@ -14,21 +14,31 @@
 \newcommand{\ngb@afgPool}{ngb/afg}
 
 \newcommand{\ngb@kuerzel}{}
-\newcommand{\ngb@dauer}{}
 \newcommand{\ngb@reihe}{}
+
+\newcommand{\ngb@version}{}
+
+\newcommand{\ngb@dauer}{}
+\newcommand{\ngb@variante}{}
 
 \newboolean{ngb@ohneLochung}
 
 \pgfkeys{
 	/ngb/.cd,
+% Paket-Setup
 	typ/.store in=\ngb@typ,
+	version/.store in=\ngb@version,
 	aufgaben/.store in=\ngb@afgPool,
+% Weitere Dokumentinfos
 	kuerzel/.store in=\ngb@kuerzel, 
-	dauer/.store in=\ngb@dauer, 
-	reihe/.store in=\ngb@reihe, 
-	autor/.code=\author{#1},
-	datum/.code=\date{#1},
-	titel/.code=\title{#1},
+	reihe/.store in=\ngb@reihe,
+% Variante und Dauer nur für Arbeiten/Klausuren speichern
+	variante/.store in=\ngb@variante, 
+	dauer/.store in=\ngb@dauer,
+%	autor/.code=\author{#1},
+%	datum/.code=\date{#1},
+%	titel/.code=\title{#1},
+% Generelle Papier-Optionen
 	ohneLochung/.value forbidden,
 	ohneLochung/.code=\setboolean{ngb@ohneLochung}{true},
 	.unknown/.code={}, % Unbekannte Optionen ignorieren.
@@ -44,13 +54,13 @@
 \ifthenelse{\boolean{ngb@ohneLochung}}{
 	\RequirePackage[top=3cm,left=2cm,bottom=2cm,right=2cm]{geometry}
 }{
-	\RequirePackage[top=3cm,left=2.2cm,bottom=2cm,right=2cm]{geometry}
+	\RequirePackage[top=3cm,left=2.5cm,bottom=2cm,right=2cm]{geometry}
 }
 %% Abstand zur Kopfzeile verringern
 %% https://texwelt.de/wissen/fragen/15050/abstand-zwischen-kopfzeile-und-textkorper
 \AfterCalculatingTypearea{%
-\addtolength{\headsep}{-1\baselineskip}%
-\addtolength{\topmargin}{.5\baselineskip}%
+	\addtolength{\headsep}{-1\baselineskip}%
+	\addtolength{\topmargin}{.5\baselineskip}%
 }
 %\recalctypearea
 
@@ -61,19 +71,28 @@
 % Paket zur Formatierung von Überschriften
 %\RequirePackage[explicit]{titlesec}
 
+%%% Einbettung von vordefinierten Aufgaben aus dem Aufgabenpool
+%% Wird vor den Unterpaketen geladen, um Überschrieben zu ermöglichen (kl.tex)
+% TODO: Anders regeln? Als eigenes Paket? Einfach per \input?
+% TODO: Variante (A/B) berücksichtigen ...
+\newcommand{\aufgabeLaden}[1]{\InputIfFileExists{\ngb@afgPool/#1.tex}{}{}}
+
 % Includes basierend auf Typ und Fach
+% TODO: Typ kl/ka kann basierend auf Option klausutyp gesetzt werden
 \InputIfFileExists{ngb/\ngb@typ.tex}{}{}
 \InputIfFileExists{ngb/\schule@fach.tex}{}{}
 
 % Schriftarten und Farben einbinden
+\definecolor{tabellenKopfHG}{gray}{0.75}
 \definecolor{ReiheVg}{gray}{0.33}
 \input{ngb/theme.tex} % Überschreibt ggf. die Farben
 
 %% Paket schule anpassen
-\loadxsimstyle{ngb-default,ngb-ruled}
-\setzeAufgabentemplate{ngb-ruled}
+%\loadxsimstyle{ngb-default,ngb-ruled}
+%\setzeAufgabentemplate{ngb-ruled}
 
 % Weitere Pakete
+% See: https://www.overleaf.com/learn/latex/Wrapping_text_around_figures
 \RequirePackage{wrapfig}
 
 %% Makros
@@ -81,28 +100,25 @@
 
 %%% Weitere Dokumentinfos
 \newcommand{\Kuerzel}{\makeatletter\ngb@kuerzel\makeatother\xspace}
-\newcommand{\Dauer}{\makeatletter\ngb@dauer\makeatother\xspace}
 \newcommand{\Reihe}{\makeatletter\ngb@reihe\makeatother\xspace}
-
-\IfEqCase{\ngb@typ}{
-	{kl}{
-		\newcommand{\DokumentTyp}{Klausur\xspace}
-	}%
-	{ka}{
-		\newcommand{\DokumentTyp}{Klassenarbeit\xspace}
-	}%
-}[%
-	\newcommand{\DokumentTyp}{\makeatletter\schule@dokumentTypBezeichnung\makeatother\xspace}
-]
+% TODO: Version irgendwo einbauen (im PDF einbeten und klein auf AB drucken?)
+% TODO: Außerdem Möglichkeit für Changelogs einplanen? (ALs Kommentare)
+\newcommand{\Version}{\makeatletter\ngb@version\makeatother\xspace}
+\def\Nummer{\DokumentNummer}
+\newcommand{\DokumentTyp}{\makeatletter\schule@dokumentTypBezeichnung\makeatother\xspace}
 
 %% Heutiges Datum formatiert
 \def\Heute{\leavevmode\hbox{\twodigits\day.\twodigits\month.\the\year}}
 \def\twodigits#1{\ifnum#1<10 0\fi\the#1}
 
-%%% Überschriften und Titel für die verschiedenen Typen
-\newcommand{\TITEL}{\begin{center}\LARGE\Titel\end{center}}
 
-\newcommand{\ReiheTitel}{\begin{center}\rmfamily\textcolor{ReiheVg}{\Reihe}\\[-1ex]\Large\Titel\titlerule\end{center}}
+%%% Überschriften und Titel für die verschiedenen Typen
+\newkomafont{reihe}{\usefontofkomafont{title}\large\textcolor{ReiheVg}}
+
+\newcommand{\TITEL}{\begin{center}\usekomafont{title}\Titel\end{center}}
+
+\newcommand{\ReiheTitel}{\begin{center}\usekomafont{reihe}\Reihe\\[-1ex]\usekomafont{title}\Titel\titlerule\end{center}}
+
 
 %%% Allgemeine Makros
 \newcommand{\linie}[1][6cm]{\underline{\hspace{#1}}}
@@ -115,6 +131,44 @@
 
 \newcommand{\operator}[1]{\textsc{#1}}
 
-%%% Einbettung von vordefinierten Aufgaben aus dem Aufgabenpool
-%% Todo: Anders regeln? Als eigenes Paket? Einfach per \input?
-%\newcommand{\aufg}[1]{\InputIfFileExists{\ngb@afgPool/#1.tex}{}{}}
+\newenvironment{rahmen}{\begin{tcolorbox}[colframe=black,colback=white,sharp corners]}{\end{tcolorbox}}
+
+
+% Default xsim Stil ändern
+\DeclareExerciseEnvironmentTemplate{ngb-ruled} {%
+	\addpenalty{-3000}\smallskip\noindent\textbf{\rmfamily%
+		% Falls Zusatzaufgabe:
+		\ifthenelse{\equal{\ExerciseType}{zusatzaufgabe}}{\llap{\GetExerciseProperty{symbol}$\bigstar$}~}{\llap{\GetExerciseProperty{symbol}~}}%
+		\XSIMmixedcase{\GetExerciseName}\nobreakspace
+		\GetExerciseProperty{counter}%
+		\IfInsideSolutionF{%
+			\IfExercisePropertySetT{subtitle}{
+				{\nobreakspace\GetExercisePropertyT{subtitle}{\hspace{1cm}\PropertyValue}}}% Subtitle setzten
+		}%
+		% Stil für Punkteanzeige
+		\GetExercisePropertyTF{points}{%
+			\nobreakspace(\PropertyValue
+			\GetExercisePropertyT{bonus-points}
+			{\nobreakspace\small(+\PropertyValue)}% Kleinere Bonuspunkte?
+			\nobreakspace%
+			\IfExerciseGoalSingularTF{points}
+			{\XSIMtranslate{point}}
+			{\XSIMtranslate{points}}%
+			)
+		}{%Keine Punkte
+			\GetExercisePropertyT{bonus-points}{
+				\nobreakspace(0\nobreakspace\small(+\PropertyValue)% Kleinere Bonuspunkte?
+				\nobreakspace%
+				\IfExerciseGoalSingularTF{bonus-points}
+				{\XSIMtranslate{point}}
+				{\XSIMtranslate{points}}%
+				)
+			}
+		}
+	}\\[-2ex]\rule{\textwidth}{1pt}\par\smallskip
+	%
+	%
+}
+{\IfInsideSolutionT{\par}}%
+
+\setzeAufgabentemplate{ngb-ruled}
