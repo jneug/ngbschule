@@ -1,0 +1,16 @@
+\part{Allgemeines}
+
+\section{Typografie und Farben}
+Die Gestaltung der Dokumente wird zum größten Teil in der Datei \texttt{theme.tex} festgelegt, die per \cs*{input} eingebunden wird.
+
+Derzeit wird für alle Dokumente dieselbe Theme-Datei eingebunden, allerdings ist eine Idee in Zukunft unterschiedliche Themes für Material der Sekundarstufe I und II einzubauen.
+
+\subsection{Schriftarten}
+Als Schriftarten werden \pkg{FiraSans} für Textabsätze und \pkg{tgschola} für Überschriften genutzt. Als Monospace-Font wird \pkg{courier} geladen.
+
+\subsubsection{Überschriften}
+Generell werden die Kommandos zum ändern von Schriftarten des \texttt{KOMA}-Paketes genutzt (\cs*{setkomafont} und \cs*{addtokomafont}), um die Schriftarten anzupassen.
+
+Zusätzlich zu den dort verfügbaren gibt es eine neue Überschrift für den Reihentitel (\texttt{reihe}). Wie alle \texttt{KOMA} Schriften kann sie über \cs*{usekomafont}\Marg{reihe} genutzt werden, was  aber in der Regel von den entsprechenden Makros für Reihe und Titel automatisch übernommen wird.
+
+\subsection{Farben}

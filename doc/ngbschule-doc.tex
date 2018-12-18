@@ -1,0 +1,78 @@
+\PassOptionsToPackage{colaction}{multicol}
+\documentclass[a4paper,add-index]{cnltx-doc}
+
+\usepackage[
+	typ=ohne,
+	fach=ohne,
+	weitereFaecher={
+		Informatik,
+		Physik
+	},
+	farbig,
+	module={
+		Kuerzel,
+		Papiertypen,
+		Symbole,
+		Texte,
+	}
+]{schule}
+
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{blindtext}
+\usepackage{weva}
+\usepackage{todonotes}
+\usepackage{pdfpages}
+\usepackage{prettyref}
+
+\setcnltx{
+	name     = ngbschule ,
+	title    = ngbschule ,
+	version  = 0.0.6 ,
+	date     = 2018-12-15 ,
+	subtitle = {\LaTeX-Paket zur Erweiterung des schule-Pakets.},
+	info     = Paketdokumentation ,
+	authors  = {Jonas Neugebauer} ,
+	email    = schule@neugebauer.cc ,
+	url     = https://ngb.schule ,
+	abstract = {%
+		Erweiterungen und Ergänzungen des schule-Pakets.
+	} ,
+	index-setup = { othercode=\footnotesize,level=\section},
+%	add-listings-options= {
+%		morekeywords={
+%			
+%		}
+%	},
+}
+
+\begin{document}
+
+\include{allgemeines}
+
+\part{Präambel}
+\section{Pakete einbinden}
+\section{Dokumentinformationen}
+
+\part{Allgemeine Erweiterungen}
+\section{Materialsammlung}
+\section{Aufgabensammlung}
+
+
+\part{Dokumenttypen und Subtypen}
+\section{Arbeitsblätter}
+\subsection{Allgemeine Arbeitsblätter}
+\subsection{Checkup und Selbstlernbögen}
+\subsection{Diagnosebögen}
+
+\section{Klausuren und Klassenarbeiten}
+\subsection{Klausuren}
+\subsection{Erwartungshorizonte}
+
+\part{Fächer}
+\section{Fach Informatik}
+\section{Fach Mathematik}
+
+\part{Anhang}
+
+\end{document}
