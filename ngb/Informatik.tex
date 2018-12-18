@@ -15,6 +15,35 @@
 	stringstyle=,
 	showstringspaces=false,
 	numbers=left,
+	numberstyle=\ttfamily\tiny\color{gray},
+}
+
+% Sprache LibreLogo für Quelltexte einfügen
+\lstdefinelanguage{LibreLogo}[]{Logo}{%
+	morekeywords={vor,vr,zurück,zk,links,li,rechts,re,fliegen,laufen,position,pos,richtung,ri,verbergen,zeigen,anfang,säubern,füllen,schliessen,stiftbreite,linienbreite,sb,lb,stiftfarbe,linienfarbe,sf,lf,stifttransparenz,linientransparenz,st,lt,stiftende,linienende,se,le,stiftübergang,linienübergang,sü,lü,stiftstil,linienstil,ss,ls,füllfarbe,ff,fülltransparenz,ft,füllstil,fs,kreis,ellipse,quadrat,rechteck,punkt,schreibe,text,schriftfarbe,textfarbe,schf,tf,schriftart,scha,schriftgrösse,textgrösse,schg,tg,schriftgewicht,schg,schriftstil,schs},%
+	morekeywords=[2]{wiederhole,wdh,zu,ende,wenn,bild,für,in,solange,abbruch,weiter,zähler,und,nicht,oder,ausgabe,eingabe,rückgabe,zufällig,stopp,warte,global,ganz,dezimal,zeichen,wurzel,sin,cos,log10,runde,zähle,menge,folge,liste,tupel,sortiert,ersetzt,suche,findealle,min,max},%
+	morekeywords=[3]{wahr,falsch,seite,beliebig,bel,pi},%
+	sensitive=false,
+	morecomment=[l]{;},
+	morestring=[b]",
+}[keywords]
+\lstdefinestyle{LibreLogo}{
+	language={LibreLogo},
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=3,
+	extendedchars=true,
+	basicstyle=\ttfamily\small,		keywordstyle={\color{blue}\underbar},
+	identifierstyle=,
+	commentstyle=\color{gray},
+	backgroundcolor=\color{white},
+	numbers=left,
+	numberstyle=\sffamily\tiny\color{gray},
+	stepnumber=1,
+	numbersep=5pt,
+	captionpos=b,
+	breaklines=true
 }
 
 \def\zeilennummernAus{\lstset{numbers=none}}
