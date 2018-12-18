@@ -6,6 +6,16 @@
 %%
 %% -----------------
 
+%% Weitere Informatik-Pakete
+\newenvironment{klassenDoku}{%
+	\tabularx{\textwidth}{|l|X|}\hline
+		\rowcolor{tabellenKopfHG}
+		\textbf{Methode} & \textbf{Beschreibung} \\ \hline
+}{\endtabularx}
+\def\methodenDoku#1#2{%
+	\texttt{\textbf{#1}} & #2 \\ \hline
+}
+
 %% Styling von Quelltexten
 \lstset{
 	basicstyle=\small\ttfamily,
