@@ -1,0 +1,94 @@
+\part{Fächer}\label{part:faecher}
+
+\section{Fach Informatik}\label{sec:fachinfo}
+
+\subsection{Materialien Informatik}\label{sec:materialinfo}
+\sidenote{Sobald für mich relevant werden auch Sequenzdiagramme und PAPs ergänzt.}
+Für das Fach Informatik lassen sich auf einfache Weise eine Reihe vorgefertigte UML-Diagramme, Struktogramme und Quelltexte einbinden.
+
+\begin{commands}
+	\command{cd}[\marg{name}]
+	Fügt das Klassendiagramm mit dem Namen \meta{name} in das Dokument ein.
+	
+	\command{lst}[\marg{name}]
+	Fügt die Quelltextdatei mit dem Namen \meta{name} in das Dokument ein.
+	
+	\command{nss}[\marg{name}]
+	Fügt das Struktogramm mit dem Namen \meta{name} in das Dokument ein.
+\end{commands}
+
+Die Namen der Materialien halten sich an die Punktnotation, um eine möglichst einfache Organisation zu gewährleisten. Die Namen lassen sich so auch mehrfach verwenden, um zum Beispiel verschiedene Darstellungen eines Algorithmus darzustellen.
+
+Die Operation \texttt{pop} des \texttt{Stack} ist zum Beispiel unter dem Namen \texttt{stack.pop} gespeichert. Mit \cs*{lst}\Marg{stack.pop} wird eine Quelltextdarstellung der Operation eingebunden (Standard: Java), während \cs*{nss}\Marg{stack.pop} das entsprechende Struktogramm anzeigt. \cs*{cd}\Marg{stack} bindet wiederum ein Klassendiagramm des \texttt{Stack} ein und \cs*{lst}\Marg{stack.pop.pseudo} einen Pseudocode.
+
+Alle Dateien für das Fach Informatik liegen im Unterordner \texttt{if}.Die Dateinamen setzen sich aus dem Namen des Materials und einer Endung pro Typ zusammen (abgeleitet aus dem Namen des Makros, z.B. \texttt{.cd.tex} für \cs*{cd}).
+
+\subsubsection{UML-Diagramme}
+Klassen- und Objektdiagramme liegen in Dateien mit der Endung \texttt{.cd.tex} im Materialordner. \\Zum Beispiel \texttt{ngb/inc/if/stack.cd.tex}. Dabei ist zu beachten, dass die Namen, die Operationen/Methoden entsprechen, in 
+der Regel Objektdiagramme enthalten, die die Veränderungen der Zeiger beim Aufruf der Operation darstellen.
+
+\begin{multicols}{2}\ttfamily
+	\begin{smallitemize}
+		\item stack
+		\item stack.pop
+		\item stack.push
+		\item queue
+		\item queue.enqueue
+		\item queue.dequeue
+		\item list
+		\item list.insert
+		\item list.append
+		\item list.delete
+	\end{smallitemize}
+\end{multicols}
+
+\subsubsection{Quelltexte}
+Quelltexte liegen in Dateien mit der Endung \texttt{.lst.tex} im Materialordner. \\Zum Beispiel \texttt{ngb/inc/if/stack.pop.lst.tex}.
+Bei mehreren verfügbaren Sprachen wird der Name der Sprache angehängt, also zum Beispiel \texttt{stack.pop.java.lst.tex}. Das Makro
+sucht zunächst nach einer Datei mit dem exakten angegebenen Namen und als Fallback nach der Java-Version.
+
+\begin{multicols}{2}\ttfamily
+	\begin{smallitemize}
+		\item stack.pop.java
+		\item stack.push.java
+		\item queue.enqueue.java
+		\item queue.dequeue.java
+		\item list.insert.java
+		\item list.append.java
+		\item list.delete.java
+		\item stack.pop.pseudo
+		\item stack.push.pseudo
+		\item queue.enqueue.pseudo
+		\item queue.dequeue.pseudo
+		\item list.insert.pseudo
+		\item list.append.pseudo
+		\item list.delete.pseudo
+		\item stack.pop.python
+		\item stack.push.python
+		\item queue.enqueue.python
+		\item queue.dequeue.python
+		\item list.insert.python
+		\item list.append.python
+		\item list.delete.python
+	\end{smallitemize}
+\end{multicols}
+
+\subsubsection{Struktogramme}
+Struktogramme liegen in Dateien mit der Endung \texttt{.nss} im Materialordner. \\Zum Beispiel \texttt{ngb/inc/if/stack.pop.nss}.
+
+\begin{multicols}{2}\ttfamily
+	\begin{smallitemize}
+		\item stack.pop
+		\item stack.push
+		\item queue.enqueue
+		\item queue.dequeue
+		\item list.insert
+		\item list.append
+		\item list.delete
+	\end{smallitemize}
+\end{multicols}
+
+\section{Fach Mathematik}\label{sec:fachmathe}
+
+\subsection{Materialien Informatik}\label{sec:materialmathe}
+Für Mathematik sind vor allem geometrische Konstruktionen und Merksätze / Definitionen angedacht. 

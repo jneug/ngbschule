@@ -1,16 +1,85 @@
-\part{Allgemeines}
+\part{Allgemeine Erweiterungen}\label{part:allgemeines}
 
-\section{Typografie und Farben}
-Die Gestaltung der Dokumente wird zum größten Teil in der Datei \texttt{theme.tex} festgelegt, die per \cs*{input} eingebunden wird.
+\begin{commands}
+	\command{linie}[\oarg{breite}]\Default{6cm}
+	Zeichnet eine Linie der angegebenen Breite.
+	\begin{example}
+	\linie[4cm]
+	\end{example}
 
-Derzeit wird für alle Dokumente dieselbe Theme-Datei eingebunden, allerdings ist eine Idee in Zukunft unterschiedliche Themes für Material der Sekundarstufe I und II einzubauen.
+	\command{Namensfeld}[\oarg{breite}]\Default{5cm}
+	Erzeugt ein Feld, um einen Namen einzutragen.
+	
+	\begin{example}
+	\Namensfeld
+	\end{example}
+	
+	\command{tab}
+	Kurz für \verbcode!\hspace{1cm}!.
 
-\subsection{Schriftarten}
-Als Schriftarten werden \pkg{FiraSans} für Textabsätze und \pkg{tgschola} für Überschriften genutzt. Als Monospace-Font wird \pkg{courier} geladen.
+	\command{titlerule}
+	Erzeugt eine Linie mit Breite \cs*{textwidth} und Dicke 1pt, die als Unterstreichung von Überschriften benutzt wird..
+	
+	\command{code}[\marg{text}]
+	Wird zur Auszeichnung von Quelltextauszügen benutzt. Das Makro wird auch von anderen Paketen erzeugt, daher prüft \ngbschule\ zunächst, ob es schon existiert und erzeugt nur dann eine eigene Version.
 
-\subsubsection{Überschriften}
-Generell werden die Kommandos zum ändern von Schriftarten des \texttt{KOMA}-Paketes genutzt (\cs*{setkomafont} und \cs*{addtokomafont}), um die Schriftarten anzupassen.
+	\command{operator}[\marg{operator}]
+	Wird benutzt, um in Aufgabentexten Operatoren auszuzeichnen.
+	\begin{example}
+	\operator{Implementiere} die Operation \texttt{push} aus der Klasse \texttt{Stack}.
+	\end{example}
 
-Zusätzlich zu den dort verfügbaren gibt es eine neue Überschrift für den Reihentitel (\texttt{reihe}). Wie alle \texttt{KOMA} Schriften kann sie über \cs*{usekomafont}\Marg{reihe} genutzt werden, was  aber in der Regel von den entsprechenden Makros für Reihe und Titel automatisch übernommen wird.
+	\command{TITEL}
+	Erzeugt einen großen, zentrierten Titel.
+	\begin{example}
+	\TITEL
+	\end{example}
 
-\subsection{Farben}
+	\command{ReiheTitel}
+	Erzeugt einen Dokumenttitel bestehend aus Reihe und Titel, sowie einem \cs*{titlerule} als Trenner.
+	\begin{example}
+	\ReiheTitel
+	\end{example}
+\end{commands}
+
+\begin{environments}
+	\environment{rahmen}[\oarg{color}]\Default{black}
+	Erzeugt eine \pkg{tcolorbox} mit einem schwarzen einfachen Rahmen.
+	
+	\begin{example}
+	\begin{rahmen}
+	\blindtext
+	\end{rahmen}
+	\end{example}
+\end{environments}
+
+\section{Aufgabensammlung}\label{sec:aufgabensammlung}
+Um das Aufbauen einer Aufgabensammlung zu vereinfachen steht allen Dokumenttypen das Makro \cs*{aufgabeLaden}\marg{name} zur Verfügung. Mit diesem können Aufgabendateien (mit der Endung \texttt{.afg.tex}) aus einem Ordner in das aktuelle Dokument eingefügt werden. Der Pfad, in dem nach den Aufgabendateien gesucht wird kann durch die Option \option*{aufgaben} für jedes Dokument angepasst werden.
+
+\begin{options}
+	\keyval{aufgaben}{pfad}\Default{ngb/afg}
+	\sidenote{In zukünftigen Versionen sollte der Pfad für die Sammlung zentral anpassbar sein.}
+	Setzt den Pfad zur Aufgabensammlung. Als Standard wird in einem Unterordner des Pakets selbst gesucht, von dem aus die Aufgaben jeder \TeX Datei zur Verfügung stehen. Um die Aufgabensammlung an einem anderen Ort zu speicher muss (derzeit) der Pfad in jeder Datei über diese Option angegeben werden.
+	
+	Der Pfad kann absolut sein (z.B. \texttt{~/user/tex/Aufgaben}) oder eine relative Pfadangabe (z.B. \texttt{../../Aufgaben}).
+\end{options}
+
+\begin{commands}
+	\command{aufgabeLaden}[\marg{name}]
+	Lädt eine Aufgabe aus der Aufgabensammlung, wenn sie vorhanden ist. Die Datei muss den Namen \texttt{\meta{name}.afg.tex} haben und im Ordner der Aufgabensammlung liegen.
+	
+	Ohne Angabe eines neuen Pfades für die Aufgabensammlung
+	ist der zusammengesetzte Pfad für eine Aufgabe dann also
+	\texttt{ngb/afg/\meta{name}.afg.tex}.
+	
+	Es können auch Unterordner angegeben werden. (Z.B. \cs*{aufgabeLaden}\Marg{if/aufgabe-1}. Die
+	Aufgabendatei liegt in dem Fall also unter \texttt{ngb/afg/if/aufgabe-1.afg.tex}.)
+\end{commands}
+
+
+\section{Materialsammlung}\label{sec:materialsammlung}
+Das Paket liefert eine Reihe von Materialien mit, die (hauptsächlich bezogen auf die Lehrpläne in NRW) häufig in Dokumenten auftauchen. Die einzelnen Fächer stellen Makros bereit, um Fachspezifische Materialien nachzuladen. Dies ist vor allem für die Informatik relevant, für das vorgefertigte \emph{UML-Diagramme}, \emph{Struktogramme} und \emph{Quelltexte} eingebunden werden können.
+
+Details dazu sind bei der Beschreibung der Fächer unter \prettyref{sec:materialinfo} und \prettyref{sec:materialmathe} beschrieben.
+
+Generell sollten die Materialdateien möglichst so gehalten sein, dass sie auch ohne das Paket \ngbschule\ verwendet werden können (Struktogramme sollten also zum Beispiel nicht die Makros \cs*{Anweisung} etc. verwenden, sondern direkt die Makros aus dem \pkg*{stuktex}-Paket).

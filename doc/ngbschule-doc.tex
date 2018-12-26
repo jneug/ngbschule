@@ -1,21 +1,28 @@
 \PassOptionsToPackage{colaction}{multicol}
-\documentclass[a4paper,add-index]{cnltx-doc}
+\documentclass[a4paper,add-index,ngerman]{cnltx-doc}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
 
 \usepackage[
 	typ=ohne,
 	fach=ohne,
 	weitereFaecher={
 		Informatik,
-		Physik
+		Mathematik
 	},
 	farbig,
-	module={
-		Kuerzel,
-		Papiertypen,
-		Symbole,
-		Texte,
-	}
+	module={}
 ]{schule}
+
+\usepackage[
+	reihe={Beispiel einer Reihe}
+]{ngbschule}
+%\input{ngb/Informatik.tex}
+
+\title{Dokumentation des Pakets ngbschule}
+
+\usepackage{tcolorbox}
 
 \usepackage{hyperref}
 \usepackage{booktabs}
@@ -46,18 +53,23 @@
 %	},
 }
 
+\newnote*\sidenote[1]{#1}
+
+\usepackage{prettyref}
+\newrefformat{part}{Kapitel\,\ref{#1}, S.\,\pageref{#1}}
+\newrefformat{sec}{Abschnitt\,\ref{#1}, S.\,\pageref{#1}}
+
+%\includeonly{allgemeines, faecher}
+
 \begin{document}
 
-\include{allgemeines}
+\include{einleitung}
 
 \part{Präambel}
 \section{Pakete einbinden}
 \section{Dokumentinformationen}
 
-\part{Allgemeine Erweiterungen}
-\section{Materialsammlung}
-\section{Aufgabensammlung}
-
+\include{allgemeines}
 
 \part{Dokumenttypen und Subtypen}
 \section{Arbeitsblätter}
@@ -69,9 +81,7 @@
 \subsection{Klausuren}
 \subsection{Erwartungshorizonte}
 
-\part{Fächer}
-\section{Fach Informatik}
-\section{Fach Mathematik}
+\include{faecher}
 
 \part{Anhang}
 
