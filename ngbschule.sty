@@ -132,6 +132,13 @@
 \newcommand{\operator}[1]{\textsc{#1}}
 
 \newenvironment{rahmen}{\begin{tcolorbox}[colframe=black,colback=white,sharp corners]}{\end{tcolorbox}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%           Tabellen           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newlength{\ngb@rowheigh}
+\newcommand\Zeilenhoehe[1][2\baselineskip]{\setlength{\ngb@rowheigh}{#1}%
+	\rule[-.5\ngb@rowheigh+.5em]{0pt}{\ngb@rowheigh}%
+}
 
 
 % Default xsim Stil ändern
