@@ -1,0 +1,22 @@
+
+
+\newcommand{\ngb@dauer}{}
+
+\newcommand{\ngb@variante}{}
+
+\ifthenelse{\equal{\schule@typ}{kl}}{%
+	\ifthenelse{\boolean{schule@kmkPunkte}}
+		{\newcommand{\ngb@notenStil}{schule}}
+		{\newcommand{\ngb@notenStil}{ngbschule}}
+}{%
+	\newcommand{\ngb@notenStil}{ngbschule}
+}
+
+
+\pgfkeys{
+	/ngb/.cd,
+% Variante und Dauer für Arbeiten/Klausuren
+	variante/.store in=\ngb@variante, 
+	dauer/.store in=\ngb@dauer,
+	notenverteilungStil/.store in=\ngb@notenStil,
+}

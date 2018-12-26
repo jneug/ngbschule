@@ -7,19 +7,31 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{ngbschule}[2018/11/28  Paket mit eigenen Erweiterungen zum schule-Paket]
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%          Modullader          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Angepasst aus dem schulepaket
+%% Lädt Moduldateien des Paekts nach
+\newcommand{\ngb@modulDateiLaden}[2][code]{
+	\InputIfFileExists{ngb.#2.#1.tex}{
+		\sdinfo{Moduldatei ngb.#2.#1 geladen!}
+	}{
+		\sdwarnung{Moduldatei ngb.#2.#1 konnte nicht geladen werden!}
+	}
+}
 
-%% Packetoptionen
-%% ------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%        Packetoptionen        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TODO: Einige der Optionen sollten erst von den Zusatzpaketen geladen werden, die sie auch verwenden (dauer -> kl.tex).
 \newcommand{\ngb@typ}{\schule@typ}
-\newcommand{\ngb@afgPool}{ngb/afg}
+\newcommand{\ngb@afgPool}{afg}
+\newcommand{\ngb@theme}{theme}
 
 \newcommand{\ngb@kuerzel}{}
 \newcommand{\ngb@reihe}{}
 
-\newcommand{\ngb@version}{}
-
-\newcommand{\ngb@dauer}{}
-\newcommand{\ngb@variante}{}
+\newcommand{\ngb@version}{\today}
 
 \newboolean{ngb@ohneLochung}
 
@@ -29,26 +41,26 @@
 	typ/.store in=\ngb@typ,
 	version/.store in=\ngb@version,
 	aufgaben/.store in=\ngb@afgPool,
+	theme/.store in=\ngb@theme,
 % Weitere Dokumentinfos
 	kuerzel/.store in=\ngb@kuerzel, 
 	reihe/.store in=\ngb@reihe,
-% Variante und Dauer nur für Arbeiten/Klausuren speichern
-	variante/.store in=\ngb@variante, 
-	dauer/.store in=\ngb@dauer,
-%	autor/.code=\author{#1},
-%	datum/.code=\date{#1},
-%	titel/.code=\title{#1},
 % Generelle Papier-Optionen
 	ohneLochung/.value forbidden,
 	ohneLochung/.code=\setboolean{ngb@ohneLochung}{true},
 	.unknown/.code={}, % Unbekannte Optionen ignorieren.
 }
 
+\ngb@modulDateiLaden[optionen]{\ngb@typ}
+\ngb@modulDateiLaden[optionen]{\schule@fach}
+\ngb@modulDateiLaden[optionen]{\ngb@theme}
+
 \ProcessPgfPackageOptions{/ngb}
 
-%% Zusatzpakete
-%% ------------------------------
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%         Zusatzpakete         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Seitenabmessungen
 % Todo: Per Option Papiergröße beachten (a4paper)
 \ifthenelse{\boolean{ngb@ohneLochung}}{
@@ -68,36 +80,47 @@
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[ngerman]{babel}
 
-% Paket zur Formatierung von Überschriften
-%\RequirePackage[explicit]{titlesec}
 
+%% Aufgabenpool
 %%% Einbettung von vordefinierten Aufgaben aus dem Aufgabenpool
-%% Wird vor den Unterpaketen geladen, um Überschrieben zu ermöglichen (kl.tex)
+%% Wird vor den Unterpaketen geladen, um Überschrieben zu ermöglichen (z.b. ngb.kl.code.tex)
 % TODO: Anders regeln? Als eigenes Paket? Einfach per \input?
 % TODO: Variante (A/B) berücksichtigen ...
-\newcommand{\aufgabeLaden}[1]{\InputIfFileExists{\ngb@afgPool/#1.tex}{}{}}
-
-% Includes basierend auf Typ und Fach
-% TODO: Typ kl/ka kann basierend auf Option klausutyp gesetzt werden
-\InputIfFileExists{ngb/\ngb@typ.tex}{}{}
-\InputIfFileExists{ngb/\schule@fach.tex}{}{}
-
-% Schriftarten und Farben einbinden
-\definecolor{tabellenKopfHG}{gray}{0.75}
-\definecolor{ReiheVg}{gray}{0.33}
-\input{ngb/theme.tex} % Überschreibt ggf. die Farben
+\newcommand{\aufgabeLaden}[1]{\InputIfFileExists{\ngb@afgPool/#1.afg.tex}{}{}}
 
 %% Paket schule anpassen
 %\loadxsimstyle{ngb-default,ngb-ruled}
 %\setzeAufgabentemplate{ngb-ruled}
 
-% Weitere Pakete
 % See: https://www.overleaf.com/learn/latex/Wrapping_text_around_figures
 \RequirePackage{wrapfig}
 
-%% Makros
-%% ------------------------------
 
+% Includes basierend auf Typ und Fach werden (fast) zuletzt geladen
+\ngb@modulDateiLaden{\ngb@typ}
+\ngb@modulDateiLaden{\schule@fach}
+
+% Schriftarten und Farben einbinden
+\definecolor{tabellenKopfHG}{gray}{0.75}
+\definecolor{ReiheVg}{gray}{0.33}
+\ngb@modulDateiLaden{\ngb@theme} % Überschreibt ggf. die Farben
+
+
+%% Add Metadata to PDF
+\AtEndDocument{%
+	\makeatletter
+	\hypersetup{
+		pdfauthor=\@author,
+		pdftitle=\ngb@reihe: \@title,
+		pdfcreator=\LaTeX,
+	}
+	\makeatother
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%            Makros            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Weitere Dokumentinfos
 \newcommand{\Kuerzel}{\makeatletter\ngb@kuerzel\makeatother\xspace}
 \newcommand{\Reihe}{\makeatletter\ngb@reihe\makeatother\xspace}
@@ -111,8 +134,9 @@
 \def\Heute{\leavevmode\hbox{\twodigits\day.\twodigits\month.\the\year}}
 \def\twodigits#1{\ifnum#1<10 0\fi\the#1}
 
-
-%%% Überschriften und Titel für die verschiedenen Typen
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    Überschriften und Titel   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newkomafont{reihe}{\usefontofkomafont{title}\large\textcolor{ReiheVg}}
 
 \newcommand{\TITEL}{\begin{center}\usekomafont{title}\Titel\end{center}}
@@ -120,18 +144,23 @@
 \newcommand{\ReiheTitel}{\begin{center}\usekomafont{reihe}\Reihe\\[-1ex]\usekomafont{title}\Titel\titlerule\end{center}}
 
 
-%%% Allgemeine Makros
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%      Allgemeine Makros       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\linie}[1][6cm]{\underline{\hspace{#1}}}
-\newcommand{\hr}{\hrule}
 \newcommand{\tab}{\hspace{1cm}}
-\newcommand{\titlerule}{\noindent\\[-2ex]\rule{\textwidth}{1pt}}
-\newcommand{\code}[1]{\texttt{\small #1}}
+\newcommand{\titlerule}{\noindent\\[-2ex]\rule{\textwidth}{1pt}\vspace{-2ex}}
 \newcommand{\Namensfeld}[1][5cm]{Name: \linie[#1]}
-\def\nl{\newline}
 
+\ifcsname code\endcsname%
+\else%
+\newcommand{\code}[1]{\texttt{\small #1}}%
+\fi%
 \newcommand{\operator}[1]{\textsc{#1}}
 
-\newenvironment{rahmen}{\begin{tcolorbox}[colframe=black,colback=white,sharp corners]}{\end{tcolorbox}}
+\newenvironment{rahmen}[1][black]{\begin{tcolorbox}[colframe=#1,colback=white,sharp corners]}{\end{tcolorbox}}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %           Tabellen           %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -141,13 +170,16 @@
 }
 
 
-% Default xsim Stil ändern
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  xsim Aufgaben Stil ändern   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifthenelse{\isnamedefined{DeclareExerciseEnvironmentTemplate}}{%
 \DeclareExerciseEnvironmentTemplate{ngb-ruled} {%
 	\addpenalty{-3000}\smallskip\noindent\textbf{\rmfamily%
 		% Falls Zusatzaufgabe:
 		\ifthenelse{\equal{\ExerciseType}{zusatzaufgabe}}{\llap{\GetExerciseProperty{symbol}$\bigstar$}~}{\llap{\GetExerciseProperty{symbol}~}}%
 		\XSIMmixedcase{\GetExerciseName}\nobreakspace
-		\GetExerciseProperty{counter}%
+		\GetExerciseProperty{counter}\addcontentsline{toc}{1}{\XSIMmixedcase{\GetExerciseName}\nobreakspace\GetExerciseProperty{counter}}%
 		\IfInsideSolutionF{%
 			\IfExercisePropertySetT{subtitle}{
 				{\nobreakspace\GetExercisePropertyT{subtitle}{\hspace{1cm}\PropertyValue}}}% Subtitle setzten
@@ -179,3 +211,4 @@
 {\IfInsideSolutionT{\par}}%
 
 \setzeAufgabentemplate{ngb-ruled}
+}{}

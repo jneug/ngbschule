@@ -1,0 +1,126 @@
+
+\IfEqCase{\schule@klausurtyp}{
+	% Klausuren
+	{klausur}{%
+		% https://tex.stackexchange.com/questions/223694/how-to-draw-a-text-box-with-shadow-borders-i-have-tried-the-following-but-it-gi#223738
+		\newcommand{\KlausurTitel}{%
+			\begin{tcolorbox}[enhanced,center upper,%
+				fontupper=\rmfamily\bfseries,colback=white,%
+				drop shadow southeast,sharp corners]
+				\Large\DokumentNummer. Klausur (\Dauer Minuten)\\
+				\large\Fach\ \Lerngruppe\ (\Kuerzel)
+			\end{tcolorbox}}
+		\chead{} % Keine Titel in der Kopfzeile
+	}%
+}[%
+	% Klassen- und Kursarbeiten
+	\newcommand{\KlausurTitel}{\begin{center}\LARGE\rmfamily\Titel\end{center}}
+	\def\ArbeitTitel{\KlausurTitel}
+	
+	\ihead{\small\Fach \Lerngruppe\ifthenelse{\equal{\ngb@variante}{}}{}{- \Variante} (\Kuerzel)}
+	\chead{\small\Datum}
+	%\ohead{\DokumentTyp Nr. \DokumentNummer\linebreak\Datum}
+	\ohead{\small\Namensfeld}
+	
+	\KOMAoptions{headsepline=off}
+]
+
+\newcommand{\Dauer}{\makeatletter\ngb@dauer\makeatother\xspace}
+\newcommand{\Variante}{\makeatletter\ngb@variante\makeatother\xspace}
+
+%% Anhang in Klausuren/Arbeiten
+\RequirePackage{prettyref}
+\newrefformat{anhang}{Anhang\,\ref{#1}}
+\newcommand\Anhang{\clearpage\appendix\chead{\centering Anhang}\addcontentsline{toc}{1}{Anhang}}
+
+%% Überschreiben von aufgabeLaden, um die Variante
+%% einzubeziehen. Statt <name>.afg.tex wird zuerst nach
+%% <name>-<variante>.afg.tex gesucht.
+\renewcommand{\aufgabeLaden}[2][\ngb@variante]{%
+	\InputIfFileExists{\ngb@afgPool/#2-#1.afg.tex}{}{%
+		\InputIfFileExists{\ngb@afgPool/#2.afg.tex}{}{}%
+}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Eigene Variante der Notenverteilung %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\IfEqCase{\ngb@notenStil}{
+	{kompakt}{\renewcommand{\notenverteilung}{\Bewertungsschema[]}}
+	{ngbschule}{\renewcommand{\notenverteilung}{\Bewertungsschema}}%
+	{schule}{}%
+}[]
+
+\newcommand{\Bewertungsschema}[1][tendenzen]{
+	% Wenn die xsim Umgebung nicht genutzt wurd werden die gesetzten
+	% Punkte jetzt übertragen
+	\IfExerciseGoalsSumTF{points}{=0}
+	{\AddtoExerciseTypeGoal{aufgabe}{ngbpoints}{24}}
+	{}
+	\ifthenelse{\boolean{schule@kmkPunkte}}{
+		\begin{center}\tiny\begin{tabular}{|l||c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
+				\rowcolor{black!20}
+				\textbf{Notenpunkte} & 15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline
+				\textbf{Schwelle} & 95\% & 90\% & 85\% & 80\% & 75\% & 70\% & 65\% & 60\% & 55\% & 50\% & 45\% & 39\% & 33\% & 27\% & 20\% & 0\% \\ \hline
+				\rowcolor{black!10}
+				\textbf{Punkte}
+				& \schule@punkteZuNote{15} 
+				& \schule@punkteZuNote{14} 
+				& \schule@punkteZuNote{13} 
+				& \schule@punkteZuNote{12} 
+				& \schule@punkteZuNote{11} 
+				& \schule@punkteZuNote{10} 
+				& \schule@punkteZuNote{9} 
+				& \schule@punkteZuNote{8} 
+				& \schule@punkteZuNote{7} 
+				& \schule@punkteZuNote{6} 
+				& \schule@punkteZuNote{5} 
+				& \schule@punkteZuNote{4} 
+				& \schule@punkteZuNote{3} 
+				& \schule@punkteZuNote{2} 
+				& \schule@punkteZuNote{1} 
+				& 0 \\ \hline
+		\end{tabular}\end{center}
+	}{
+		\ifthenelse{\equal{#1}{tendenzen}}{
+			\begin{center}\renewcommand{\arraystretch}{1.2}\tiny\begin{tabular}{|l||c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
+					\rowcolor{black!20}
+					\textbf{Note} & 1+ & 1 & 1- & 2+ & 2 & 2- & 3+ & 3 & 3- & 4+ & 4 & 4- & 5+ & 5 & 5- & 6 \\ \hline
+					\textbf{Schwelle} & 95\% & 90\% & 85\% & 80\% & 75\% & 70\% & 65\% & 60\% & 55\% & 50\% & 45\% & 39\% & 33\% & 27\% & 20\% & 0\% \\ \hline
+					\rowcolor{black!10}
+					\textbf{Punkte}
+					& \schule@punkteZuNote{15} 
+					& \schule@punkteZuNote{14} 
+					& \schule@punkteZuNote{13} 
+					& \schule@punkteZuNote{12} 
+					& \schule@punkteZuNote{11} 
+					& \schule@punkteZuNote{10} 
+					& \schule@punkteZuNote{9} 
+					& \schule@punkteZuNote{8} 
+					& \schule@punkteZuNote{7} 
+					& \schule@punkteZuNote{6} 
+					& \schule@punkteZuNote{5} 
+					& \schule@punkteZuNote{4} 
+					& \schule@punkteZuNote{3} 
+					& \schule@punkteZuNote{2} 
+					& \schule@punkteZuNote{1} 
+					& 0 \\ \hline
+			\end{tabular}\end{center}
+		}{
+			\begin{center}\renewcommand{\arraystretch}{1.1}\small\begin{tabular}{|l||c|c|c|c|c|c|} \hline
+					\rowcolor{black!20}
+					\textbf{Note} & 1 & 2 & 3 & 4 & 5 & 6 \\ \hline
+					\textbf{Schwelle} & 85\% & 70\% & 55\% & 39\% & 20\% & 0\% \\ \hline
+					\rowcolor{black!10}
+					\textbf{Punkte}
+					& \schule@punkteZuNote{13}
+					& \schule@punkteZuNote{10}
+					& \schule@punkteZuNote{7}
+					& \schule@punkteZuNote{4}
+					& \schule@punkteZuNote{1}
+					& 0 \\ \hline
+			\end{tabular}\end{center}
+		}
+	}
+}
+

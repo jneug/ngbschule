@@ -26,6 +26,7 @@
 	showstringspaces=false,
 	numbers=left,
 	numberstyle=\ttfamily\tiny\color{gray},
+	breaklines=true,
 }
 
 % Sprache LibreLogo für Quelltexte einfügen
@@ -97,6 +98,23 @@
 %% Laden von vordefinierten Struktogrammen, 
 %% Klassendiagrammen und Quelltexten aus der internen
 %% Bibliothek
-\newcommand{\nss}[1]{\centernssfile{if/#1}}
-\newcommand{\cd}[1]{\input{if/#1.cd.tex}}
-\newcommand{\lst}[1]{\input{if/#1.lst.tex}}
+\def\ngb@defaultPath{inc/if}
+\def\ngb@defaultLang{java}
+\newcommand{\nss}[1]{\centernssfile{\ngb@defaultPath/#1}}
+\newcommand{\cd}[1]{\input{\ngb@defaultPath/#1.cd.tex}}
+\newcommand{\lst}[1]{\IfFileExists{\ngb@defaultPath/#1.lst.tex}%
+	{\input{\ngb@defaultPath/#1.lst.tex}}%
+	{\input{\ngb@defaultPath/#1.\ngb@defaultLang.lst.tex}%
+}}
+
+%% Hack für Listings in tabularx
+\newcommand{\tablelst}[2][]{\lstinline[#1]{#2}}
+\newenvironment{savelst}[1]
+{\expandafter\newbox\csname lstbox#1\endcsname\lrbox{\csname lstbox#1\endcsname}}
+{\endlrbox}
+\newcommand{\loadlst}[1]{\usebox{\csname lstbox#1\endcsname}}
+
+%\newcolumntype{P}[2]{>{\Zeilenhoehe[#1]}p{#2}}
+%\newcolumntype{M}[2]{>{\Zeilenhoehe[#1]}m{#2}}
+%\newcolumntype{B}[2]{>{\Zeilenhoehe[#1]}b{#2}}
+%\newcolumntype{Y}[1]{>{\Zeilenhoehe[#1]}X}
