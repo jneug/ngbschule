@@ -1,10 +1,32 @@
 
+
 \definecolor{ngb.foot.version}{gray}{0.5}
 
 \ihead{\small\Fach \Lerngruppe (\Kuerzel)}
 \chead{\small\Datum}
 %\ohead{}
 
-\ofoot{\tiny\color{ngb.foot.version} v.\Version}
+
+
+
+\ifthenelse{\equal{\ngb@baseurl}{}}{%
+\def\ngb@foot@qrcode{}
+}{%
+\RequirePackage{qrcode} % Package nur einfügen, wenn Url angegeben
+\def\ngb@foot@qrcode{\qrcode{\ngb@baseurl}}
+}
+\ifthenelse{\equal{\ngb@version}{}}{%
+\def\ngb@foot@version{}
+}{%
+\def\ngb@foot@version{v.\Version}
+}
+
+%\ifoot*{Version vom \gfiGetDate{}}
+%\ofoot*{\lizenzSymbol ~\qrcode{http://ddi.uni-wuppertal.de/material/materialsammlung/}}
+
+\ifoot*{\footnotesize\color{ngb.foot.version}\ngb@foot@version}
+\ofoot*{\footnotesize\color{ngb.foot.version}\lizenzSymbol}
+
+
 
 \KOMAoptions{headsepline=off}
