@@ -1,4 +1,3 @@
-
 \IfEqCase{\schule@klausurtyp}{
 	% Klausuren
 	{klausur}{%
@@ -7,7 +6,7 @@
 			\begin{tcolorbox}[enhanced,center upper,%
 				fontupper=\rmfamily\bfseries,colback=white,%
 				drop shadow southeast,sharp corners]
-				\Large\DokumentNummer. Klausur (\Dauer Minuten)\\
+				\Large\Nummer. \TypBezeichnung (\Dauer\,Minuten)\\
 				\large\Fach\ \Lerngruppe\ (\Kuerzel)
 			\end{tcolorbox}}
 		\chead{} % Keine Titel in der Kopfzeile
@@ -31,7 +30,7 @@
 %% Anhang in Klausuren/Arbeiten
 \RequirePackage{prettyref}
 \newrefformat{anhang}{Anhang\,\ref{#1}}
-\newcommand\Anhang{\clearpage\appendix\chead{\centering Anhang}\addcontentsline{toc}{1}{Anhang}}
+\newcommand\Anhang{\clearpage\appendix\chead{\centering Anhang}}
 
 %% Überschreiben von aufgabeLaden, um die Variante
 %% einzubeziehen. Statt <name>.afg.tex wird zuerst nach
