@@ -25,7 +25,9 @@
 %\ofoot*{\lizenzSymbol ~\qrcode{http://ddi.uni-wuppertal.de/material/materialsammlung/}}
 
 \ifoot*{\footnotesize\color{ngb.foot.version}\ngb@foot@version}
-\ofoot*{\footnotesize\color{ngb.foot.version}\lizenzSymbol}
+\ifthenelse{\isundefined{\lizenzSymbol}}{}{%
+	\ofoot*{\footnotesize\color{ngb.foot.version}\lizenzSymbol}
+}
 
 
 
