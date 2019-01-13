@@ -59,6 +59,9 @@
 
 \ProcessPgfPackageOptions{/ngb}
 
+%% laden der User-Config, wenn vorhanden
+\InputIfFileExists{.ngbconfig}{}{}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %         Zusatzpakete         %
