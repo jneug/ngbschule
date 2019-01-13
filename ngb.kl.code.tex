@@ -1,17 +1,16 @@
-\IfEqCase{\schule@klausurtyp}{
+\ifthenelse{\equal{\schule@klausurtyp}{klausur}}{%
 	% Klausuren
-	{klausur}{%
-		% https://tex.stackexchange.com/questions/223694/how-to-draw-a-text-box-with-shadow-borders-i-have-tried-the-following-but-it-gi#223738
-		\newcommand{\KlausurTitel}{%
-			\begin{tcolorbox}[enhanced,center upper,%
-				fontupper=\rmfamily\bfseries,colback=white,%
-				drop shadow southeast,sharp corners]
-				\Large\Nummer. \TypBezeichnung (\Dauer\,Minuten)\\
-				\large\Fach\ \Lerngruppe\ (\Kuerzel)
-			\end{tcolorbox}}
-		\chead{} % Keine Titel in der Kopfzeile
-	}%
-}[%
+	% https://tex.stackexchange.com/questions/223694/how-to-draw-a-text-box-with-shadow-borders-i-have-tried-the-following-but-it-gi#223738
+	\newcommand{\KlausurTitel}[1][none]{%
+		\begin{tcolorbox}[enhanced,center upper,%
+			fontupper=\rmfamily\bfseries,colback=white,%
+			drop shadow southeast,sharp corners]
+			\Large\Nummer. \TypBezeichnung (\Dauer\,Minuten)\\
+			\large\Fach\ \Lerngruppe\ (\Kuerzel)\ifthenelse{\equal{#1}{none}}{}{\\
+				\textcolor{gray!50!black}{- #1 -}}
+	\end{tcolorbox}}
+	\chead{} % Keine Titel in der Kopfzeile
+}{
 	% Klassen- und Kursarbeiten
 	\newcommand{\KlausurTitel}{\begin{center}\LARGE\rmfamily\Titel\end{center}}
 	\def\ArbeitTitel{\KlausurTitel}
@@ -22,7 +21,7 @@
 	\ohead{\small\Namensfeld}
 	
 	\KOMAoptions{headsepline=off}
-]
+}
 
 \newcommand{\Dauer}{\makeatletter\ngb@dauer\makeatother\xspace}
 \newcommand{\Variante}{\makeatletter\ngb@variante\makeatother\xspace}

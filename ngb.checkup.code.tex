@@ -4,10 +4,10 @@
 \RequirePackage{multirow}
 
 % \schule@dokumentTypBezeichnung
-\newcommand{\CheckupTitel}{{\rmfamily\Large Checkup \Titel: \textcolor{ReiheVg}{\Reihe}}} %\Linie
+\newcommand{\CheckupTitel}{{\usekomafont{title}Checkup \Titel: \usekomafont{reihe}\Reihe}} %\Linie
 \newcommand{\CheckupBild}{%
 	\begin{wrapfigure}{R}{2cm}
-	\includegraphics[width=2cm]{ngb/checkup.png}
+	\includegraphics[width=2cm]{checkup.png}
 	\end{wrapfigure}%
 }
 
