@@ -43,6 +43,10 @@
 
 \setzeAufgabentemplate{ngbunterstrichen}
 
+
+%% "Normal"
+%%% Aufgabe 1: Subtitle (X Punkte)
+%%%
 \DeclareExerciseEnvironmentTemplate{ngbnormal} {%
 	\addpenalty{-3000}\smallskip\noindent\textbf{\rmfamily%
 		% Falls Zusatzaufgabe:
@@ -78,3 +82,8 @@
 	%
 }
 {\IfInsideSolutionT{\par}}%
+
+
+%% Ohne Titel, Ohne Punkte
+%%%
+\DeclareExerciseEnvironmentTemplate{ngbohne}{}{}
