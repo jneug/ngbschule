@@ -1,6 +1,0 @@
-	\begin{tinwindow}{Wurzeln eines Polynoms}
-		\TINwfield{$a_2$=}
-		\TINwfield{$a_1$=}
-		\TINwfield{$a_0$=}
-		\TINwbtns{OK}{Abbruch}
-	\end{tinwindow}
