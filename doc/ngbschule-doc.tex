@@ -74,6 +74,15 @@
 \part{Dokumenttypen und Subtypen}
 \section{Arbeitsblätter}
 \subsection{Allgemeine Arbeitsblätter}
+\begin{commands}
+	\command{qrhinweis}[\oarg{qrtext}\marg{text}]
+	Erstellt einen Bearbeitungshinweis in Form eines QR-Codes. Das Paket \pkg{qrcode} muss separat im Dokument nachgeladen werden.
+	
+	Wird die schule-Option \option*{loesungen} auf etwas anderes als \texttt{keine} gesetzt, dann wird statt einem QR-Code der Hinweis im Klartext angezeigt.
+	
+	Da die Codes keine mit \TeX gesetzten Formatierungen darstellen können, kann durch den optionalen Parameter \oarg*{qrtext} ein alternativer Text für den QR-Code angegeben werden. Dadurch können für die Lösungen die Hinweise schön formatiert und dennoch im QR-Code gesetzt werden.
+\end{commands}
+
 \subsection{Checkup und Selbstlernbögen}
 \subsection{Diagnosebögen}
 

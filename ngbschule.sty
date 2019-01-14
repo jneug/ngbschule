@@ -195,6 +195,17 @@
 	\rule[-.5\ngb@rowheigh+.5em]{0pt}{\ngb@rowheigh}%
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%      Hinweise als QR-Code    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TODO: Koppeln mit Bearbeitungshinweisen von Aufgaben?
+% TODO: Kopplung mit option loesung lösen und hiwneise o.Ä. als Option einführen?
+\ifthenelse{\equal{\schule@loesungen}{keine}}{%
+	\newcommand{\qrhinweis}[2][]{\ifthenelse{\equal{#1}{}}{\qrcode{#2}}{\qrcode{#1}}}%
+}{%
+	\newcommand{\qrhinweis}[2][]{#2}%
+}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % xsim Aufgaben Stil anpassen  %
