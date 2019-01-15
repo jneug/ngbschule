@@ -34,6 +34,10 @@
 \newcommand{\ngb@baseurl}{}
 \newcommand{\ngb@version}{\today}
 
+\newcommand{\ngb@hinweise}{keine}
+\ifthenelse{\isnamedefined{schule@loesungen}}{%
+	\renewcommand{\ngb@hinweise}{\schule@loesungen}}{}
+
 \newboolean{ngb@ohneLochung}
 
 \pgfkeys{
@@ -47,6 +51,8 @@
 % Weitere Dokumentinfos
 	kuerzel/.store in=\ngb@kuerzel, 
 	reihe/.store in=\ngb@reihe,
+% Hinweise zeigen?
+	hinweise/.store in=\ngb@hinweise,
 % Generelle Papier-Optionen
 	ohneLochung/.value forbidden,
 	ohneLochung/.code=\setboolean{ngb@ohneLochung}{true},
@@ -200,7 +206,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % TODO: Koppeln mit Bearbeitungshinweisen von Aufgaben?
 % TODO: Kopplung mit option loesung lösen und hiwneise o.Ä. als Option einführen?
-\ifthenelse{\equal{\schule@loesungen}{keine}}{%
+\ifthenelse{\equal{\ngb@hinweise}{keine}}{%
 	\newcommand{\qrhinweis}[2][]{\ifthenelse{\equal{#1}{}}{\qrcode{#2}}{\qrcode{#1}}}%
 }{%
 	\newcommand{\qrhinweis}[2][]{#2}%
