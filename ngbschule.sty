@@ -39,6 +39,10 @@
 	\renewcommand{\ngb@hinweise}{\schule@loesungen}}{}
 
 \newboolean{ngb@ohneLochung}
+\newboolean{ngb@keineMetadaten}
+\ifthenelse{\equal{ngb@typ}{ohne}}{%
+	\setboolean{ngb@keineMetadaten}{true}}{%
+	\setboolean{ngb@keineMetadaten}{false}}
 
 \pgfkeys{
 	/ngb/.cd,
@@ -48,6 +52,8 @@
 	url/.store in=\ngb@baseurl,
 	aufgaben/.store in=\ngb@afgPool,
 	theme/.store in=\ngb@theme,
+	keineMetadaten/.value forbidden,
+	keineMetadaten/.code=\setboolean{ngb@keineMetadaten}{true},
 % Weitere Dokumentinfos
 	kuerzel/.store in=\ngb@kuerzel, 
 	reihe/.store in=\ngb@reihe,
@@ -118,6 +124,8 @@
 
 
 %% Add Metadata to PDF
+% TODO: verberssen
+\ifthenelse{\boolean{ngb@keineMetadaten}}{}{%
 \AtEndDocument{%
 	\makeatletter
 	\hypersetup{
@@ -128,6 +136,7 @@
 		baseurl=\ngb@baseurl
 	}
 	\makeatother
+}%
 }
 
 
