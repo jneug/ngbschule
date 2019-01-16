@@ -4,6 +4,14 @@
 \usepackage[utf8]{inputenc}
 \usepackage[ngerman]{babel}
 
+\usepackage{tcolorbox}
+
+\usepackage{booktabs}
+\usepackage{blindtext}
+\usepackage{weva}
+\usepackage{todonotes}
+\usepackage{pdfpages}
+
 \usepackage[
 	typ=ohne,
 	fach=ohne,
@@ -16,21 +24,12 @@
 ]{schule}
 
 \usepackage[
-	reihe={Beispiel einer Reihe}
+	kuerzel={Ngb},
+	reihe={Beispiel einer Reihe},
+	keineMetadaten,
 ]{ngbschule}
-%\input{ngb/Informatik.tex}
 
 \title{Dokumentation des Pakets ngbschule}
-
-\usepackage{tcolorbox}
-
-\usepackage{hyperref}
-\usepackage{booktabs}
-\usepackage{blindtext}
-\usepackage{weva}
-\usepackage{todonotes}
-\usepackage{pdfpages}
-\usepackage{prettyref}
 
 \setcnltx{
 	name     = ngbschule ,
@@ -78,9 +77,11 @@
 	\command{qrhinweis}[\oarg{qrtext}\marg{text}]
 	Erstellt einen Bearbeitungshinweis in Form eines QR-Codes. Das Paket \pkg{qrcode} muss separat im Dokument nachgeladen werden.
 	
-	Wird die schule-Option \option*{loesungen} auf etwas anderes als \texttt{keine} gesetzt, dann wird statt einem QR-Code der Hinweis im Klartext angezeigt.
+	Wird die Option \option{hinweise} angegeben, dann werden statt QR-Codes die Hinweise im Klartext angezeigt.
 	
-	Da die Codes keine mit \TeX gesetzten Formatierungen darstellen können, kann durch den optionalen Parameter \oarg*{qrtext} ein alternativer Text für den QR-Code angegeben werden. Dadurch können für die Lösungen die Hinweise schön formatiert und dennoch im QR-Code gesetzt werden.
+	Wird die \pkg*{schule}-Option \option*{loesungen} auf etwas anderes als \texttt{keine} gesetzt wird automatisch auch \option*{hinweise} gesetzt!
+	
+	Da die Codes keine mit \TeX\ gesetzten Formatierungen darstellen können, kann durch den optionalen Parameter \meta{qrtext} ein alternativer Text für den QR-Code angegeben werden. Dadurch können für die Lösungen die Hinweise schön formatiert und dennoch als QR-Code gesetzt werden.
 \end{commands}
 
 \subsection{Checkup und Selbstlernbögen}
