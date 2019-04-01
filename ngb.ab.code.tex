@@ -26,9 +26,10 @@
 
 \ifoot*{\footnotesize\color{ngb.foot.version}\ngb@foot@version}
 \ifthenelse{\isundefined{\lizenzSymbol}}{}{%
-	\ofoot*{\footnotesize\color{ngb.foot.version}\lizenzSymbol}
+	\cfoot*{\footnotesize\color{ngb.foot.version}\lizenzSymbol}
 }
-
-
+%\ifthenelse{\isundefined{\schule@nummer}}{}{%
+%	\ofoot*{\footnotesize\color{ngb.foot.version}\Reihe \#\Nummer}
+%}
 
 \KOMAoptions{headsepline=off}

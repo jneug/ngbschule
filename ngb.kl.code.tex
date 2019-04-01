@@ -26,6 +26,10 @@
 \newcommand{\Dauer}{\makeatletter\ngb@dauer\makeatother\xspace}
 \newcommand{\Variante}{\makeatletter\ngb@variante\makeatother\xspace}
 
+\graphicspath{{inc/animal-icons/}}
+\newcommand{\tier}{\raisebox{-.3\height}{\pgfmathrandom{1,46}\includegraphics[height=1.5cm]{\pgfmathresult.png}}}
+\newcommand{\vielErfolg}{\begin{flushright}\bfseries Viel Erfolg \; \tier\end{flushright}}
+
 %% Anhang in Klausuren/Arbeiten
 \RequirePackage{prettyref}
 \newrefformat{anhang}{Anhang\,\ref{#1}}
@@ -50,7 +54,7 @@
 }[]
 
 \newcommand{\Bewertungsschema}[1][tendenzen]{
-	% Wenn die xsim Umgebung nicht genutzt wurd werden die gesetzten
+	% Wenn die xsim Umgebung nicht genutzt wurde, werden die gesetzten
 	% Punkte jetzt übertragen
 	\IfExerciseGoalsSumTF{points}{=0}
 	{\AddtoExerciseTypeGoal{aufgabe}{ngbpoints}{24}}
@@ -121,4 +125,3 @@
 		}
 	}
 }
-

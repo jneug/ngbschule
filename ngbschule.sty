@@ -26,6 +26,7 @@
 % TODO: Einige der Optionen sollten erst von den Zusatzpaketen geladen werden, die sie auch verwenden (dauer -> kl.tex).
 \newcommand{\ngb@typ}{\schule@typ}
 \newcommand{\ngb@afgPool}{afg}
+\newcommand{\ngb@ersteAfg}{1}
 \newcommand{\ngb@theme}{theme}
 
 \newcommand{\ngb@kuerzel}{}
@@ -51,6 +52,7 @@
 	version/.store in=\ngb@version,
 	url/.store in=\ngb@baseurl,
 	aufgaben/.store in=\ngb@afgPool,
+	%ersteAufgabe/.store in=\ngb@ersteAfg,
 	theme/.store in=\ngb@theme,
 	keineMetadaten/.value forbidden,
 	keineMetadaten/.code=\setboolean{ngb@keineMetadaten}{true},
@@ -74,16 +76,17 @@
 %% laden der User-Config, wenn vorhanden
 \InputIfFileExists{.ngbconfig}{}{}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %         Zusatzpakete         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Seitenabmessungen
 % Todo: Per Option Papiergröße beachten (a4paper)
+\ifthenelse{\equal{\schule@typ}{folie}}{}{ % Folien bekommen vom schulepaket besondere Abmessungen
 \ifthenelse{\boolean{ngb@ohneLochung}}{
 	\RequirePackage[top=3cm,left=2cm,bottom=2cm,right=2cm]{geometry}
 }{
 	\RequirePackage[top=3cm,left=2.5cm,bottom=2cm,right=2cm]{geometry}
+}
 }
 %% Abstand zur Kopfzeile verringern
 %% https://texwelt.de/wissen/fragen/15050/abstand-zwischen-kopfzeile-und-textkorper
@@ -105,12 +108,19 @@
 % TODO: Variante (A/B) berücksichtigen ...
 \newcommand{\aufgabeLaden}[1]{\InputIfFileExists{\ngb@afgPool/#1.afg.tex}{}{}}
 
+% Erste Aufgabennummer setzen
+%\setcounter{aufgabe}{\ngb@ersteAfg}\stepcounter{aufgabe}{-1}
+%\setcounter{loesung}{\ngb@ersteAfg}\stepcounter{loesung}{-1}
+
 %% Paket schule anpassen
 %\loadxsimstyle{ngb-default,ngb-ruled}
 %\setzeAufgabentemplate{ngb-ruled}
 
 % See: https://www.overleaf.com/learn/latex/Wrapping_text_around_figures
 \RequirePackage{wrapfig}
+
+% Horizontale listen z.B. für Unteraufgaben
+\RequirePackage{tasks}
 
 
 % Includes basierend auf Typ und Fach werden (fast) zuletzt geladen
@@ -169,6 +179,7 @@
 %      Allgemeine Makros       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\linie}[1][6cm]{\underline{\hspace{#1}}}
+\def\linievoll{\leaders\hbox{\rule[-1ex]{1pt}{.5pt}}\hfill\;}
 %\newcommand{\tab}{\hspace{1cm}}
 \newcommand{\titlerule}{\noindent\\[-2ex]\rule{\textwidth}{1pt}\vspace{-2ex}}
 \newcommand{\Namensfeld}[1][5cm]{Name: \linie[#1]}
@@ -190,6 +201,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %         Aufzählungen         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newlist{enumeratea}{enumerate}{1}
+\setlist[enumeratea,1]{label=\alph*)}
+\newlist{enumeraten}{enumerate}{1}
+\setlist[enumeraten,1]{label=\arabic*)}
+%\newenvironment{enumeratea}[1][]{\begin{enumerate}[label=\alph*),#1]}{\end{enumerate}}
+%\newenvironment{enumeraten}[1][]{\begin{enumerate}[label=\arabic*),#1]}{\end{enumerate}}
 \renewenvironment{smallenumerate}[1][label=\alph*)]{\begin{enumerate}[#1]\itemsep -2ex
 	}{\end{enumerate}}
 

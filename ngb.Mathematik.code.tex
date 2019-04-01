@@ -4,39 +4,31 @@
 \RequirePackage{exscale}
 \RequirePackage{tikz}
 
-\RequirePackage{tkz-euclide,tkz-fct}
-%\usetkzobj{all}
+% Kartesische Koordinatengeometrie und Funktionen
+\RequirePackage{tkz-base,tkz-euclide,tkz-fct} % requires gnuplot
+\usetkzobj{all}
 %\usetikzlibrary{shapes}
 %\usetikzlibrary{calc}
 %\RequirePackage{xstring}
 
-\RequirePackage{units,skmath}
+\RequirePackage[commonsets,notation=german]{skmath}
+\RequirePackage{units}
 \RequirePackage{gauss}
 
 
 % Schnell-Kommandos für Mengenzeichen und andere Symbole
-\newcommand{\A}{\mathbb{A}}
-\newcommand{\B}{\mathbb{B}}
-\newcommand{\C}{\mathbb{C}}
-\newcommand{\D}{\mathbb{D}}
-\newcommand{\E}{\mathbb{E}}
-\newcommand{\F}{\mathbb{F}}
-\newcommand{\G}{\mathbb{G}}
-\newcommand{\K}{\mathbb{K}}
-\newcommand{\N}{\mathbb{N}}
-\renewcommand{\P}{\mathbb{P}}
-\newcommand{\Q}{\mathbb{Q}}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\cA}{\mathcal{A}}
-\newcommand{\cB}{\mathcal{B}}
-\newcommand{\cG}{\mathcal{G}}
-\newcommand{\cL}{\mathcal{L}}
-\newcommand{\cX}{\mathcal{X}}
-\newcommand{\cY}{\mathcal{Y}}
-\newcommand{\cZ}{\mathcal{Z}}
 \newcommand{\bs}{\,\backslash\,}
 \newcommand{\qed}{\ensuremath{\Box}}
+
+\newenvironment{sachaufgabe}{\begin{description}}{\end{description}}
+\newcommand{\frage}{\item[Frage:]}
+\newcommand{\rechnung}{\item[Rechnung:]}
+\newcommand{\antwort}{\item[Antwort:]}
+
+\newcommand{\grad}[1]{\ensuremath{\unit[#1]{^\circ}}}
+
+% https://tex.stackexchange.com/questions/249688/how-do-i-draw-a-circle-around-a-term-in-an-align-equation
+
 
 \def\geogrid{5mm}
 \def\geogridcolor{gray!50}
@@ -112,6 +104,10 @@
 \def\Spiegelpunkt{\@ifstar\@@Spiegelpunkt\@Spiegelpunkt}
 \newcommand{\@Spiegelpunkt}[4][]{\tkzDefPointBy[symmetry=center #3](#2)\tkzGetPoint{#4}\tkzDrawPoint[size=10,#1](#4)}
 \newcommand{\@@Spiegelpunkt}[4][]{\tkzDefPointBy[reflection=over #3](#2)\tkzGetPoint{#4}\tkzDrawPoint[size=10,#1](#4)}
+
+\def\Drehpunkt{\@ifstar\@@Drehpunkt\@Drehpunkt}
+\newcommand{\@Drehpunkt}[5][]{\tkzDefPointBy[rotation=center #3 angle #4](#2)\tkzGetPoint{#5}\tkzDrawPoint[size=10,#1](#5)}
+\newcommand{\@@Drehpunkt}[4][]{}
 
 % Linien und Vektoren %
 
