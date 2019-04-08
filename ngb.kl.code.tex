@@ -42,14 +42,19 @@
 	\InputIfFileExists{\ngb@afgPool/#2-#1.afg.tex}{}{%
 		\InputIfFileExists{\ngb@afgPool/#2.afg.tex}{}{}%
 }}
-%\newcommand{\variante}[2]{\if\ngb@variante#1\then#2\fi}
-%\def\variA#1{}
-%\def\variB#1{}
-%\def\variC#1{}
-%\ifthenelse{\equal{\ngb@variante}{}}{\def\variA#1{#1}}{}
-%\ifthenelse{\equal{\ngb@variante}{A}}{\def\variA#1{#1}}{}
-%\ifthenelse{\equal{\ngb@variante}{B}}{\def\variB#1{#1}}{}
-%\ifthenelse{\equal{\ngb@variante}{C}}{\def\variC#1{#1}}{}
+\ifthenelse{\equal{\ngb@variante}{B}}{%
+\def\A#1{}
+\def\B#1{#1}
+\def\AB#1#2{#2}
+\NewEnviron{varianteA}{}
+\NewEnviron{varianteB}{\BODY}
+}{%
+\def\A#1{#1}
+\def\B#1{}
+\def\AB#1#2{#1}
+\NewEnviron{varianteA}{\BODY}
+\NewEnviron{varianteB}{}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Eigene Variante der Notenverteilung %
