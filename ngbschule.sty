@@ -30,6 +30,7 @@
 \newcommand{\ngb@theme}{theme}
 
 \newcommand{\ngb@kuerzel}{}
+\newcommand{\ngb@schule}{}
 \newcommand{\ngb@reihe}{}
 
 \newcommand{\ngb@baseurl}{}
@@ -52,12 +53,13 @@
 	version/.store in=\ngb@version,
 	url/.store in=\ngb@baseurl,
 	aufgaben/.store in=\ngb@afgPool,
-	%ersteAufgabe/.store in=\ngb@ersteAfg,
+	ersteAufgabe/.store in=\ngb@ersteAfg,
 	theme/.store in=\ngb@theme,
 	keineMetadaten/.value forbidden,
 	keineMetadaten/.code=\setboolean{ngb@keineMetadaten}{true},
 % Weitere Dokumentinfos
 	kuerzel/.store in=\ngb@kuerzel, 
+	schule/.store in=\ngb@schule, 
 	reihe/.store in=\ngb@reihe,
 % Hinweise zeigen?
 	hinweise/.store in=\ngb@hinweise,
@@ -71,10 +73,10 @@
 \ngb@modulDateiLaden[optionen]{\schule@fach}
 \ngb@modulDateiLaden[optionen]{\ngb@theme}
 
-\ProcessPgfPackageOptions{/ngb}
-
 %% laden der User-Config, wenn vorhanden
 \InputIfFileExists{.ngbconfig}{}{}
+
+\ProcessPgfPackageOptions{/ngb}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %         Zusatzpakete         %
@@ -155,6 +157,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Weitere Dokumentinfos
 \newcommand{\Kuerzel}{\makeatletter\ngb@kuerzel\makeatother\xspace}
+\newcommand{\Schule}{\makeatletter\ngb@schule\makeatother\xspace}
 \newcommand{\Reihe}{\makeatletter\ngb@reihe\makeatother\xspace}
 % TODO: Version irgendwo einbauen (im PDF einbeten und klein auf AB drucken?)
 % TODO: Außerdem Möglichkeit für Changelogs einplanen? (ALs Kommentare)
