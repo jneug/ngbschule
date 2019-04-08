@@ -1,3 +1,4 @@
+% !TeX root = ngbschule-doc
 \part{Fächer}\label{part:faecher}
 
 \section{Fach Informatik}\label{sec:fachinfo}
@@ -93,5 +94,47 @@ Struktogramme liegen in Dateien mit der Endung \texttt{.nss} im Materialordner. 
 
 \section{Fach Mathematik}\label{sec:fachmathe}
 
-\subsection{Materialien Informatik}\label{sec:materialmathe}
+Für Dokumente mit dem Typ \enquote{ab} (\keyis*-{typ}{ab}) werden weitere Pakete nachgeladen:
+\begin{multicols}{2}
+	\begin{smallitemize}
+		\item \pkg{amsmath}
+		\item \pkg{amssymb}
+		\item \pkg{amstext}
+		\item \pkg{amscd}
+		\item \pkg{exscale}
+		\item \pkg{tkz-base}
+		\item \pkg{tkz-euclide} und \cs*{usetkzobj}\Marg{all} wird ausgeführt.
+		\item \pkg{tkz-fct} benötigt eine Installation von \texttt{gnuplot} und \texttt{pdflatex} muss mit dem Schalter \texttt{--shell-escape} gestartet werden (\zB\  \texttt{pdflatex --shell-escape "ab-mit-tkz.tex"}).
+		\item \pkg{skmath} mit den Optionen \option*{commonsets} und \keyis*-{notation}{german}.
+		\item \pkg{units}
+		\item \pkg{gauss}
+	\end{smallitemize}
+\end{multicols}
+
+Die Dokumentation der Pakete hilft bei der Verwendung, aber gerade für die Geometrie-Pakete (\pkg*{tkz}) werden viele hilfreiche Kommandos ergänzt (siehe dazu \ref{sec:geometrie}).
+
+\subsection{Mathematische Erweiterungen}\label{sec:allgemeinmathe}
+\begin{environments}
+	\environment{sachaufgabe}
+	Setzt die Lösung einer Sach-/Textaufgabe mit \cs{frage}, \cs{rechnung} und \cs{antwort}. Die Umgebung hat nur semantische Bedeutung, da sie einfach eine \env*{description} Umgebung darstellt.
+	
+	\begin{example}
+		\begin{sachaufgabe}
+			\frage Wieviele Enten schwimmen auf dem See?
+			\rechnung $\text{Alle Meine Entchen} - \text{Meine Entchen} = \text{Alle}$
+			\antwort \emph{Alle} Entchen schwimmen auf dem See.
+		\end{sachaufgabe}
+	\end{example}
+\end{environments}
+\begin{commands}
+	\command{grad}[\marg{gradzahl}] Formatiert \meta{gradzahl} mit dem Grad-Symbol ($^\circ$).
+	
+	\command{bs} Erzeugt einen backslash: $\bs$
+	
+	\command{qed} Erzeugt eine Box als Abschluss von Beweisen: \qed
+\end{commands}
+
+\subsection{Geometrische Konstruktionen}\label{sec:geometrie}
+
+\subsection{Materialien Mathematik}\label{sec:materialmathe}
 Für Mathematik sind vor allem geometrische Konstruktionen und Merksätze / Definitionen angedacht. 

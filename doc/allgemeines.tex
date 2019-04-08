@@ -1,5 +1,9 @@
 \part{Allgemeine Erweiterungen}\label{part:allgemeines}
 
+\begin{options}
+	\opt{ersteAufgabe}\Default{1} Setzt die Nummer der ersten Aufgabe im Dokument.
+\end{options}
+
 \begin{commands}
 	\command{linie}[\oarg{breite}]\Default{6cm}
 	Zeichnet eine Linie der angegebenen Breite.
@@ -52,6 +56,61 @@
 	\end{rahmen}
 	\end{example}
 \end{environments}
+
+
+\section{Aufzählungen}\label{sec:aufzaehlungen}
+Für Aufzählungen werden die Pakete \pkg{enumitem} (von \pkg*{schule}) und \pkg{tasks} eingebunden
+
+Das Paket ändert die von \pkg*{schule} ergänzte Aufzählung \env{smallenumerate} so um, dass als Aufzählungszeichen \code{a)}, \code{b)}, \code{c)}, ... benutzt werden. Dadurch wird sie für Listen Unteraufgaben leichter nutzbar.
+
+Durch Kombination mit der Umgebung \env{multicols} können die normalen Listen auch mehrspaltig gesetzt werden.
+
+\begin{example}
+	\begin{multicols}{3}
+		\begin{smallenumerate}
+			\item Item 1
+			\item Item 2
+			\item Item 3
+			\item Item 4
+			\item Item 5
+		\end{smallenumerate}
+	\end{multicols}
+\end{example}
+
+Neben \env*{smallenumerate} gibt es die beiden Umgebungen \env{enumeratea} und \env{enumeraten}, die jeweils alphabetische und numerische Listen erzeugen,
+
+\begin{example}
+	\begin{multicols}{3}
+		\begin{enumeratea}
+			\item Item 1
+			\item Item 2
+			\item Item 3
+		\end{enumeratea}
+	\end{multicols}
+\end{example}
+
+
+\begin{example}
+	\begin{multicols}{4}
+		\begin{enumeraten}
+			\item Item 1
+			\item Item 2
+			\item Item 3
+		\end{enumeraten}
+	\end{multicols}
+\end{example}
+
+Die Umgebung \env*{multicols} setzt den Inhalt in mehreren Spalten. Soll eine \enquote{echte} horizontale Liste erzeugt werden, dann sollte die Umgebung \env{tasks}\Darg{cols} benutzt werden. Statt mit \cs*{item} werden in dieser die einzelnen Elemente mit \cs{task} gesetzt. Die Anzahl der Spalten wird in \emph{runden} Klammern angegeben. 
+
+\begin{example}
+	\begin{tasks}(4)
+		\task Item 1
+		\task Item 2
+		\task Item 3
+		\task Item 4
+		\task Item 5
+	\end{tasks}
+\end{example}
 
 \section{Aufgabensammlung}\label{sec:aufgabensammlung}
 Um das Aufbauen einer Aufgabensammlung zu vereinfachen steht allen Dokumenttypen das Makro \cs*{aufgabeLaden}\marg{name} zur Verfügung. Mit diesem können Aufgabendateien (mit der Endung \texttt{.afg.tex}) aus einem Ordner in das aktuelle Dokument eingefügt werden. Der Pfad, in dem nach den Aufgabendateien gesucht wird kann durch die Option \option*{aufgaben} für jedes Dokument angepasst werden.
