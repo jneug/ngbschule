@@ -42,13 +42,20 @@
 	\InputIfFileExists{\ngb@afgPool/#2-#1.afg.tex}{}{%
 		\InputIfFileExists{\ngb@afgPool/#2.afg.tex}{}{}%
 }}
-
+%\newcommand{\variante}[2]{\if\ngb@variante#1\then#2\fi}
+%\def\variA#1{}
+%\def\variB#1{}
+%\def\variC#1{}
+%\ifthenelse{\equal{\ngb@variante}{}}{\def\variA#1{#1}}{}
+%\ifthenelse{\equal{\ngb@variante}{A}}{\def\variA#1{#1}}{}
+%\ifthenelse{\equal{\ngb@variante}{B}}{\def\variB#1{#1}}{}
+%\ifthenelse{\equal{\ngb@variante}{C}}{\def\variC#1{#1}}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Eigene Variante der Notenverteilung %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \IfEqCase{\ngb@notenStil}{
-	{kompakt}{\renewcommand{\notenverteilung}{\Bewertungsschema[]}}
+	{kompakt}{\renewcommand{\notenverteilung}{\Bewertungsschema[]}}%
 	{ngbschule}{\renewcommand{\notenverteilung}{\Bewertungsschema}}%
 	{schule}{}%
 }[]
@@ -111,10 +118,10 @@
 		}{
 			\begin{center}\renewcommand{\arraystretch}{1.1}\small\begin{tabular}{|l||c|c|c|c|c|c|} \hline
 					\rowcolor{black!20}
-					\textbf{Note} & 1 & 2 & 3 & 4 & 5 & 6 \\ \hline
-					\textbf{Schwelle} & 85\% & 70\% & 55\% & 39\% & 20\% & 0\% \\ \hline
+					\textbf{Notenbereich} & 1 & 2 & 3 & 4 & 5 & 6 \\ \hline
+					\textbf{ab Schwelle} & 85\% & 70\% & 55\% & 39\% & 20\% & 0\% \\ \hline
 					\rowcolor{black!10}
-					\textbf{Punkte}
+					\textbf{ab Punkte}
 					& \schule@punkteZuNote{13}
 					& \schule@punkteZuNote{10}
 					& \schule@punkteZuNote{7}
@@ -125,3 +132,144 @@
 		}
 	}
 }
+
+
+% Angepasster Bewertungsbogen
+\ExplSyntaxOn
+
+\str_new:N \ngb_kompetenzen_str
+\bool_new:N \ngb_erwartungen_erste_bool
+
+\RenewDocumentCommand{\erwartung}{m m O{}}{%
+	\bool_if:NTF \ngb_erwartungen_erste_bool {
+		\bool_gset_false:N \ngb_erwartungen_erste_bool
+	}{
+		\tl_gput_right:Nn \schule_zeilen_erwartungen_str {\detokenize{\newline}}
+	}
+
+	\int_gadd:Nn \schule_aufgaben_punkte_int {\_str_to_int_with_zero:n{#2}} %Punkte
+	\int_gadd:Nn \schule_aufgaben_zusatzpunkte_int {\_str_to_int_with_zero:n{#3}} %Zusatzpunkte
+%	\tl_gput_right:Nn \schule_zeilen_erwartungen_str {\detokenize{\newline}}
+	\tl_gput_right:Nn \schule_zeilen_erwartungen_str {\detokenize{\dots\; #1}}
+}
+
+\cs_new:Npn \_ngb_punkte_anzeige:nn #1 #2 {
+	\int_compare:nT {#1 > 0}{#1}
+	\int_compare:nT {#2 > 0}{\space (#2)}
+}
+
+% Zeile für die Aufgabe in der Tabelle setzen (Standard).
+\cs_new:Npn \_ngb_aufgaben_erwartungen_zeile {
+	\detokenize{\bfseries}
+	\GetExerciseProperty{counter}
+	\detokenize{& }%
+	\schule_zeilen_erwartungen_str%
+	\detokenize{& \bfseries}%
+	\_ngb_punkte_anzeige:nn {\int_use:N \schule_aufgaben_punkte_int}{\int_use:N \schule_aufgaben_zusatzpunkte_int}
+	\detokenize{& \\}%
+	\detokenize{\hline}
+}
+
+\NewEnviron{kompetenzen}{
+%	\str_gclear:N \ngb_kompetenzen_str
+	\exp_args:Nno\relax{}{\BODY}
+}
+
+% Kompetenzen in Form bringen
+\NewDocumentCommand{\kompetenz}{m}{%
+	\tl_gput_right:Nn \ngb_kompetenzen_str {\detokenize{#1 & }}
+	\tl_gput_right:Nn \ngb_kompetenzen_str {\detokenize{ & \\ \hline}}
+}
+
+% Erwartungshorizont (Eine Tabelle für alles)
+% --------------------------------------------------------------------
+\def\tabularxcolumn#1{m{#1}}
+\newcolumntype{M}[1]{>{\large\centering\arraybackslash}m{#1}}
+%\newwrite\ehfile
+
+\newcommand{\ngb@erwartungshorizont}{
+	%Aufgabenausgabe leeren
+	\str_gclear:N \schule_aufgaben_erwartungen_str
+	\int_gzero:N \schule_aufgaben_punkte_ges_int
+	\int_gzero:N \schule_aufgaben_zusatzpunkte_ges_int
+	
+	\ForEachUsedExerciseByID{%
+		%Variablen für neue Aufgabe neu initialisieren
+		\str_gclear:N \schule_zeilen_erwartungen_str
+		\int_gzero:N \schule_aufgaben_punkte_int
+		\int_gzero:N \schule_aufgaben_zusatzpunkte_int
+		\bool_gset_false:N \schule_erwartungen_zeile_gerade_bool
+		\bool_gset_true:N \ngb_erwartungen_erste_bool
+		
+		%Definition der Aufgabe in entsprechende Befehle laden
+		\def\ExerciseType{##1}%
+		\def\ExerciseID{##2}%
+		\GetExercisePropertyTF{erwartungen}{\PropertyValue}{}
+		
+		%Gesamtaufgabe
+		\tl_gput_right:Nx \schule_aufgaben_erwartungen_str \_ngb_aufgaben_erwartungen_zeile
+		
+		\int_gadd:Nn \schule_aufgaben_punkte_ges_int {\schule_aufgaben_punkte_int} %Punkte
+		\int_gadd:Nn \schule_aufgaben_zusatzpunkte_ges_int {\schule_aufgaben_zusatzpunkte_int} %Zusatzpunkte
+		
+		\_schule_erwartungen_punkte_speichern
+	}
+	
+	%Zusammengebautetes wieder serialisieren
+	\tokenize{%
+		\schule@aEHCode%
+	}{%
+		\schule_aufgaben_erwartungen_str
+	}
+	\tokenize{%
+		\ngb@aKECode%
+	}{%
+		\ngb_kompetenzen_str
+	}
+
+	% Aux-Datei öffnen
+%	\immediate\openout\ehfile=\jobname.eh.aux
+
+%	\immediate\write\ehfile{\unexpanded{Name: \underline{\Large\hspace{6cm}}}}
+	\underline{Name: \Large\hspace{6cm}}
+	
+	\begin{center}
+		\renewcommand{\arraystretch}{1.4}
+		\begin{tabularx}{\textwidth}{|M{1cm}|X|M{1.5cm}|M{1.5cm}|} \hline
+			% Kopfzeile
+			\rowcolor{black!20}
+			Afg & Die~Schülerin/der~Schüler\dots & mögl.\newline Punkte & \small erreicht \tabularnewline\hline\hline %
+			%Erwartungen
+			\schule@aEHCode%
+			
+			% Fusszeile
+			\multicolumn{2}{|r|}{Summe:} & 52 & \tabularnewline\hline
+			\multicolumn{2}{|r|}{Prozentual:} &  & \tabularnewline\hline
+			\multicolumn{2}{|r|}{Note:} & \multicolumn{2}{c|}{} \tabularnewline\hline
+		\end{tabularx}
+	\end{center}
+
+	\begin{flushright}
+		\underline{\today, \hspace{3cm}}
+	\end{flushright}
+	
+	\notenverteilung
+	
+	\begin{center}
+		\renewcommand{\arraystretch}{1.2}
+		\begin{tabularx}{\textwidth}{|p{9cm}|XX|} \hline
+			\rowcolor{black!20}
+			Kompetenz & \small Kannst~du\newline sehr~gut & \small Musst~du\newline intensiv~üben \\ \hline \hline
+			\ngb@aKECode
+		\end{tabularx}
+	\end{center}
+	
+	% Erwartungshorizont einfuegen
+%	\immediate\closeout\ehfile
+%	\input{\jobname.eh.aux}
+	\clearpage
+}
+
+\renewcommand{\erwartungshorizont}{\ngb@erwartungshorizont}
+
+\ExplSyntaxOff
