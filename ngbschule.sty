@@ -20,6 +20,8 @@
 	}
 }
 
+\RequirePackage{etoolbox}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %        Packetoptionen        %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -37,14 +39,16 @@
 \newcommand{\ngb@version}{\today}
 
 \newcommand{\ngb@hinweise}{keine}
-\ifthenelse{\isnamedefined{schule@loesungen}}{%
+\ifcsdef{schule@loesungen}{%
 	\renewcommand{\ngb@hinweise}{\schule@loesungen}}{}
+%\ifthenelse{\isnamedefined{schule@loesungen}}{%
+%	\renewcommand{\ngb@hinweise}{\schule@loesungen}}{}
 
-\newboolean{ngb@ohneLochung}
-\newboolean{ngb@keineMetadaten}
-\ifthenelse{\equal{ngb@typ}{ohne}}{%
-	\setboolean{ngb@keineMetadaten}{true}}{%
-	\setboolean{ngb@keineMetadaten}{false}}
+\newtoggle{ngb@ohneLochung}
+\newtoggle{ngb@keineMetadaten}
+\ifdefstring{\ngb@typ}{ohne}{%
+	\toggletrue{ngb@keineMetadaten}}{%
+	\togglefalse{ngb@keineMetadaten}}
 
 \pgfkeys{
 	/ngb/.cd,
@@ -56,16 +60,16 @@
 	ersteAufgabe/.store in=\ngb@ersteAfg,
 	theme/.store in=\ngb@theme,
 	keineMetadaten/.value forbidden,
-	keineMetadaten/.code=\setboolean{ngb@keineMetadaten}{true},
+	keineMetadaten/.code=\toggletrue{ngb@keineMetadaten},
 % Weitere Dokumentinfos
 	kuerzel/.store in=\ngb@kuerzel, 
-	schule/.store in=\ngb@schule, 
+	schule/.store in=\ngb@schule,
 	reihe/.store in=\ngb@reihe,
 % Hinweise zeigen?
 	hinweise/.store in=\ngb@hinweise,
 % Generelle Papier-Optionen
 	ohneLochung/.value forbidden,
-	ohneLochung/.code=\setboolean{ngb@ohneLochung}{true},
+	ohneLochung/.code=\toggletrue{ngb@ohneLochung},
 	.unknown/.code={}, % Unbekannte Optionen ignorieren.
 }
 
@@ -81,14 +85,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %         Zusatzpakete         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % Seitenabmessungen
 % Todo: Per Option Papiergröße beachten (a4paper)
-\ifthenelse{\equal{\schule@typ}{folie}}{}{ % Folien bekommen vom schulepaket besondere Abmessungen
-\ifthenelse{\boolean{ngb@ohneLochung}}{
-	\RequirePackage[top=3cm,left=2cm,bottom=2cm,right=2cm]{geometry}
-}{
-	\RequirePackage[top=3cm,left=2.5cm,bottom=2cm,right=2cm]{geometry}
-}
+\ifdefstring{\schule@typ}{folie}{ % Folien bekommen vom schulepaket besondere Abmessungen
+}{ 
+	\iftoggle{ngb@ohneLochung}{
+		\RequirePackage[top=3cm,left=2cm,bottom=2cm,right=2cm]{geometry}
+	}{
+		\RequirePackage[top=3cm,left=2.5cm,bottom=2cm,right=2cm]{geometry}
+	}
 }
 %% Abstand zur Kopfzeile verringern
 %% https://texwelt.de/wissen/fragen/15050/abstand-zwischen-kopfzeile-und-textkorper
@@ -112,7 +118,6 @@
 
 % Erste Aufgabennummer setzen
 \setcounter{aufgabe}{\ngb@ersteAfg-1}
-%\setcounter{loesung}{\ngb@ersteAfg}\stepcounter{loesung}{-1}
 
 %% Paket schule anpassen
 %\loadxsimstyle{ngb-default,ngb-ruled}
@@ -136,8 +141,8 @@
 
 
 %% Add Metadata to PDF
-% TODO: verberssen
-\ifthenelse{\boolean{ngb@keineMetadaten}}{}{%
+% TODO: verbessern  !!!
+\iftoggle{ngb@keineMetadaten}{}{%
 \AtEndDocument{%
 	\makeatletter
 	\hypersetup{
@@ -160,7 +165,7 @@
 \newcommand{\Schule}{\makeatletter\ngb@schule\makeatother\xspace}
 \newcommand{\Reihe}{\makeatletter\ngb@reihe\makeatother\xspace}
 % TODO: Version irgendwo einbauen (im PDF einbeten und klein auf AB drucken?)
-% TODO: Außerdem Möglichkeit für Changelogs einplanen? (ALs Kommentare)
+% TODO: Außerdem Möglichkeit für Changelogs einplanen? (Als Kommentare)
 \newcommand{\Version}{\makeatletter\ngb@version\makeatother\xspace}
 \newcommand{\DokumentTyp}{\makeatletter\schule@dokumentTypBezeichnung\makeatother\xspace}
 
@@ -187,10 +192,10 @@
 \newcommand{\titlerule}{\noindent\\[-2ex]\rule{\textwidth}{1pt}\vspace{-2ex}}
 \newcommand{\Namensfeld}[1][5cm]{Name: \linie[#1]}
 
-\ifcsname code\endcsname%
-\else%
-\newcommand{\code}[1]{\texttt{\small #1}}%
-\fi%
+% \code wird von anderen Paketen auch verwendet
+\ifdef{\code}{}{%
+	\newcommand{\code}[1]{\texttt{\small #1}}%
+}
 
 %% Auszeichnung für Operatoren des Kernlehrplans
 \newcommand{\operator}[1]{\textsc{#1}}
@@ -198,6 +203,7 @@
 %% Auszeichnungen für Funktionen von Apps
 \newcommand{\appfunktion}[1]{\enquote{\textsc{#1}}}
 
+% Rahmen um eine Box
 \newenvironment{rahmen}[1][black]{\begin{tcolorbox}[colframe=#1,colback=white,sharp corners]}{\end{tcolorbox}\vspace{-2ex}}
 
 
@@ -237,8 +243,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % TODO: Koppeln mit Bearbeitungshinweisen von Aufgaben?
 % TODO: Kopplung mit option loesung lösen und hiwneise o.Ä. als Option einführen?
-\ifthenelse{\equal{\ngb@hinweise}{keine}}{%
-	\newcommand{\qrhinweis}[2][]{\ifthenelse{\equal{#1}{}}{\qrcode{#2}}{\qrcode{#1}}}%
+\ifdefstring{\ngb@hinweise}{keine}{%
+	% Hinweise wereden als 
+	\newcommand{\qrhinweis}[2][]{\ifstrempty{#1}{\qrcode{#2}}{\qrcode{#1}}}%
 }{%
 	\newcommand{\qrhinweis}[2][]{#2}%
 }
@@ -247,6 +254,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % xsim Aufgaben Stil anpassen  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\ifthenelse{\isnamedefined{DeclareExerciseEnvironmentTemplate}}{%
+\ifdef{\DeclareExerciseEnvironmentTemplate}{%
 	\ngb@modulDateiLaden{xsim}
 }{}

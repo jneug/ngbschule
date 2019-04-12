@@ -4,8 +4,10 @@
 
 \newcommand{\ngb@variante}{}
 
-\ifthenelse{\equal{\schule@typ}{kl}}{%
-	\ifthenelse{\boolean{schule@kmkPunkte}}
+\providebool{schule@kmkPunkte}
+
+\ifdefstring{\schule@typ}{kl}{%
+	\ifbool{schule@kmkPunkte}
 		{\newcommand{\ngb@notenStil}{schule}}
 		{\newcommand{\ngb@notenStil}{ngbschule}}
 }{%

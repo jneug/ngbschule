@@ -1,5 +1,4 @@
-\ifthenelse{\equal{\schule@klausurtyp}{klausur}}{%
-	% Klausuren
+\ifdefstring{\schule@klausurtyp}{klausur}{% Klausuren
 	% https://tex.stackexchange.com/questions/223694/how-to-draw-a-text-box-with-shadow-borders-i-have-tried-the-following-but-it-gi#223738
 	\newcommand{\KlausurTitel}[1][none]{%
 		\begin{tcolorbox}[enhanced,center upper,%
@@ -10,8 +9,7 @@
 				\textcolor{gray!50!black}{- #1 -}}
 	\end{tcolorbox}}
 	\chead{} % Keine Titel in der Kopfzeile
-}{
-	% Klassen- und Kursarbeiten
+}{ % Klassen- und Kursarbeiten
 	\newcommand{\KlausurTitel}{\begin{center}\LARGE\rmfamily\Titel\end{center}}
 	\def\ArbeitTitel{\KlausurTitel}
 	
@@ -42,28 +40,40 @@
 	\InputIfFileExists{\ngb@afgPool/#2-#1.afg.tex}{}{%
 		\InputIfFileExists{\ngb@afgPool/#2.afg.tex}{}{}%
 }}
-\ifthenelse{\equal{\ngb@variante}{B}}{%
-\def\A#1{}
-\def\B#1{#1}
-\def\AB#1#2{#2}
-\NewEnviron{varianteA}{}
-\NewEnviron{varianteB}{\BODY}
+
+% Befehle für A/B-Varianten
+\ifdefstring{\ngb@variante}{B}{%
+	\def\A#1{}
+	\def\B#1{#1}
+	\def\AB#1#2{#2}
+	\NewEnviron{varianteA}{}
+	\NewEnviron{varianteB}{\BODY}
 }{%
-\def\A#1{#1}
-\def\B#1{}
-\def\AB#1#2{#1}
-\NewEnviron{varianteA}{\BODY}
-\NewEnviron{varianteB}{}
+	\def\A#1{#1}
+	\def\B#1{}
+	\def\AB#1#2{#1}
+	\NewEnviron{varianteA}{\BODY}
+	\NewEnviron{varianteB}{}
 }
+
+
+% Varianten dynamisch in einem Dokument laden
+% TODO: Reset der Aufgabennummern
+%\newcommand{\ngb@vari}[2]{\if\ngb@variante#1 #2\fi}
+%\def\A#1{\ngb@vari{A}{#1}}
+%\def\B#1{\ngb@vari{A}{#1}}
+%\def\AB#1#2{\ngb@vari{A}{#1}\ngb@vari{B}{#2}}
+%\NewEnviron{varianteA}{\ngb@vari{A}{\BODY}}
+%\NewEnviron{varianteB}{\ngb@vari{B}{\BODY}}
+
+%\newcommand{\varianteLaden}[2][inhalt]{\def\ngb@variante{#2}%
+%\InputIfFileExists{6.4-Arbeit.#1.tex}{}{\textbf{Fehler beim Laden der Inhalte für Variante #2!}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Eigene Variante der Notenverteilung %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\IfEqCase{\ngb@notenStil}{
-	{kompakt}{\renewcommand{\notenverteilung}{\Bewertungsschema[]}}%
-	{ngbschule}{\renewcommand{\notenverteilung}{\Bewertungsschema}}%
-	{schule}{}%
-}[]
+\ifdefstring{\ngb@notenStil}{kompakt}{\renewcommand{\notenverteilung}{\Bewertungsschema[]}}{}
+\ifdefstring{\ngb@notenStil}{ngbschule}{\renewcommand{\notenverteilung}{\Bewertungsschema}}{}
 
 \newcommand{\Bewertungsschema}[1][tendenzen]{
 	% Wenn die xsim Umgebung nicht genutzt wurde, werden die gesetzten
@@ -71,7 +81,7 @@
 	\IfExerciseGoalsSumTF{points}{=0}
 	{\AddtoExerciseTypeGoal{aufgabe}{ngbpoints}{24}}
 	{}
-	\ifthenelse{\boolean{schule@kmkPunkte}}{
+	\ifbool{schule@kmkPunkte}{
 		\begin{center}\tiny\begin{tabular}{|l||c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
 				\rowcolor{black!20}
 				\textbf{Notenpunkte} & 15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline
@@ -96,7 +106,7 @@
 				& 0 \\ \hline
 		\end{tabular}\end{center}
 	}{
-		\ifthenelse{\equal{#1}{tendenzen}}{
+		\ifstrequal{#1}{tendenzen}{
 			\begin{center}\renewcommand{\arraystretch}{1.2}\tiny\begin{tabular}{|l||c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
 					\rowcolor{black!20}
 					\textbf{Note} & 1+ & 1 & 1- & 2+ & 2 & 2- & 3+ & 3 & 3- & 4+ & 4 & 4- & 5+ & 5 & 5- & 6 \\ \hline
