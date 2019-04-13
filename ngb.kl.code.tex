@@ -9,6 +9,8 @@
 				\textcolor{gray!50!black}{- #1 -}}
 	\end{tcolorbox}}
 	\chead{} % Keine Titel in der Kopfzeile
+	
+	\schule@notenschemaSetzen{\ngb@notenschemaSekII}
 }{ % Klassen- und Kursarbeiten
 	\newcommand{\KlausurTitel}{\begin{center}\LARGE\rmfamily\Titel\end{center}}
 	\def\ArbeitTitel{\KlausurTitel}
@@ -19,6 +21,8 @@
 	\ohead{\small\Namensfeld}
 	
 	\KOMAoptions{headsepline=off}
+	
+	\schule@notenschemaSetzen{\ngb@notenschemaSekI}
 }
 
 \newcommand{\Dauer}{\makeatletter\ngb@dauer\makeatother\xspace}
