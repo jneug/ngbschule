@@ -76,11 +76,6 @@
 \ifdefstring{\ngb@notenStil}{ngbschule}{\renewcommand{\notenverteilung}{\Bewertungsschema}}{}
 
 \newcommand{\Bewertungsschema}[1][tendenzen]{
-	% Wenn die xsim Umgebung nicht genutzt wurde, werden die gesetzten
-	% Punkte jetzt übertragen
-	\IfExerciseGoalsSumTF{points}{=0}
-	{\AddtoExerciseTypeGoal{aufgabe}{ngbpoints}{24}}
-	{}
 	\ifbool{schule@kmkPunkte}{
 		\begin{center}\tiny\begin{tabular}{|l||c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
 				\rowcolor{black!20}
