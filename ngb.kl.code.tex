@@ -265,14 +265,16 @@
 	
 	\notenverteilung
 	
+	\bool_if:NTF \ngb_kompetenzen_setzen_bool {
 	\begin{center}
 		\renewcommand{\arraystretch}{1.2}
-		\begin{tabularx}{\textwidth}{|p{9cm}|XX|} \hline
+		\begin{tabularx}{\textwidth}{|m{9cm}|X>{\raggedleft\arraybackslash}m{1.5cm}|} \hline
 			\rowcolor{black!20}
-			Kompetenz & \small Kannst~du\newline sehr~gut & \small Musst~du\newline intensiv~üben \\ \hline \hline
+			Kompetenz & \tiny Kannst~du\newline sehr~gut & \tiny Musst~du~intensiv~üben \\ \hline \hline
 			\ngb@aKECode
 		\end{tabularx}
 	\end{center}
+	}{}
 	
 	% Erwartungshorizont einfuegen
 %	\immediate\closeout\ehfile
