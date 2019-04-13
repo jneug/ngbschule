@@ -148,6 +148,7 @@
 \ExplSyntaxOn
 
 \str_new:N \ngb_kompetenzen_str
+\bool_new:N \ngb_kompetenzen_setzen_bool
 \bool_new:N \ngb_erwartungen_erste_bool
 
 \RenewDocumentCommand{\erwartung}{m m O{}}{%
@@ -182,13 +183,27 @@
 
 \NewEnviron{kompetenzen}{
 %	\str_gclear:N \ngb_kompetenzen_str
+%	\bool_gset_false:N \ngb_kompetenzen_setzen_bool
 	\exp_args:Nno\relax{}{\BODY}
 }
 
 % Kompetenzen in Form bringen
 \NewDocumentCommand{\kompetenz}{m}{%
+	\bool_gset_true:N \ngb_kompetenzen_setzen_bool
 	\tl_gput_right:Nn \ngb_kompetenzen_str {\detokenize{#1 & }}
 	\tl_gput_right:Nn \ngb_kompetenzen_str {\detokenize{ & \\ \hline}}
+}
+
+\NewDocumentCommand \GetRelGrade {m}
+{ \xsim_get_relative_grade:n {#1} }
+
+\cs_new_protected:Npn \xsim_get_relative_grade:n #1
+{
+	\prop_get:NnNTF \l__xsim_relative_grades_prop {#1} \l__xsim_tmpa_tl
+	{
+		\fp_to_decimal:n {round( 100*(\l__xsim_tmpa_tl),0)}\,\%
+	}
+	{ \msg_error:nnn {xsim} {grade-unknown} {#1} }
 }
 
 % Erwartungshorizont (Eine Tabelle für alles)
