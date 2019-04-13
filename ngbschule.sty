@@ -158,6 +158,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %            Makros            %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Kompatibilität zum Schule-Paket
+\ifundef{\Nummer}{\newcommand{\Nummer}{\makeatletter\schule@nummer\makeatother\xspace}}{}
 %%% Weitere Dokumentinfos
 \newcommand{\Kuerzel}{\makeatletter\ngb@kuerzel\makeatother\xspace}
 \newcommand{\Schule}{\makeatletter\ngb@schule\makeatother\xspace}
