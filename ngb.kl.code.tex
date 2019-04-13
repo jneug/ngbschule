@@ -80,7 +80,23 @@
 		\begin{center}\tiny\begin{tabular}{|l||c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
 				\rowcolor{black!20}
 				\textbf{Notenpunkte} & 15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\ \hline
-				\textbf{Schwelle} & 95\% & 90\% & 85\% & 80\% & 75\% & 70\% & 65\% & 60\% & 55\% & 50\% & 45\% & 39\% & 33\% & 27\% & 20\% & 0\% \\ \hline
+				\textbf{Schwelle}
+				& \GetRelGrade{15}
+				& \GetRelGrade{14}
+				& \GetRelGrade{13}
+				& \GetRelGrade{12}
+				& \GetRelGrade{11}
+				& \GetRelGrade{10}
+				& \GetRelGrade{9}
+				& \GetRelGrade{8}
+				& \GetRelGrade{7}
+				& \GetRelGrade{6}
+				& \GetRelGrade{5}
+				& \GetRelGrade{4}
+				& \GetRelGrade{3}
+				& \GetRelGrade{2}
+				& \GetRelGrade{1}
+				& 0 \\ \hline
 				\rowcolor{black!10}
 				\textbf{Punkte}
 				& \schule@punkteZuNote{15} 
@@ -105,7 +121,23 @@
 			\begin{center}\renewcommand{\arraystretch}{1.2}\tiny\begin{tabular}{|l||c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
 					\rowcolor{black!20}
 					\textbf{Note} & 1+ & 1 & 1- & 2+ & 2 & 2- & 3+ & 3 & 3- & 4+ & 4 & 4- & 5+ & 5 & 5- & 6 \\ \hline
-					\textbf{Schwelle} & 95\% & 90\% & 85\% & 80\% & 75\% & 70\% & 65\% & 60\% & 55\% & 50\% & 45\% & 39\% & 33\% & 27\% & 20\% & 0\% \\ \hline
+					\textbf{Schwelle}
+					& \GetRelGrade{15}
+					& \GetRelGrade{14}
+					& \GetRelGrade{13}
+					& \GetRelGrade{12}
+					& \GetRelGrade{11}
+					& \GetRelGrade{10}
+					& \GetRelGrade{9}
+					& \GetRelGrade{8}
+					& \GetRelGrade{7}
+					& \GetRelGrade{6}
+					& \GetRelGrade{5}
+					& \GetRelGrade{4}
+					& \GetRelGrade{3}
+					& \GetRelGrade{2}
+					& \GetRelGrade{1}
+					& 0\,\% \\ \hline
 					\rowcolor{black!10}
 					\textbf{Punkte}
 					& \schule@punkteZuNote{15} 
@@ -129,7 +161,13 @@
 			\begin{center}\renewcommand{\arraystretch}{1.1}\small\begin{tabular}{|l||c|c|c|c|c|c|} \hline
 					\rowcolor{black!20}
 					\textbf{Notenbereich} & 1 & 2 & 3 & 4 & 5 & 6 \\ \hline
-					\textbf{ab Schwelle} & 85\% & 70\% & 55\% & 39\% & 20\% & 0\% \\ \hline
+					\textbf{ab Schwelle}
+					& \GetRelGrade{13}
+					& \GetRelGrade{10}
+					& \GetRelGrade{7}
+					& \GetRelGrade{4}
+					& \GetRelGrade{1}
+					& 0 \\ \hline
 					\rowcolor{black!10}
 					\textbf{ab Punkte}
 					& \schule@punkteZuNote{13}
@@ -268,7 +306,7 @@
 			\schule@aEHCode%
 			
 			% Fusszeile
-			\multicolumn{2}{|r|}{Summe:} & 52 & \tabularnewline\hline
+			\multicolumn{2}{|r|}{Summe:} & \_ngb_punkte_anzeige:nn {\int_use:N \schule_aufgaben_punkte_ges_int}{\int_use:N \schule_aufgaben_zusatzpunkte_ges_int} & \tabularnewline\hline
 			\multicolumn{2}{|r|}{Prozentual:} &  & \tabularnewline\hline
 			\multicolumn{2}{|r|}{Note:} & \multicolumn{2}{c|}{} \tabularnewline\hline
 		\end{tabularx}
