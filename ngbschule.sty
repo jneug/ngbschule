@@ -45,10 +45,7 @@
 %	\renewcommand{\ngb@hinweise}{\schule@loesungen}}{}
 
 \newtoggle{ngb@ohneLochung}
-\newtoggle{ngb@keineMetadaten}
-\ifdefstring{\ngb@typ}{ohne}{%
-	\toggletrue{ngb@keineMetadaten}}{%
-	\togglefalse{ngb@keineMetadaten}}
+\newtoggle{ngb@pdfMetadaten}
 
 \pgfkeys{
 	/ngb/.cd,
@@ -59,8 +56,8 @@
 	aufgaben/.store in=\ngb@afgPool,
 	ersteAufgabe/.store in=\ngb@ersteAfg,
 	theme/.store in=\ngb@theme,
-	keineMetadaten/.value forbidden,
-	keineMetadaten/.code=\toggletrue{ngb@keineMetadaten},
+	pdfMetadaten/.value forbidden,
+	pdfMetadaten/.code=\toggletrue{ngb@pdfMetadaten},
 % Weitere Dokumentinfos
 	kuerzel/.store in=\ngb@kuerzel, 
 	schule/.store in=\ngb@schule,
@@ -135,14 +132,15 @@
 \ngb@modulDateiLaden{\schule@fach}
 
 % Schriftarten und Farben einbinden
-\definecolor{tabellenKopfHG}{gray}{0.75}
-\definecolor{ReiheVg}{gray}{0.33}
+\definecolor{ngb.tabelle.kopf.hg}{gray}{0.75}
+\definecolor{ngb.reihe.text}{gray}{0.33}
+\definecolor{ngb.fuss.version.text}{gray}{0.5}
 \ngb@modulDateiLaden{\ngb@theme} % Überschreibt ggf. die Farben
 
 
 %% Add Metadata to PDF
 % TODO: verbessern  !!!
-\iftoggle{ngb@keineMetadaten}{}{%
+\iftoggle{ngb@pdfMetadaten}{%
 \AtEndDocument{%
 	\makeatletter
 	\hypersetup{
@@ -154,7 +152,7 @@
 	}
 	\makeatother
 }%
-}
+}{}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -176,7 +174,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %    Überschriften und Titel   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newkomafont{reihe}{\usefontofkomafont{title}\textcolor{ReiheVg}} % \large (?)
+\newkomafont{reihe}{\usefontofkomafont{title}\textcolor{ngb.reihe.text}} % \large (?)
 
 \newcommand{\TITEL}{\begin{center}\usekomafont{title}\Titel\end{center}}
 

@@ -40,17 +40,17 @@
 
 % Farben
 %% Allgemein
-\definecolor{ReiheVg}{gray}{0.33}
+\definecolor{ngb.reihe.text}{gray}{0.33}
 
 % Koma Schriften
 \addtokomafont{title}{\Large}
 %\addtokomafont{reihe}{\normalsize}
 
 %% Informatik
-\ifthenelse{\equal{\schule@fach}{Informatik}}{
-	\definecolor{SyntaxHg}{gray}{0.98}
+\ifdefstr{\schule@fach}{Informatik}{
+	\definecolor{ngb.syntax.hg}{gray}{0.98}
 	\lstset{
 		frame=single,
-		backgroundcolor=\color{SyntaxHg}
+		backgroundcolor=\color{ngb.syntax.hg}
 	}
 }{}

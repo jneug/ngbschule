@@ -1,7 +1,5 @@
 
 
-\definecolor{ngb.foot.version}{gray}{0.5}
-
 \ihead{\small\Fach \Lerngruppe (\Kuerzel)}
 \chead{\small\Datum}
 %\ohead{}
@@ -9,13 +7,13 @@
 
 
 
-\ifthenelse{\equal{\ngb@baseurl}{}}{%
+\ifstrempty{\ngb@baseurl}{%
 \def\ngb@foot@qrcode{}
 }{%
 %\RequirePackage{qrcode} % Package nur einfügen, wenn Url angegeben
 %\def\ngb@foot@qrcode{\qrcode{\ngb@baseurl}}
 }
-\ifthenelse{\equal{\ngb@version}{}}{%
+\ifstrempty{\ngb@version}{%
 \def\ngb@foot@version{}
 }{%
 \def\ngb@foot@version{v.\Version}
@@ -24,12 +22,12 @@
 %\ifoot*{Version vom \gfiGetDate{}}
 %\ofoot*{\lizenzSymbol ~\qrcode{http://ddi.uni-wuppertal.de/material/materialsammlung/}}
 
-\ifoot*{\footnotesize\color{ngb.foot.version}\ngb@foot@version}
-\ifthenelse{\isundefined{\lizenzSymbol}}{}{%
-	\cfoot*{\footnotesize\color{ngb.foot.version}\lizenzSymbol}
-}
+\ifoot*{\footnotesize\color{ngb.fuss.version.text}\ngb@foot@version}
+\ifdef{\lizenzSymbol}{%
+	\cfoot*{\footnotesize\color{ngb.fuss.version.text}\lizenzSymbol}
+}{}
 %\ifthenelse{\isundefined{\schule@nummer}}{}{%
-%	\ofoot*{\footnotesize\color{ngb.foot.version}\Reihe \#\Nummer}
+%	\ofoot*{\footnotesize\color{ngb.fuss.version.text}\Reihe \#\Nummer}
 %}
 
 \KOMAoptions{headsepline=off}
