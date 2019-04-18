@@ -127,7 +127,11 @@ Die Dokumentation der Pakete hilft bei der Verwendung, aber gerade für die Geom
 	\end{example}
 \end{environments}
 \begin{commands}
-	\command{grad}[\marg{gradzahl}] Formatiert \meta{gradzahl} mit dem Grad-Symbol ($^\circ$).
+	\command{grad}[\marg{gradzahl}] Formatiert \meta{gradzahl} mit dem Grad-Symbol ($^\circ$): \grad{36}
+	
+	\command{punkt}[\sarg\marg{x}\marg{y}\marg{z}] Setzt einen Punkt mit zwei Koordinaten: \punkt{2}{-.5}
+	
+	Die Optionale Sternvariante setzt einen Punkt mit drei Koordinaten: \punkt*{2}{-.5}{\dfrac{1}{2}}
 	
 	\command{bs} Erzeugt einen backslash: $\bs$
 	
@@ -146,38 +150,100 @@ Um die Darstellung von Formeln möglichst einheitlich zu gestalten, werden im Fo
 \begin{itemize}
 	\item equation
 	\item array
-	\item eqnarray
+	\item align
+	\item alignat
 \end{itemize}
 
 \subsubsection*{Formelsatz}
 
-Für Gleichungssysteme und Termumformungen wird das Paket \pkg{gauss} eingebunden. Um ein Gleichungssysteme zu setzen bietet sich die Umgebung \env{alignedat} an. Diese setzt nicht automatisch Fformeln und muss daher explizit in den Math-Mode gesetzt werden:
+\paragraph{Gleichungen ausrichten}
+
+Zum Ausrichten von Gleichungen und Formeln bietet sich die \env{align}\sarg Umgebung an. Sie erlaubt die Ausrichtung anhand von \& Zeichen.
 \begin{example}
-\[ \begin{gmatrix}[v]
-	-2x & + 3y & = & 4 \\
-	3x & -2y + & 5z = & 9 \\
-	x & + y + & 5z = & 13
-	\end{gmatrix} \]
+	\begin{align*}
+	f'(x) &= 9x^2 + \frac{1}{2x^3} \\
+	f'(-1) &= 9\cdot -1^2 + \frac{1}{2\cdot -1^3} \\
+		&= 9\cdot 1 + \frac{1}{2\cdot -1} \\
+		&= 8,5
+	\end{align*}
 \end{example}
-	
-		Durch Umformungen erhält man:
-		\[ \begin{gmatrix}[v]
-		-2x  & +3y & & = 4 \\
-		3x & -2y & +5z & = 9 \\
-		x & +y & +5z&  = 13
+
+
+Sollen Äquivalenzumformungen inklusive der Umformungsschritte dargestellt werden, dann sollte die Umgebung \env{alignat}\sarg benutzt werden, die weitaus flexibler ist. Dadurch können die Gleichungen einheitlich am Gleichzeichen ausgerichtet und zusätzlich Äquivalenzpfeile und Umformungen ergänzt werden.
+\begin{example}
+	\begin{alignat*}{3}
+	&& -\frac{4}{x^3} + \frac{1}{2} &= 0 &&\qquad\rvert-\frac{1}{2}\quad\rvert\cdot -1 \\
+	\Leftrightarrow\quad && \frac{4}{x^3} &= \frac{1}{2} &&\qquad\rvert\text{Kehrwert}\\
+	\Leftrightarrow\quad && \frac{1}{4}x^3 &= 2 &&\qquad\rvert\cdot 4\quad|\sqrt[3]{\quad}\\
+	\Leftrightarrow\quad && x &= 2 &&
+	\end{alignat*}
+\end{example}
+
+\paragraph{Gleichungssysteme und Matrizen}
+
+Für Gleichungssysteme mit Äquivalenzformungen wird das Paket \pkg{gauss} eingebunden. Um ein Gleichungssysteme zu setzen bietet sich die \pkg*{amsmath} Umgebungen \env*{vmatrix} an. Um zusätzlich Äquivalenzformungen darzustellen ergänzt \pkg*{gauss} die Umgebung \env{gmatrix}\oarg{delimtype}, die als optionalen Parameter die Art der \pkg*{amsmath} Matrix erhält (\code{v} hier).
+\begin{sidebyside}
+	\[ \begin{gmatrix}[v]
+	-2x & + 3y &      &= &  4 \\
+	 3x & - 2y & + 5z &= &  9 \\
+	  x & +  y & + 5z &= & 13
+	\end{gmatrix} \]
+\end{sidebyside}
+
+Die zugehörige Koeffizientenmatrix kann entsprechend mit der Option \code{p} gesetzt werden.
+\begin{sidebyside}
+	\[ \begin{gmatrix}[p]
+	-2 &  3 & 0 &  4 \\
+	 3 & -2 & 5 &  9 \\
+	 1 &  1 & 5 & 13
+	\end{gmatrix} \]
+\end{sidebyside}
+
+Die Umformungen werden mit dem Makro \cs{rowops} eingeleitet und mit den Kommandos \cs{mult}, \cs{add} und \cs{swap} gesetzt.
+
+Die Ausrichtung von aufeinanderfolgenden Gleichungssystemen wird am besten mit \env*{align}\sarg erreicht. Der Umformungspfeil kann mit \cs{rightsquigarrow} gesetzt werden. Damit die Matrizen nicht zu eng aufeinander liegen sollte beim Zeilenumbruch zwischen den Matrizen ein Abstand angegeben werden (z.B. \verbcode!\\[1em]!).
+
+\begin{example}
+	\begin{align*}
+		&\begin{gmatrix}[v]
+		-2x & + 3y &      &= &  4 \\
+		3x & - 2y & + 5z &= &  9 \\
+		x & +  y & + 5z &= & 13
 		\rowops
 		\mult{2}{\cdot 2}\add{2}{0}
 		\mult{2}{\cdot -3}\add{2}{1}
-		\end{gmatrix} \]
-		\[ \begin{gmatrix}[v]
+		\end{gmatrix} \\[1em]
+		\rightsquigarrow&\begin{gmatrix}[v]
 		& +5y & + 10z & = 30 \\
 		& -5y & - 10z & = -30 \\
 		x & +y & +5z&  = 13
 		\rowops
 		\add{0}{1}
-		\end{gmatrix} \]
-		\[ \begin{gmatrix}[v]
-		& +5y & + 10z & = 30 \\
-		& & 0 & = 0 \\
-		x & +y & +5z&  = 13
-		\end{gmatrix} \]
+		\end{gmatrix}
+	\end{align*}
+\end{example}
+
+Aufgrund des Platzmangels werden Brüche in Gleichungssystemen und Matrizen besser mit dem Kommando \cs{nicefrac} aus dem \pkg*{unit} Paket dargestellt:
+
+\begin{sidebyside}
+	\[\begin{pmatrix}
+	 0 & 0 & \nicefrac{1}{8} \\
+	 0 & 0 & -\nicefrac{3}{4} \\
+	 -\nicefrac{1}{2} & 0 & \nicefrac{2}{6} \\
+	\end{pmatrix}\]
+\end{sidebyside}
+
+%		Durch Umformungen erhält man:
+
+%		\[ \begin{gmatrix}[v]
+%		& +5y & + 10z & = 30 \\
+%		& -5y & - 10z & = -30 \\
+%		x & +y & +5z&  = 13
+%		\rowops
+%		\add{0}{1}
+%		\end{gmatrix} \]
+%		\[ \begin{gmatrix}[v]
+%		& +5y & + 10z & = 30 \\
+%		& & 0 & = 0 \\
+%		x & +y & +5z&  = 13
+%		\end{gmatrix} \]
