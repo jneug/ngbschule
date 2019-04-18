@@ -42,7 +42,9 @@
 %% <name>-<variante>.afg.tex gesucht.
 \renewcommand{\aufgabeLaden}[2][\ngb@variante]{%
 	\InputIfFileExists{\ngb@afgPool/#2-#1.afg.tex}{}{%
-		\InputIfFileExists{\ngb@afgPool/#2.afg.tex}{}{}%
+		\InputIfFileExists{\ngb@afgPool/#2.afg.tex}{}{%
+			\sdwarnung{Aufgabendatei \ngb@afgPool/#2.afg.tex wurde nicht gefunden!}%
+		}%
 }}
 
 % Befehle für A/B-Varianten

@@ -111,7 +111,9 @@
 %% Wird vor den Unterpaketen geladen, um Überschrieben zu ermöglichen (z.b. ngb.kl.code.tex)
 % TODO: Anders regeln? Als eigenes Paket? Einfach per \input?
 % TODO: Variante (A/B) berücksichtigen ...
-\newcommand{\aufgabeLaden}[1]{\InputIfFileExists{\ngb@afgPool/#1.afg.tex}{}{}}
+\newcommand{\aufgabeLaden}[1]{\InputIfFileExists{\ngb@afgPool/#1.afg.tex}{}{%
+\sdwarnung{Aufgabendatei \ngb@afgPool/#1.afg.tex wurde nicht gefunden!}%
+}}
 
 % Erste Aufgabennummer setzen
 \ifdef{\theaufgabe}{%
