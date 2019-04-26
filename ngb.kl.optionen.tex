@@ -4,8 +4,10 @@
 
 \newcommand{\ngb@variante}{}
 
-\newcommand{\ngb@notenschemaSekI}{15 = 1,14 = .95,13 = .9,12 = .85,11 = .8,10 = .75,9 = .7,8 = .65,7 = .6,6 = .55,5 = .5,4 = .45,3 = .37,2 = .28,1 = .2}
-\newcommand{\ngb@notenschemaSekII}{15 = .95,14 = .90,13 = .85,12 = .80,11 = .75,10 = .7,9 = .65,8 = .5,7 = .45,6 = .40,5 = .5,4 = .45,3 = .37,2 = .28,1 = .2}
+\newtoggle{ngb@teilpunkteAnzeigen}
+
+\newcommand{\ngb@notenschemaA}{15 = 1,14 = .95,13 = .9,12 = .85,11 = .8,10 = .75,9 = .7,8 = .65,7 = .6,6 = .55,5 = .5,4 = .45,3 = .37,2 = .28,1 = .2}
+\newcommand{\ngb@notenschemaB}{15 = .95,14 = .90,13 = .85,12 = .80,11 = .75,10 = .7,9 = .65,8 = .60,7 = .55,6 = .50,5 = .45,4 = .40,3 = .33,2 = .27,1 = .2}
 
 \providebool{schule@kmkPunkte}
 \ifdefstring{\schule@typ}{kl}{%
@@ -16,11 +18,12 @@
 	\newcommand{\ngb@notenStil}{ngbschule}
 }
 
-
 \pgfkeys{
 	/ngb/.cd,
 % Variante und Dauer für Arbeiten/Klausuren
 	variante/.store in=\ngb@variante, 
 	dauer/.store in=\ngb@dauer,
 	notenverteilungStil/.store in=\ngb@notenStil,
+	teilpunkteAnzeigen/.value forbidden,
+	teilpunkteAnzeigen/.code=\toggletrue{ngb@teilpunkteAnzeigen},
 }

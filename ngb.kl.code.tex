@@ -5,15 +5,15 @@
 			fontupper=\rmfamily\bfseries,colback=white,%
 			drop shadow southeast,sharp corners]
 			\Large\Nummer. \TypBezeichnung (\Dauer\,Minuten)\\
-			\large\Fach\ \Lerngruppe\ (\Kuerzel)\ifthenelse{\equal{#1}{none}}{}{\\
+			\large\Fach\ \Lerngruppe\ (\Kuerzel)\ifstrequal{#1}{none}{}{\\
 				\textcolor{gray!50!black}{- #1 -}}
 	\end{tcolorbox}}
 	\chead{} % Keine Titel in der Kopfzeile
 	
-	\schule@notenschemaSetzen{\ngb@notenschemaSekII}
+	\schule@notenschemaSetzen{\ngb@notenschemaB}
 }{ % Klassen- und Kursarbeiten
-	\newcommand{\KlausurTitel}{\begin{center}\LARGE\rmfamily\Titel\end{center}}
-	\def\ArbeitTitel{\KlausurTitel}
+	\newcommand{\KlausurTitel}[1][none]{\begin{center}\LARGE\rmfamily\Titel\ifstrequal{#1}{none}{}{- #1}\end{center}}
+	\newcommand{\ArbeitTitel}[1][none]{\KlausurTitel[#1]}
 	
 	\ihead{\small\Fach \Lerngruppe\ifthenelse{\equal{\ngb@variante}{}}{}{- \Variante} (\Kuerzel)}
 	\chead{\small\Datum}
@@ -22,7 +22,7 @@
 	
 	\KOMAoptions{headsepline=off}
 	
-	\schule@notenschemaSetzen{\ngb@notenschemaSekI}
+	\schule@notenschemaSetzen{\ngb@notenschemaA}
 }
 
 \newcommand{\Dauer}{\makeatletter\ngb@dauer\makeatother\xspace}
@@ -52,14 +52,18 @@
 	\def\A#1{}
 	\def\B#1{#1}
 	\def\AB#1#2{#2}
-	\NewEnviron{varianteA}{}
-	\NewEnviron{varianteB}{\BODY}
+	\NewEnviron{variA}{}
+	\NewEnviron{variB}{\BODY}
+	\NewEnviron{varianteA}{\PackageWarning{ngbschule}{Environment varianteA is deprecated for variA.}}
+	\NewEnviron{varianteB}{\PackageWarning{ngbschule}{Environment varianteB is deprecated for variB.}\BODY}
 }{%
 	\def\A#1{#1}
 	\def\B#1{}
 	\def\AB#1#2{#1}
-	\NewEnviron{varianteA}{\BODY}
-	\NewEnviron{varianteB}{}
+	\NewEnviron{variA}{\BODY}
+	\NewEnviron{variB}{}
+	\NewEnviron{varianteA}{\PackageWarning{ngbschule}{Environment varianteA is deprecated for variA.}\BODY}
+	\NewEnviron{varianteB}{\PackageWarning{ngbschule}{Environment varianteB is deprecated for variB.}}
 }
 
 
@@ -195,7 +199,7 @@
 \bool_new:N \ngb_kompetenzen_setzen_bool
 \bool_new:N \ngb_erwartungen_erste_bool
 
-\RenewDocumentCommand{\erwartung}{m m O{}}{%
+\NewDocumentCommand{\ngb@erwartung}{m m O{}}{%
 	\bool_if:NTF \ngb_erwartungen_erste_bool {
 		\bool_gset_false:N \ngb_erwartungen_erste_bool
 	}{
@@ -206,6 +210,9 @@
 	\int_gadd:Nn \schule_aufgaben_zusatzpunkte_int {\_str_to_int_with_zero:n{#3}} %Zusatzpunkte
 %	\tl_gput_right:Nn \schule_zeilen_erwartungen_str {\detokenize{\newline}}
 	\tl_gput_right:Nn \schule_zeilen_erwartungen_str {\detokenize{\dots\; #1}}
+	\iftoggle{ngb@teilpunkteAnzeigen}{
+		\tl_gput_right:Nn \schule_zeilen_erwartungen_str {\detokenize{\ }(\_ngb_punkte_anzeige:nn {\_str_to_int_with_zero:n{#2}}{\_str_to_int_with_zero:n{#3}})}
+	}{}
 }
 
 \cs_new:Npn \_ngb_punkte_anzeige:nn #1 #2 {
@@ -341,6 +348,9 @@
 	\clearpage
 }
 
-\renewcommand{\erwartungshorizont}{\ngb@erwartungshorizont}
+\ifdefstring{\schule@erwartungshorizontStil}{standard}{%
+	\RenewDocumentCommand{\erwartung}{m m O{}}{ \ngb@erwartung{#1}{#2}{#3}}%
+	\renewcommand{\erwartungshorizont}{\ngb@erwartungshorizont}%
+}{}
 
 \ExplSyntaxOff
