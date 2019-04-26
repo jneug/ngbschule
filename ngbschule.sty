@@ -105,15 +105,20 @@
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[ngerman]{babel}
 
+% Fix file extension parsing of graphicx
+% See: https://tex.stackexchange.com/questions/110513/unknown-graphics-extension-1-png
+\RequirePackage{grffile}
 
 %% Aufgabenpool
 %%% Einbettung von vordefinierten Aufgaben aus dem Aufgabenpool
 %% Wird vor den Unterpaketen geladen, um Überschrieben zu ermöglichen (z.b. ngb.kl.code.tex)
 % TODO: Anders regeln? Als eigenes Paket? Einfach per \input?
 % TODO: Variante (A/B) berücksichtigen ...
-\newcommand{\aufgabeLaden}[1]{\InputIfFileExists{\ngb@afgPool/#1.afg.tex}{}{%
-\sdwarnung{Aufgabendatei \ngb@afgPool/#1.afg.tex wurde nicht gefunden!}%
+\def\ngb@imgPath{}
+\newcommand{\aufgabeLaden}[2][.]{\def\ngb@imgPath{#1}\InputIfFileExists{\ngb@afgPool/#2.afg.tex}{}{%
+	\PackageWarning{ngbschule}{Aufgabendatei \ngb@afgPool/#2.afg.tex wurde nicht gefunden!}%
 }}
+\newcommand{\bildLaden}[2][]{\includegraphics[#1]{\ngb@afgPool/\ngb@imgPath/#2}}
 
 % Erste Aufgabennummer setzen
 \ifdef{\theaufgabe}{%

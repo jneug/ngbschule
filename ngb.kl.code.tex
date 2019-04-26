@@ -40,10 +40,10 @@
 %% Überschreiben von aufgabeLaden, um die Variante
 %% einzubeziehen. Statt <name>.afg.tex wird zuerst nach
 %% <name>-<variante>.afg.tex gesucht.
-\renewcommand{\aufgabeLaden}[2][\ngb@variante]{%
-	\InputIfFileExists{\ngb@afgPool/#2-#1.afg.tex}{}{%
+\renewcommand{\aufgabeLaden}[2][.]{\def\ngb@imgPath{#1}%
+	\InputIfFileExists{\ngb@afgPool/#2-\ngb@variante.afg.tex}{}{%
 		\InputIfFileExists{\ngb@afgPool/#2.afg.tex}{}{%
-			\sdwarnung{Aufgabendatei \ngb@afgPool/#2.afg.tex wurde nicht gefunden!}%
+			\PackageWarning{ngbschule}{Aufgabendatei \ngb@afgPool/#2.afg.tex wurde nicht gefunden!}%
 		}%
 }}
 
