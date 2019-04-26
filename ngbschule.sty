@@ -243,6 +243,9 @@
 % Rahmen um eine Box
 \newenvironment{rahmen}[1][black]{\begin{tcolorbox}[colframe=#1,colback=white,sharp corners]}{\end{tcolorbox}\vspace{-2ex}}
 
+% Tipp
+\newcommand{\tipp}[1]{\textbf{\llap{\usym{1F4A1}\space}Tipp:}
+	\space\itshape #1}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %         Aufzählungen         %
