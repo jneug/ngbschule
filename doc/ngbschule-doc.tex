@@ -63,7 +63,7 @@
 \newrefformat{sec}{Abschnitt\,\ref{#1}, S.\,\pageref{#1}}
 
 %\includeonly{allgemeines, faecher}
-\includeonly{faecher}
+%\includeonly{faecher}
 
 
 \begin{document}
@@ -93,28 +93,7 @@
 \subsection{Checkup und Selbstlernbögen}
 \subsection{Diagnosebögen}
 
-\section{Klausuren und Klassenarbeiten}
-\begin{options}
-	\opt{variante}
-	Variante der Klausur/Klassenarbeit. Sinnvoll, wenn A/B Arbeiten oder generell verschiedene Versionen gesetzt werden sollen. Kann im Dokument über \cs*{Variante} abgerufen werden.
-
-	\opt{dauer}
-	Dauer der Klausur/Klassenarbeit. Kann im Dokument über \cs*{Dauer} abgerufen werden.
-	
-	\keychoice{notenverteilungStil}{schule,ngbschule,kompakt}
-	Setzt den Stil der Notenverteilungstabelle.
-\end{options}
-\begin{commands}
-	\command{tier}
-	Fügt ein zufällig gewähltes Tierbild ein, dass unterhalb von Klassenarbeiten als Motivation eingesetzt werden kann.
-	\command{vielErfolg}
-	Fügt den Text \enquote{Viel Erfolg!} und ein zufällig gewähltes Tierbild mit \cs*{tier} ein.
-	
-	\command{Bewertungsschema}[\oarg{t}]\Default{tendenzen}
-\end{commands}
-
-
-\subsection{Erwartungshorizonte}
+\inlucde{klausuren}
 
 \include{faecher}
 

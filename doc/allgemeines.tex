@@ -1,3 +1,4 @@
+% !TeX root = ngbschule-doc
 \part{Allgemeine Erweiterungen}\label{part:allgemeines}
 
 \begin{options}
@@ -7,31 +8,44 @@
 \begin{commands}
 	\command{linie}[\oarg{breite}]\Default{6cm}
 	Zeichnet eine Linie der angegebenen Breite.
-	\begin{example}
+	\begin{sidebyside}
 	\linie[4cm]
-	\end{example}
+	\end{sidebyside}
 
 	\command{Namensfeld}[\oarg{breite}]\Default{5cm}
 	Erzeugt ein Feld, um einen Namen einzutragen.
 	
-	\begin{example}
+	\begin{sidebyside}
 	\Namensfeld
-	\end{example}
+	\end{sidebyside}
 	
-	\command{tab}
-	Kurz für \verbcode!\hspace{1cm}!.
+%	\command{tab}
+%	Kurz für \verbcode!\hspace{1cm}!.
 
 	\command{titlerule}
-	Erzeugt eine Linie mit Breite \cs*{textwidth} und Dicke 1pt, die als Unterstreichung von Überschriften benutzt wird..
+	Erzeugt eine Linie mit Breite \cs*{textwidth} und Dicke 1pt, die als Unterstreichung von Überschriften benutzt wird.
 	
 	\command{code}[\marg{text}]
 	Wird zur Auszeichnung von Quelltextauszügen benutzt. Das Makro wird auch von anderen Paketen erzeugt, daher prüft \ngbschule\ zunächst, ob es schon existiert und erzeugt nur dann eine eigene Version.
+	\begin{sidebyside}
+	\code{int a = 1;}
+	\end{sidebyside}
+	
+	\command{appfunktion}[\marg{text}]
+	Wird zur Auszeichnung von Funktionen, Menüs und Tasten in Apps benutzt.
+	\begin{sidebyside}
+	\appfunktion{Ansicht}
+	\end{sidebyside}
+	
+	
+	\command{tipp}
+	Auszeichnung für einen Tipp z.B. auf einem Arbeitsblatt. Prinzipiell gleich zu \cs*{hinweis}.
 
 	\command{operator}[\marg{operator}]
 	Wird benutzt, um in Aufgabentexten Operatoren auszuzeichnen.
-	\begin{example}
+	\begin{sidebyside}
 	\operator{Implementiere} die Operation \texttt{push} aus der Klasse \texttt{Stack}.
-	\end{example}
+	\end{sidebyside}
 
 	\command{TITEL}
 	Erzeugt einen großen, zentrierten Titel.
@@ -91,7 +105,7 @@ Neben \env*{smallenumerate} gibt es die beiden Umgebungen \env{enumeratea} und \
 
 
 \begin{example}
-	\begin{multicols}{4}
+	\begin{multicols}{3}
 		\begin{enumeraten}
 			\item Item 1
 			\item Item 2
@@ -111,6 +125,17 @@ Die Umgebung \env*{multicols} setzt den Inhalt in mehreren Spalten. Soll eine \e
 		\task Item 5
 	\end{tasks}
 \end{example}
+
+\section{Zahlen und Einheiten}\label{sec:zahlen}
+Zahlen im Fließtext und Werte mit Einheiten werden mit dem Paket \pkg{siunitx} gesetzt. Für das Eurosymbol bindet \pkg*{schule} schon das Paket \pkg{eurosym} ein.
+
+\subsection{Zahlen}
+Das Kommando \cs{num} formatiert Zahlen automatisch in ein einheitliches Format. Im Text-Modus ist es der bevorzugte Weg, Zahlen darzustellen.
+
+\subsection{Einheiten}
+Größen mit Einheiten werden mit den Kommandos \cs{si} und \cs{SI} gesetzt. Erstere Variante setzt nur eine Einheit (z.B. \verb!\si{\cubic\meter}! = \si{\cubic\meter}), während die zweite Variante noch den Wert der Größe bekommt (z.B. \verb!\SI{5}{\square\centi\meter}! = \SI{5}{\square\centi\meter}).
+
+Geldbeträge in Euro können direkt mit dem Kommando \cs{EUR} gesetzt werden: \verb!\EUR{12.2}! = \EUR{12.2}.
 
 \section{Aufgabensammlung}\label{sec:aufgabensammlung}
 Um das Aufbauen einer Aufgabensammlung zu vereinfachen steht allen Dokumenttypen das Makro \cs*{aufgabeLaden}\marg{name} zur Verfügung. Mit diesem können Aufgabendateien (mit der Endung \texttt{.afg.tex}) aus einem Ordner in das aktuelle Dokument eingefügt werden. Der Pfad, in dem nach den Aufgabendateien gesucht wird kann durch die Option \option*{aufgaben} für jedes Dokument angepasst werden.
