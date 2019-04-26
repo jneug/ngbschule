@@ -12,8 +12,12 @@
 %\RequirePackage{xstring}
 
 \RequirePackage[commonsets,notation=german]{skmath}
-\RequirePackage{units}
+%\RequirePackage{units}
 \RequirePackage{gauss}
+\RequirePackage{interval}
+\intervalconfig{
+	separator symbol = {;\,},
+}
 
 
 % Schnell-Kommandos für Mengenzeichen und andere Symbole
@@ -25,7 +29,8 @@
 \newcommand{\rechnung}{\item[Rechnung:]}
 \newcommand{\antwort}{\item[Antwort:]}
 
-\newcommand{\grad}[1]{\ensuremath{\unit[#1]{^\circ}}}
+%\newcommand{\grad}[1]{\ensuremath{\unit[#1]{^\circ}}}
+\def\grad{\ang}
 
 \newcommand{\punkt}{\@ifstar\@@punkt\@punkt}
 \newcommand{\@punkt}[2]{\ensuremath{\left(#1 \middle| #2\right)}}

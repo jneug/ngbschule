@@ -109,6 +109,27 @@
 % See: https://tex.stackexchange.com/questions/110513/unknown-graphics-extension-1-png
 \RequirePackage{grffile}
 
+\RequirePackage{siunitx}
+\sisetup{
+	group-digits = integer,
+	output-decimal-marker = {,},
+	per-mode = symbol-or-fraction,
+}
+
+% Zusätzliche Einheiten
+%\DeclareSIUnit\euro{\euro}
+\DeclareSIUnit\cent{ct}
+
+% Euro Beträge mit eurosym
+\let\ngb@eur\EUR
+\renewcommand{\EUR}[1]{\ngb@eur{\num[round-mode=places,round-precision=2,round-integer-to-decimal,zero-decimal-to-integer]{#1}}}
+%\renewcommand{\EUR}[1]{\SI[round-mode=places,round-precision=2,round-integer-to-decimal,zero-decimal-to-integer]{#1}{\eur}}
+
+% Abwärtskompatibilität zum alten unit-Paket
+\def\nicefrac{\tfrac}
+\newcommand{\unit}[2][none]{\ifstrequal{#1}{none}{\si{#2}}{\SI{#1}{#2}}}
+\newcommand{\unitfrac}[3][]{\ifstrequal{#1}{none}{\si{#2}}{\SI{#1}{#2/#3}}}
+
 %% Aufgabenpool
 %%% Einbettung von vordefinierten Aufgaben aus dem Aufgabenpool
 %% Wird vor den Unterpaketen geladen, um Überschrieben zu ermöglichen (z.b. ngb.kl.code.tex)
