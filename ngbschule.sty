@@ -154,7 +154,15 @@
 
 % Horizontale listen z.B. für Unteraufgaben
 \RequirePackage{tasks}
-
+%\settasks{
+%	% Labels von Tasks an Teilaufgaben anpassen
+%	label-format = \bfseries,
+%}
+\ifdef{\theteilaufgabeni}{
+\setlist[teilaufgaben]{
+	% Fettdruck von Teilaufgaben entfernen
+	label=\alph{teilaufgabeni}),
+}}{}
 
 % Includes basierend auf Typ und Fach werden (fast) zuletzt geladen
 \ngb@modulDateiLaden{\ngb@typ}
