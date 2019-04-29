@@ -119,6 +119,7 @@
 % Zusätzliche Einheiten
 %\DeclareSIUnit\euro{\euro}
 \DeclareSIUnit\cent{ct}
+\DeclareSIUnit\uhr{Uhr}
 
 % Euro Beträge mit eurosym
 \let\ngb@eur\EUR
@@ -244,8 +245,8 @@
 \newenvironment{rahmen}[1][black]{\begin{tcolorbox}[colframe=#1,colback=white,sharp corners]}{\end{tcolorbox}\vspace{-2ex}}
 
 % Tipp
-\newcommand{\tipp}[1]{\textbf{\llap{\usym{1F4A1}\space}Tipp:}
-	\space\itshape #1}
+\newcommand{\tipp}[1]{{\textbf{\llap{\usym{1F4A1}\space}Tipp:}
+	\space\itshape #1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %         Aufzählungen         %
