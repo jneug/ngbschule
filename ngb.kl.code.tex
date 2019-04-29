@@ -1,3 +1,10 @@
+\newcommand{\Dauer}{\makeatletter\ngb@dauer\makeatother\xspace}
+\newcommand{\Variante}{\makeatletter\ngb@variante\makeatother\xspace}
+
+\graphicspath{{inc/animal-icons/}}
+\newcommand{\tier}{\raisebox{-.3\height}{\pgfmathrandom{1,46}\includegraphics[height=1.5cm]{\pgfmathresult.png}}}
+\newcommand{\vielErfolg}{\begin{flushright}\bfseries Viel Erfolg \; \tier\end{flushright}}
+
 \ifdefstring{\schule@klausurtyp}{klausur}{% Klausuren
 	% https://tex.stackexchange.com/questions/223694/how-to-draw-a-text-box-with-shadow-borders-i-have-tried-the-following-but-it-gi#223738
 	\newcommand{\KlausurTitel}[1][none]{%
@@ -9,6 +16,8 @@
 				\textcolor{gray!50!black}{- #1 -}}
 	\end{tcolorbox}}
 	\chead{} % Keine Titel in der Kopfzeile
+	
+	\renewcommand{\vielErfolg}{\begin{flushright}\bfseries Viel Erfolg\end{flushright}}
 	
 	\schule@notenschemaSetzen{\ngb@notenschemaB}
 }{ % Klassen- und Kursarbeiten
@@ -24,13 +33,6 @@
 	
 	\schule@notenschemaSetzen{\ngb@notenschemaA}
 }
-
-\newcommand{\Dauer}{\makeatletter\ngb@dauer\makeatother\xspace}
-\newcommand{\Variante}{\makeatletter\ngb@variante\makeatother\xspace}
-
-\graphicspath{{inc/animal-icons/}}
-\newcommand{\tier}{\raisebox{-.3\height}{\pgfmathrandom{1,46}\includegraphics[height=1.5cm]{\pgfmathresult.png}}}
-\newcommand{\vielErfolg}{\begin{flushright}\bfseries Viel Erfolg \; \tier\end{flushright}}
 
 %% Anhang in Klausuren/Arbeiten
 \RequirePackage{prettyref}
