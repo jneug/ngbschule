@@ -36,6 +36,10 @@
 \newcommand{\@punkt}[2]{\ensuremath{\left(#1 \,\middle|\, #2\right)}}
 \newcommand{\@@punkt}[3]{\ensuremath{\left(#1 \,\middle|\, #2 \,\middle|\, #3\right)}}
 
+\def\pkt{\@ifstar\@@pkt\@pkt}
+\def\@pkt(#1|#2){\ensuremath{\left(#1 \,\middle|\, #2\right)}}
+\def\@@pkt(#1|#2|#3){\ensuremath{\left(#1 \,\middle|\, #2 \,\middle|\, #3\right)}}
+
 % https://tex.stackexchange.com/questions/249688/how-do-i-draw-a-circle-around-a-term-in-an-align-equation
 
 
