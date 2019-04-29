@@ -39,6 +39,9 @@
 % https://tex.stackexchange.com/questions/249688/how-do-i-draw-a-circle-around-a-term-in-an-align-equation
 
 
+\def\tkzCoeffSubColor{25}
+\def\tkzCoeffSubLw{0.2}
+
 \def\geogrid{5mm}
 \def\geogridcolor{gray!50}
 \def\geoaxiscolor{black}
@@ -121,6 +124,7 @@
 % Linien und Vektoren %
 
 \newcommand{\Strecke}[2][]{\tkzDrawSegment[#1](#2)}
+\newcommand{\Strecken}[2][]{\tkzDrawSegments[#1](#2)}
 \newcommand{\StreckeBeschriften}[3][]{\tkzLabelSegment[#1](#2){#3}}
 
 \newcommand{\Gerade}[2][]{\tkzDrawLine[add=10 and 10,#1](#2)}
