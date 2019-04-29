@@ -40,6 +40,39 @@
 \def\@pkt(#1|#2){\ensuremath{\left(#1 \,\middle|\, #2\right)}}
 \def\@@pkt(#1|#2|#3){\ensuremath{\left(#1 \,\middle|\, #2 \,\middle|\, #3\right)}}
 
+
+\NewDocumentCommand \gls {s O{\rightsquigarrow} m O{.8em}} {
+	\IfBooleanTF{#1}{
+		\begin{gmatrix}[v]
+		#3
+		\end{gmatrix}
+	}{
+		#2& \begin{gmatrix}[v]
+		#3
+		\end{gmatrix}\\[#4]
+	}
+}
+\NewDocumentCommand \kom {s O{\rightsquigarrow} m O{.8em}} {
+	\IfBooleanTF{#1}{
+		\begin{gmatrix}[p]
+			#3
+		\end{gmatrix}
+	}{
+		#2& \begin{gmatrix}[p]
+			#3
+		\end{gmatrix}\\[#4]
+	}
+}
+
+\NewDocumentCommand \gl {O{\Leftrightarrow} m O{=} m} {
+	#1\quad&& #2 &#3 #4 && 
+}
+\NewDocumentCommand \tu {o o o} {
+	\qquad\vert \IfNoValueTF{#1}{\,\text{TU}}{#1}%
+	\IfNoValueF{#2}{\quad\vert #2}%
+	\IfNoValueF{#3}{\quad\vert #3}%
+}
+
 % https://tex.stackexchange.com/questions/249688/how-do-i-draw-a-circle-around-a-term-in-an-align-equation
 
 
