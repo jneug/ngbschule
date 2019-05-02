@@ -219,7 +219,7 @@
 
 \cs_new:Npn \_ngb_punkte_anzeige:nn #1 #2 {
 	\int_compare:nT {#1 > 0}{#1}
-	\int_compare:nT {#2 > 0}{\space (#2)}
+	\int_compare:nT {#2 > 0}{\space (+#2)}
 }
 
 % Zeile für die Aufgabe in der Tabelle setzen (Standard).
@@ -309,6 +309,7 @@
 %	\immediate\openout\ehfile=\jobname.eh.aux
 
 %	\immediate\write\ehfile{\unexpanded{Name: \underline{\Large\hspace{6cm}}}}
+	\ihead{\small\Fach \Lerngruppe} % Variante auf Horizont aus Kopfzeile nehmen
 	\underline{Name: \Large\hspace{6cm}}
 	
 	\begin{center}
@@ -351,7 +352,7 @@
 }
 
 \ifdefstring{\schule@erwartungshorizontStil}{standard}{%
-	\RenewDocumentCommand{\erwartung}{m m O{}}{ \ngb@erwartung{#1}{#2}{#3}}%
+	\RenewDocumentCommand{\erwartung}{m m O{}}{ \ngb@erwartung{#1}{#2}[#3]}%
 	\renewcommand{\erwartungshorizont}{\ngb@erwartungshorizont}%
 }{}
 
