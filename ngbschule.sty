@@ -288,12 +288,11 @@
 % TODO: Koppeln mit Bearbeitungshinweisen von Aufgaben?
 % TODO: Kopplung mit option loesung lösen und hiwneise o.Ä. als Option einführen?
 \ifdefstring{\ngb@hinweise}{keine}{%
-	% Hinweise wereden als 
+	% Hinweise werden als QR-Code gesetzt
 	\newcommand{\qrhinweis}[2][]{\ifstrempty{#1}{\qrcode{#2}}{\qrcode{#1}}}%
-}{%
+}{% Hinweise im Klartext anzeigen
 	\newcommand{\qrhinweis}[2][]{#2}%
 }
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % xsim Aufgaben Stil anpassen  %
