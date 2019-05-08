@@ -133,6 +133,7 @@
 %	\begin{tikzpicture}[]
 %}{\end{tikzpicture}}
 
+\newcommand{\Linienbreite}[1][1.2pt]{\tikzset{line style/.style={line width=#1}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                Objekte                %
@@ -176,7 +177,8 @@
 \newcommand{\Vektor}[2][]{\Strecke[>=latex,->,thick,#1]{#2}}
 
 % Formen und Polygone %
-\newcommand{\Polygon}[2][]{\tkzDrawPolySeg[#1](#2)}
+%\NewDocumentCommand \Polygon { O{} r() }{\tkzDrawPolySeg[#1](#2)}
+\NewDocumentCommand \Polygon { O{} r() }{\tkzDrawPolygon[#1](#2)}
 
 % Transformationen %
 \newcommand{\Spiegeln}[3][']{%
