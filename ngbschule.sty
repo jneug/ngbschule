@@ -252,6 +252,11 @@
 \newcommand{\tipp}[1]{{\textbf{\llap{\usym{1F4A1}\space}Tipp:}
 	\space\itshape #1}}
 
+% Zeilenumbruch in \url zulassen
+% See: https://tex.stackexchange.com/questions/3033/forcing-linebreaks-in-url
+%\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\RequirePackage{xurl}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %         Aufzählungen         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
