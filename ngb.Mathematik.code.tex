@@ -89,16 +89,18 @@
 }
 
 \tikzset{
-	crossing/.style={
+	crossing/.style={%
 		draw,
 		cross out,
 		minimum size=2mm,
 		inner sep=0pt,
 		outer sep=0pt,
 		thick
-	}
+	},
+%	point style/.style={%
+%		crossing
+%	}
 }
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                Umgebungen                %
@@ -139,52 +141,65 @@
 %                Objekte                %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\newcommand{\Text}[3][]{\tkzText[fill=white,#1](#2){#3}}
 \NewDocumentCommand \Text { O{} r() m } {\tkzText[fill=white,#1](#2){#3}}
 
 % Punkte %
 \newcommand{\Ursprung}[1][O]{\tkzDefPoint(0,0){#1}}
-\newcommand{\Koordinate}[2]{\tkzDefPoint(#1){#2}}
+\NewDocumentCommand \Koordinate { r() m }{\tkzDefPoint(#1){#2}}
 \NewDocumentCommand \Koordinaten {m}{\tkzDefPoints{#1}}
-%\newcommand{\Punkt}[3][]{\tkzDefPoint(#2){#3}\tkzDrawPoint[size=10,#1](#3)}
-\newcommand\Punkt{\@ifstar\@@Punkt\@Punkt}
-\newcommand\@Punkt[3][]{\node at (#2) [crossing] (#3) {};\PunktBeschriften{#3}{#3}}
-\newcommand\@@Punkt[3][]{\node at (#2) [crossing] (#3) {};}
-\newcommand{\PunktMarkieren}[1]{\tkzPointShowCoord(#1)}
-\newcommand{\PunktBeschriften}[3][]{\tkzLabelPoint[#1](#2){#3}}
 
-\def\Spiegelpunkt{\@ifstar\@@Spiegelpunkt\@Spiegelpunkt}
-\newcommand{\@Spiegelpunkt}[4][]{\tkzDefPointBy[symmetry=center #3](#2)\tkzGetPoint{#4}\tkzDrawPoint[size=10,#1](#4)}
-\newcommand{\@@Spiegelpunkt}[4][]{\tkzDefPointBy[reflection=over #3](#2)\tkzGetPoint{#4}\tkzDrawPoint[size=10,#1](#4)}
+\NewDocumentCommand \Punkt {s O{} r() m}{
+	\tkzDefPoint(#3){#4}\tkzDrawPoint[shape=cross out,size=10,#2](#4)
+	\IfBooleanT {#1}
+		{ \PunktBeschriften(#4){#4} }
+}
 
-\def\Drehpunkt{\@ifstar\@@Drehpunkt\@Drehpunkt}
-\newcommand{\@Drehpunkt}[5][]{\tkzDefPointBy[rotation=center #3 angle #4](#2)\tkzGetPoint{#5}\tkzDrawPoint[size=10,#1](#5)}
-\newcommand{\@@Drehpunkt}[4][]{}
+\NewDocumentCommand \PunktMarkieren { r() }{\tkzPointShowCoord(#1)}
+\NewDocumentCommand \PunktBeschriften { O{} r() m }{\tkzLabelPoint[#1](#2){#3}}
+
+% TODO: Spiegelpuntke auch shape=cross out setzen, oder als Kreis lassen?
+\NewDocumentCommand \Spiegelpunkt {s O{} r() r() m}{
+	\IfBooleanTF {#1}
+	{\tkzDefPointBy[reflection=over #4](#3)\tkzGetPoint{#5}\tkzDrawPoint[size=10,#2](#5)}
+	{\tkzDefPointBy[symmetry=center #4](#3)\tkzGetPoint{#5}\tkzDrawPoint[size=10,#2](#5)}
+}
+
+\NewDocumentCommand \Drehpunkt {s O{} r() r() m m}{
+	\IfBooleanTF {#1}
+	{\tkzDefPointBy[rotation=center #4 angle #5](#3)\tkzGetPoint{#6}\tkzDrawPoint[size=10,#2](#6)}
+	{\tkzDefPointBy[rotation=center #4 angle {-1*#5}](#3)\tkzGetPoint{#6}\tkzDrawPoint[size=10,#2](#6)}
+}
 
 % Linien und Vektoren %
 
-\newcommand{\Strecke}[2][]{\tkzDrawSegment[#1](#2)}
+\NewDocumentCommand \Strecke { O{} r() }{\tkzDrawSegment[#1](#2)}
 \NewDocumentCommand \Strecken { O{} r() }{\tkzDrawSegments[#1](#2)}
-\newcommand{\StreckeBeschriften}[3][]{\tkzLabelSegment[#1](#2){#3}}
+\NewDocumentCommand \StreckeBeschriften { O{} r() m }{\tkzLabelSegment[#1](#2){#3}}
 
 \NewDocumentCommand \Laenge { O{} r() O{} m } {\tkzDrawSegment[line width=1pt,|-|,#1](#2)\tkzLabelSegment[#3](#2){#4}}
 
-\newcommand{\Gerade}[2][]{\tkzDrawLine[add=10 and 10,#1](#2)}
-\newcommand{\GeradeBeschriften}[3][]{\tkzLabelSegment[#1](#2){#3}}
+\NewDocumentCommand \Gerade { O{} r() }{\tkzDrawLine[add=10 and 10,#1](#2)}
+\NewDocumentCommand \GeradeBeschriften { O{} r() m }{\tkzLabelSegment[#1](#2){#3}}
 
-\newcommand{\Strahl}[2][]{\tkzDrawLine[add=0 and 10,#1](#2)}
+\NewDocumentCommand \Strahl { O{} r() }{\tkzDrawLine[add=0 and 10,#1](#2)}
 
-\newcommand{\Vektor}[2][]{\Strecke[>=latex,->,thick,#1]{#2}}
+\NewDocumentCommand \Vektor { O{} r() }{\tkzDrawSegment[>=latex,->,thick,#1](#2)}
 
 % Formen und Polygone %
 %\NewDocumentCommand \Polygon { O{} r() }{\tkzDrawPolySeg[#1](#2)}
 \NewDocumentCommand \Polygon { O{} r() }{\tkzDrawPolygon[#1](#2)}
 
 % Transformationen %
-\newcommand{\Spiegeln}[3][']{%
-	\foreach \i in {#2}{%
-		\Spiegelpunkt{\i}{#3}{\i#1}%
-	}%
+\NewDocumentCommand \Spiegeln { s r() r() O{'} }{%
+	\IfBooleanTF {#1} {%
+		\foreach \p in {#2}{%
+			\Spiegelpunkt*(\p)(#3){\p#4}
+		}%
+	}{%
+		\foreach \p in {#2}{%
+			\Spiegelpunkt(\p)(#3){\p#4}
+		}%
+	}
 }
 %\newcommand{\SpiegelnUndZeichnen}[3][']{\Spiegeln[#1]{#2}{#3}\Polygon{\MitSuffixVersehen{#2}{#1}}}
 
