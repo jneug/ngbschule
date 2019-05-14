@@ -5,6 +5,7 @@
 \RequirePackage{tikz}
 
 % Kartesische Koordinatengeometrie und Funktionen
+\RequirePackage{tikz}
 \RequirePackage{tkz-base,tkz-euclide,tkz-fct} % requires gnuplot
 \usetkzobj{all}
 %\usetikzlibrary{shapes}
@@ -76,17 +77,19 @@
 % https://tex.stackexchange.com/questions/249688/how-do-i-draw-a-circle-around-a-term-in-an-align-equation
 
 
+% Subgrid farbe
 \def\tkzCoeffSubColor{25}
 \def\tkzCoeffSubLw{0.2}
 
-\def\geogrid{5mm}
-\def\geogridcolor{gray!50}
-\def\geoaxiscolor{black}
-\def\georeset{%
-	\renewcommand{\geogrid}{5mm}%
-	\renewcommand{\geogridcolor}{gray!50}%
-	\renewcommand{\geoaxiscolor}{black}%
-}
+% Einstellungen für Subgrid
+%\def\geogrid{5mm}
+%\def\geogridcolor{gray!50}
+%\def\geoaxiscolor{black}
+%\def\georeset{%
+%	\renewcommand{\geogrid}{5mm}%
+%	\renewcommand{\geogridcolor}{gray!50}%
+%	\renewcommand{\geoaxiscolor}{black}%
+%}
 
 \tikzset{
 	crossing/.style={%
@@ -97,9 +100,9 @@
 		outer sep=0pt,
 		thick
 	},
-%	point style/.style={%
-%		crossing
-%	}
+	%	point style/.style={%
+	%		shape=cross out
+	%	}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -135,15 +138,18 @@
 %	\begin{tikzpicture}[]
 %}{\end{tikzpicture}}
 
+% Standardwert für Linienbreite ändern
 \newcommand{\geoLinienbreite}[1][1.2pt]{\tikzset{line style/.style={line width=#1}}}
+\newcommand{\geoPunktform}[1][cross out]{\tikzset{point style/.style={shape=#1}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                Objekte                %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Text mittig am Punkt #2
 \NewDocumentCommand \geoText { O{} r() m } {\tkzText[fill=white,#1](#2){#3}}
 
-% Punkte %
+% Punkte
 \newcommand{\geoUrsprung}[1][O]{\tkzDefPoint(0,0){#1}}
 \NewDocumentCommand \geoKoordinate { r() m }{\tkzDefPoint(#1){#2}}
 \NewDocumentCommand \geoKoordinaten {m}{\tkzDefPoints{#1}}
@@ -151,10 +157,11 @@
 \NewDocumentCommand \geoPunkt {s O{} r() m}{
 	\tkzDefPoint(#3){#4}\tkzDrawPoint[shape=cross out,size=10,#2](#4)
 	\IfBooleanT {#1}
-		{ \PunktBeschriften(#4){#4} }
+	{ \geoPunktBeschriften(#4){#4} }
 }
 
 \NewDocumentCommand \geoPunktMarkieren { r() }{\tkzPointShowCoord(#1)}
+
 \NewDocumentCommand \geoPunktBeschriften { O{} r() m }{\tkzLabelPoint[#1](#2){#3}}
 
 % TODO: Spiegelpuntke auch shape=cross out setzen, oder als Kreis lassen?
@@ -193,11 +200,11 @@
 \NewDocumentCommand \geoSpiegeln { s r() r() O{'} }{%
 	\IfBooleanTF {#1} {%
 		\foreach \p in {#2}{%
-			\Spiegelpunkt*(\p)(#3){\p#4}
+			\geoSpiegelpunkt*(\p)(#3){\p#4}
 		}%
 	}{%
 		\foreach \p in {#2}{%
-			\Spiegelpunkt(\p)(#3){\p#4}
+			\geoSpiegelpunkt(\p)(#3){\p#4}
 		}%
 	}
 }
