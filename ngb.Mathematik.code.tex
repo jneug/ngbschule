@@ -138,9 +138,15 @@
 %	\begin{tikzpicture}[]
 %}{\end{tikzpicture}}
 
-% Standardwert für Linienbreite ändern
-\newcommand{\geoLinienbreite}[1][1.2pt]{\tikzset{line style/.style={line width=#1}}}
+\newcommand{\geoLinienbreite}[1][1.2pt]{%
+\tikzset{
+	line style/.style={line width=#1},
+	every path/.append style={line width=#1}
+}}
 \newcommand{\geoPunktform}[1][cross out]{\tikzset{point style/.style={shape=#1}}}
+
+\newcommand{\geoInit}[1][]{\tkzInit[#1]}
+\newcommand{\geoGitter}[1][]{\tkzGrid[#1]}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                Objekte                %
@@ -195,6 +201,8 @@
 % Formen und Polygone %
 %\NewDocumentCommand \geoPolygon { O{} r() }{\tkzDrawPolySeg[#1](#2)}
 \NewDocumentCommand \geoPolygon { O{} r() }{\tkzDrawPolygon[#1](#2)}
+
+\NewDocumentCommand \geoPolygonzug { O{} m }{\draw[#1] #2;}
 
 % Transformationen %
 \NewDocumentCommand \geoSpiegeln { s r() r() O{'} }{%
