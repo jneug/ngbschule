@@ -94,7 +94,7 @@ Struktogramme liegen in Dateien mit der Endung \texttt{.nss} im Materialordner. 
 
 \section{Fach Mathematik}\label{sec:fachmathe}
 
-Für Dokumente mit dem Typ \enquote{ab} (\keyis*-{typ}{ab}) werden weitere Pakete nachgeladen:
+Für Dokumente mit dem Fach \enquote{Mathematik} (\keyis*-{fach}{Mathematik}) werden weitere Pakete nachgeladen:
 \begin{multicols}{2}
 	\begin{smallitemize}
 		\item \pkg{amsmath}
@@ -106,7 +106,6 @@ Für Dokumente mit dem Typ \enquote{ab} (\keyis*-{typ}{ab}) werden weitere Paket
 		\item \pkg{tkz-euclide} und \cs*{usetkzobj}\Marg{all} wird ausgeführt.
 		\item \pkg{tkz-fct} benötigt eine Installation von \texttt{gnuplot} und \texttt{pdflatex} muss mit dem Schalter \texttt{--shell-escape} gestartet werden (\zB\  \texttt{pdflatex --shell-escape "ab-mit-tkz.tex"}).
 		\item \pkg{skmath} mit den Optionen \option*{commonsets} und \keyis*-{notation}{german}.
-		\item \pkg{units}
 		\item \pkg{gauss}
 	\end{smallitemize}
 \end{multicols}
@@ -138,8 +137,6 @@ Die Dokumentation der Pakete hilft bei der Verwendung, aber gerade für die Geom
 	\command{qed} Erzeugt eine Box als Abschluss von Beweisen: \qed
 \end{commands}
 
-\subsection{Geometrische Konstruktionen}\label{sec:geometrie}
-
 \subsection{Materialien Mathematik}\label{sec:materialmathe}
 Für Mathematik sind vor allem geometrische Konstruktionen und Merksätze / Definitionen angedacht.
 
@@ -147,18 +144,22 @@ Für Mathematik sind vor allem geometrische Konstruktionen und Merksätze / Defi
 Um die Darstellung von Formeln möglichst einheitlich zu gestalten, werden im Folgenden die verschiedenen mathematischen Umgebungen verglichen und Beispiele für wiederkehrende Formeln wie Termumformungen oder Gleichungssysteme gegeben.
 
 \subsubsection*{Mathematische Umgebungen}
-\begin{itemize}
-	\item equation
-	\item array
-	\item align
-	\item alignat
-\end{itemize}
+Zum Satz mathematischer Formeln sind diese Umgebungen bevorzugt zu verwenden. Sie ermöglichen den Satz der üblicherweise in der Schule verwendeten Formeln und Rechnungen. Andere Umgebungen (wie z.B. \env*{eqnarray}) können eine Reihe von Problemen verursachen.
+\begin{multicols}{3}
+	\begin{itemize}
+		\item\env{equation}\sarg
+		\item\env{array}\sarg
+		\item\env{align}\sarg
+		\item\env{alignat}\sarg
+		\item\env{gather}\sarg
+	\end{itemize}
+\end{multicols}
 
 \subsubsection*{Formelsatz}
 
 \paragraph{Gleichungen ausrichten}
 
-Zum Ausrichten von Gleichungen und Formeln bietet sich die \env{align}\sarg Umgebung an. Sie erlaubt die Ausrichtung anhand von \& Zeichen.
+Zum Ausrichten von Gleichungen und Formeln bietet sich die \env{align}\sarg\ Umgebung an. Sie erlaubt die Ausrichtung anhand von \& Zeichen.
 \begin{example}
 	\begin{align*}
 	f'(x) &= 9x^2 + \frac{1}{2x^3} \\
@@ -189,6 +190,12 @@ Für Gleichungssysteme mit Äquivalenzformungen wird das Paket \pkg{gauss} einge
 	  x & +  y & + 5z &= & 13
 	\end{gmatrix} \]
 \end{sidebyside}
+
+Zur Vereinfachung gibt es das Kommando \cs{gls}:
+\begin{commands}
+	\command{gls}[\sarg\oarg{pfeil}\marg{inhalt}\oarg{abstand}]
+	Die \sarg-Version erzeugt die oben gezeigte Matrix. \meta{inhalt} wird in die \env*{gmatrix} Umgebung gesetzt. Ohne \sarg wird angenommen, das GLS wird innerhalb einer \env*{align}\sarg Umgebung gesetzt (siehe unten). Dann kann mit \meta{pfeil} ein Symbol als Umformungspfeil gesetzt werden. Als Standard ist dies\cs*{rightsquigarrow}. Soll kein Pfeil erscheinen (z.B. da es das erste GLS ist), kann das Argument leer gelassen werden. \meta{abstand} setzt den Abstand zwischen zwei aufeinanderfolgenden GLS mit \verb!\\!\oarg{abstand}. Standards ist \code{.8em}.
+\end{commands}
 
 Die zugehörige Koeffizientenmatrix kann entsprechend mit der Option \code{p} gesetzt werden.
 \begin{sidebyside}
@@ -247,3 +254,9 @@ Aufgrund des Platzmangels werden Brüche in Gleichungssystemen und Matrizen bess
 %		& & 0 & = 0 \\
 %		x & +y & +5z&  = 13
 %		\end{gmatrix} \]
+
+\subsection{Geometrische Konstruktionen}\label{sec:geometrie}
+
+
+\subsection{Funktionsgraphen}\label{sec:funktionsgraphen}
+Als Ergänzung zu den Geometrie-Paketen können Funktionsgraphen mit dem Paket \env{tkz-fct} geplottet werden.
