@@ -106,10 +106,14 @@
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[ngerman]{babel}
 
-% Fix file extension parsing of graphicx
+% Fix file extension parsing of graphicx:
 % See: https://tex.stackexchange.com/questions/110513/unknown-graphics-extension-1-png
+% Erlaubt Punkte in Dateinamen (z.B. 06.bruchrechnen-1.abb.jpg)
 \RequirePackage{grffile}
 
+% Komma als Trenzeichen für Dezimalstellen nutzen
+\RequirePackage{icomma}
+% Einheiltiche Darstellung von Zahlen und Einheiten im Text
 \RequirePackage{siunitx}
 \sisetup{
 	group-digits = integer,
@@ -122,7 +126,7 @@
 \DeclareSIUnit\cent{ct}
 \DeclareSIUnit\uhr{Uhr}
 \DeclareSIUnit\pa{\,p.A.}
-\DeclareSIUnit\are{a}
+\DeclareSIUnit\are{a} % offiziell keine SI-Einheit
 
 % Euro Beträge mit eurosym
 \let\ngb@eur\EUR
