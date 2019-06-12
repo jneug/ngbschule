@@ -228,6 +228,43 @@
 
 \NewDocumentCommand \geoPolygonzug { O{} m }{\draw[#1] #2;}
 
+%\newcommand{\geoWuerfel}[4]{
+%	\pgfmathsetmacro \angle {45}
+%	\pgfmathsetmacro \xd {{.5*cos(\angle)}}
+%	\pgfmathsetmacro \yd {{.5*sin(\angle)}}
+%	\pgfmathsetmacro \x {{#1-1+(#2-1)*(\xd)}}
+%	\pgfmathsetmacro \y {{#3-1+(#2-1)*(\yd)}}
+%	
+%	\draw[fill=#4] (\x,\y) -- (\x+1,\y) -- (\x+1,\y+1) -- (\x,\y+1) -- cycle;
+%	\draw[fill=#4] (\x,\y+1) -- (\x+\xd,\y+1+\yd) -- (\x+1+\xd,\y+1+\yd) -- (\x+1,\y+1) -- cycle;
+%	\draw[fill=#4] (\x+1,\y+1) -- (\x+1+\xd,\y+1+\yd) -- (\x+1+\xd,\y+\yd) -- (\x+1,\y) -- cycle;
+%}
+\newcommand{\geoWuerfel}[4]{
+	\geoWuerfelVorne{#1}{#2}{#3}{#4}
+	\geoWuerfelOben{#1}{#2}{#3}{#4}
+	\geoWuerfelRechts{#1}{#2}{#3}{#4}
+}
+\newcommand{\geoWuerfelVorne}[4]{
+	\pgfmathsetmacro \xd {.5}
+	\pgfmathsetmacro \yd {.5}
+	\pgfmathsetmacro \x {{#1-1+.5*(#2-1)}}
+	\pgfmathsetmacro \y {{#3-1+.5*(#2-1)}}
+	\draw[fill=#4] (\x,\y) -- (\x+1,\y) -- (\x+1,\y+1) -- (\x,\y+1) -- cycle;
+}
+\newcommand{\geoWuerfelOben}[4]{
+	\pgfmathsetmacro \xd {.5}
+	\pgfmathsetmacro \yd {.5}
+	\pgfmathsetmacro \x {{#1-1+.5*(#2-1)}}
+	\pgfmathsetmacro \y {{#3-1+.5*(#2-1)}}
+	\draw[fill=#4] (\x,\y+1) -- (\x+\xd,\y+1+\yd) -- (\x+1+\xd,\y+1+\yd) -- (\x+1,\y+1) -- cycle;
+}
+\newcommand{\geoWuerfelRechts}[4]{
+	\pgfmathsetmacro \xd {.5}
+	\pgfmathsetmacro \yd {.5}
+	\pgfmathsetmacro \x {{#1-1+.5*(#2-1)}}
+	\pgfmathsetmacro \y {{#3-1+.5*(#2-1)}}
+	\draw[fill=#4] (\x+1,\y+1) -- (\x+1+\xd,\y+1+\yd) -- (\x+1+\xd,\y+\yd) -- (\x+1,\y) -- cycle;
+}
 % Transformationen %
 \NewDocumentCommand \geoSpiegeln { s r() r() O{'} }{%
 	\IfBooleanTF {#1} {%
