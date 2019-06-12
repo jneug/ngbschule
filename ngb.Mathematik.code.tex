@@ -159,7 +159,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Text mittig am Punkt #2
-\NewDocumentCommand \geoText { O{} r() m } {\tkzText[fill=white,#1](#2){#3}}
+\NewDocumentCommand \geoText { O{} r() m } {\tkzText[#1](#2){#3}}
 
 % Punkte
 \newcommand{\geoUrsprung}[1][O]{\tkzDefPoint(0,0){#1}}
