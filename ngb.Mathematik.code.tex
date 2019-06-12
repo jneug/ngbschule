@@ -195,7 +195,25 @@
 \NewDocumentCommand \geoStrecken { O{} r() }{\tkzDrawSegments[#1](#2)}
 \NewDocumentCommand \geoStreckeBeschriften { O{} r() m }{\tkzLabelSegment[#1](#2){#3}}
 
-\NewDocumentCommand \geoLaenge { O{} r() O{} m } {\tkzDrawSegment[line width=1pt,|-|,#1](#2)\tkzLabelSegment[#3](#2){#4}}
+\NewDocumentCommand \geoLaenge { O{} r() O{} m } {\tkzDrawSegment[|-|,#1](#2)\tkzLabelSegment[#3](#2){#4}}
+
+% Args:
+% location: below, above, left, right
+% options for the line
+% line endings
+% options for the label
+% label text
+\NewDocumentCommand \geoAbmessung { m O{} r() O{} m } {%
+	\pgfmathsetmacro \xd {0}
+	\pgfmathsetmacro \yd {0}
+	\ifstrequal{#1}{right}{\pgfmathsetmacro \xd {2mm}}{}
+	\ifstrequal{#1}{left}{\pgfmathsetmacro \xd {-2mm}}{}x
+	\ifstrequal{#1}{above}{\pgfmathsetmacro \yd {2mm}}{}
+	\ifstrequal{#1}{below}{\pgfmathsetmacro \yd {-2mm}}{}
+	\begin{scope}[transform canvas={xshift=\xd,yshift=\yd}]
+	 	\geoLaenge[#2](#3)[#1,#4]{#5}
+	\end{scope}%
+}
 
 \NewDocumentCommand \geoGerade { O{} r() }{\tkzDrawLine[add=10 and 10,#1](#2)}
 \NewDocumentCommand \geoGeradeBeschriften { O{} r() m }{\tkzLabelSegment[#1](#2){#3}}
