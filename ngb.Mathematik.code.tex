@@ -209,11 +209,11 @@
 \NewDocumentCommand \geoAbmessung { m O{} r() O{} m } {%
 	\pgfmathsetmacro \xd {0}
 	\pgfmathsetmacro \yd {0}
-	\ifstrequal{#1}{right}{\pgfmathsetmacro \xd {2mm}}{}
-	\ifstrequal{#1}{left}{\pgfmathsetmacro \xd {-2mm}}{}x
-	\ifstrequal{#1}{above}{\pgfmathsetmacro \yd {2mm}}{}
-	\ifstrequal{#1}{below}{\pgfmathsetmacro \yd {-2mm}}{}
-	\begin{scope}[transform canvas={xshift=\xd,yshift=\yd}]
+	\ifstrequal{#1}{right}{\pgfmathsetmacro \xd {.2}}{}
+	\ifstrequal{#1}{left}{\pgfmathsetmacro \xd {-.2}}{}
+	\ifstrequal{#1}{above}{\pgfmathsetmacro \yd {.2}}{}
+	\ifstrequal{#1}{below}{\pgfmathsetmacro \yd {-.2}}{}
+	\begin{scope}[transform canvas={shift={(\xd,\yd)}}]
 	 	\geoLaenge[#2](#3)[#1,#4]{#5}
 	\end{scope}%
 }
