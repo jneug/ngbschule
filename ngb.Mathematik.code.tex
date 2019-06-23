@@ -226,6 +226,9 @@
 \NewDocumentCommand \geoVektor { O{} r() }{\tkzDrawSegment[>=latex,->,thick,#1](#2)}
 
 % Formen und Polygone %
+\NewDocumentCommand \geoRechteck { O{} r() m m }{\draw[#1] (#2) |- +(#3,#4) |- (#2);}
+\NewDocumentCommand \geoQuadrat{ O{} r() m }{\draw[#1] (#2) |- +(#3,#3) |- (#2);}
+
 %\NewDocumentCommand \geoPolygon { O{} r() }{\tkzDrawPolySeg[#1](#2)}
 \NewDocumentCommand \geoPolygon { O{} r() }{\tkzDrawPolygon[#1](#2)}
 
