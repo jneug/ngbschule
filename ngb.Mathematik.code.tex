@@ -268,8 +268,9 @@
 	\pgfmathsetmacro \y {{#3-1+.5*(#2-1)}}
 	\draw[fill=#4] (\x+1,\y+1) -- (\x+1+\xd,\y+1+\yd) -- (\x+1+\xd,\y+\yd) -- (\x+1,\y) -- cycle;
 }
+
 % Transformationen %
-\NewDocumentCommand \geoSpiegeln { s r() r() O{'} }{%
+\NewDocumentCommand \geoSpiegeln { s r() r() O{} }{%
 	\IfBooleanTF {#1} {%
 		\foreach \p in {#2}{%
 			\geoSpiegelpunkt*(\p)(#3){\p#4}
