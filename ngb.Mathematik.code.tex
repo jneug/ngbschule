@@ -213,11 +213,11 @@
 \NewDocumentCommand \geoAbmessung { m O{} r() O{} m } {%
 	\pgfmathsetmacro \xd {0}
 	\pgfmathsetmacro \yd {0}
-	\ifstrequal{#1}{right}{\pgfmathsetmacro \xd {2mm}}{}
-	\ifstrequal{#1}{left}{\pgfmathsetmacro \xd {-2mm}}{}x
-	\ifstrequal{#1}{above}{\pgfmathsetmacro \yd {2mm}}{}
-	\ifstrequal{#1}{below}{\pgfmathsetmacro \yd {-2mm}}{}
-	\begin{scope}[transform canvas={xshift=\xd,yshift=\yd}]
+	\ifstrequal{#1}{right}{\pgfmathsetmacro \xd {.2}}{}
+	\ifstrequal{#1}{left}{\pgfmathsetmacro \xd {-.2}}{}
+	\ifstrequal{#1}{above}{\pgfmathsetmacro \yd {.2}}{}
+	\ifstrequal{#1}{below}{\pgfmathsetmacro \yd {-.2}}{}
+	\begin{scope}[transform canvas={shift={(\xd,\yd)}}]
 	 	\geoLaenge[#2](#3)[#1,#4]{#5}
 	\end{scope}%
 }
@@ -230,6 +230,9 @@
 \NewDocumentCommand \geoVektor { O{} r() }{\tkzDrawSegment[>=latex,->,thick,#1](#2)}
 
 % Formen und Polygone %
+\NewDocumentCommand \geoRechteck { O{} r() m m }{\draw[#1] (#2) |- +(#3,#4) |- (#2);}
+\NewDocumentCommand \geoQuadrat{ O{} r() m }{\draw[#1] (#2) |- +(#3,#3) |- (#2);}
+
 %\NewDocumentCommand \geoPolygon { O{} r() }{\tkzDrawPolySeg[#1](#2)}
 \NewDocumentCommand \geoPolygon { O{} r() }{\tkzDrawPolygon[#1](#2)}
 
@@ -272,8 +275,9 @@
 	\pgfmathsetmacro \y {{#3-1+.5*(#2-1)}}
 	\draw[fill=#4] (\x+1,\y+1) -- (\x+1+\xd,\y+1+\yd) -- (\x+1+\xd,\y+\yd) -- (\x+1,\y) -- cycle;
 }
+
 % Transformationen %
-\NewDocumentCommand \geoSpiegeln { s r() r() O{'} }{%
+\NewDocumentCommand \geoSpiegeln { s r() r() O{} }{%
 	\IfBooleanTF {#1} {%
 		\foreach \p in {#2}{%
 			\geoSpiegelpunkt*(\p)(#3){\p#4}
