@@ -234,7 +234,7 @@
 \newcommand{\linie}[1][6cm]{\underline{\hspace{#1}}}
 \def\linievoll{\leaders\hbox{\rule[-1ex]{1pt}{.5pt}}\hfill\;}
 %\newcommand{\tab}{\hspace{1cm}}
-\newcommand{\titlerule}{\noindent\\[-2ex]\rule{\textwidth}{1pt}\vspace{-2ex}}
+\newcommand{\titlerule}{\noindent\\[-2ex]\rule{\textwidth}{1pt}\vspace{-1ex}}
 \newcommand{\Namensfeld}[1][5cm]{Name: \linie[#1]}
 
 % \code wird von anderen Paketen auch verwendet
@@ -254,7 +254,9 @@
 \newcommand{\ordner}[1]{\directory{#1}}
 
 % Rahmen um eine Box
-\newenvironment{rahmen}[1][black]{\begin{tcolorbox}[colframe=#1,colback=white,sharp corners]}{\end{tcolorbox}\vspace{-2ex}}
+\tcbuselibrary{skins}
+\newenvironment{rahmen}[1][black]{\begin{tcolorbox}[colframe=#1,colback=white,sharp corners]}{\end{tcolorbox}}
+\newenvironment{infobox}[1][]{\begin{tcolorbox}[enhanced,colframe=black,colback=black!20,rounded corners,width=.95\textwidth,center,boxrule=1pt,drop shadow,#1]\symHilfe}{\end{tcolorbox}}
 
 % Tipp
 \newcommand{\tipp}[1]{{\textbf{\llap{\usym{1F4A1}\space}Tipp:}
