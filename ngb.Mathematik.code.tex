@@ -176,12 +176,16 @@
 \NewDocumentCommand \geoText { O{} r() m } {\tkzText[#1](#2){#3}}
 
 % Punkte
-\newcommand{\geoUrsprung}[1][O]{\tkzDefPoint(0,0){#1}}
+\NewDocumentCommand \geoUrsprung {s O{O}}{
+	\IfBooleanTF {#1}
+	{ \geoPunkt(0,0){#2} }
+	{ \geoKoordinate(0,0){#2} }
+}
 \NewDocumentCommand \geoKoordinate { r() m }{\tkzDefPoint(#1){#2}}
 \NewDocumentCommand \geoKoordinaten {m}{\tkzDefPoints{#1}}
 
 \NewDocumentCommand \geoPunkt {s O{} r() m}{
-	\tkzDefPoint(#3){#4}\tkzDrawPoint[shape=cross out,size=10,#2](#4)
+	\tkzDefPoint(#3){#4}\tkzDrawPoint[size=10,#2](#4)
 	\IfBooleanT {#1}
 	{ \geoPunktBeschriften(#4){#4} }
 }
