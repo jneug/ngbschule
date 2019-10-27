@@ -22,7 +22,7 @@
 		&
 		& \rmfamily\textbf{Informationen \&\newline Aufgaben} \\ \hline\hline\endhead}{\end{longtable}}
 
-\def\ichkann#1#2{#1 & \smileys & %
+\def\ichkann#1#2{\dots #1 & \smileys & %
 	\bgroup\def\arraystretch{1}\begin{tabular}{l}
 		#2
 	\end{tabular}\egroup \\ \hline}
@@ -41,3 +41,4 @@
 \newcommand{\af}[1]{Afg.#1}
 \newcommand{\bu}[2]{Buch S.#1\ifthenelse{\equal{#2}{}}{}{, \af{#2}}}
 \newcommand{\ah}[2]{AH S.#1\ifthenelse{\equal{#2}{}}{}{, \af{#2}}}
+\newcommand{\ab}[1]{AB \enquote{#1}}
