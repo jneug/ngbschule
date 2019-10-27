@@ -46,6 +46,17 @@
 \def\@pkt(#1|#2){\ensuremath{\left(#1 \,\middle|\, #2\right)}}
 \def\@@pkt(#1|#2|#3){\ensuremath{\left(#1 \,\middle|\, #2 \,\middle|\, #3\right)}}
 
+% Better vector arrow
+% See: https://tex.stackexchange.com/a/114636/179614
+\newcommand{\vect}[1]{%
+  \vbox{\m@th \ialign {##\crcr
+  \vectfill\crcr\noalign{\kern-\p@ \nointerlineskip}
+  $\hfil\displaystyle{#1}\hfil$\crcr}}}
+\def\vectfill{%
+  $\m@th\smash-\mkern-7mu%
+  \cleaders\hbox{$\mkern-2mu\smash-\mkern-2mu$}\hfill
+  \mkern-7mu\raisebox{-3.81pt}[\p@][\p@]{$\mathord\mathchar"017E$}$}
+\def\vector(#1|#2|#3){\begin{pmatrix} #1 \\ #2 \\ #3 \end{pmatrix}}
 
 \NewDocumentCommand \gls {s O{\rightsquigarrow} m O{.8em}} {
 	\IfBooleanTF{#1}{
