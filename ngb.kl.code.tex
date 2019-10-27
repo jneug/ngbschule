@@ -197,6 +197,12 @@
 % Angepasster Bewertungsbogen
 \ExplSyntaxOn
 
+\newcommand{\setzeName}[1]{\SetExerciseProperty{ID}{#1}}
+
+\newcommand{\ordnungspunkte}[1]{\begin{aufgabe}[print=false,use=true,ID=OP,points=#1]
+	% Empty
+\end{aufgabe}}
+
 \str_new:N \ngb_kompetenzen_str
 \bool_new:N \ngb_kompetenzen_setzen_bool
 \bool_new:N \ngb_erwartungen_erste_bool
@@ -224,8 +230,8 @@
 
 % Zeile für die Aufgabe in der Tabelle setzen (Standard).
 \cs_new:Npn \_ngb_aufgaben_erwartungen_zeile {
-	\detokenize{\bfseries}
-	\GetExerciseProperty{counter}
+	\detokenize{\bfseries }%
+	\ifstrequal{\GetExerciseProperty{ID}}{\GetExerciseProperty{id}}{\GetExerciseProperty{counter}}{\GetExerciseProperty{ID}}
 	\detokenize{& }%
 	\schule_zeilen_erwartungen_str%
 	\detokenize{& \bfseries}%
@@ -279,10 +285,13 @@
 		\bool_gset_false:N \schule_erwartungen_zeile_gerade_bool
 		\bool_gset_true:N \ngb_erwartungen_erste_bool
 		
+%		\int_gset:Nn \schule_aufgaben_zusatzpunkte_int {\GetExerciseProperty{bonus-points}}
+		
 		%Definition der Aufgabe in entsprechende Befehle laden
 		\def\ExerciseType{##1}%
 		\def\ExerciseID{##2}%
-		\GetExercisePropertyTF{erwartungen}{\PropertyValue}{}
+%		\GetExercisePropertyTF{erwartungen}{\PropertyValue}{\int_gadd:Nn \schule_aufgaben_punkte_int {\_str_to_int_with_zero:n{\GetExerciseProperty{points}}}\int_gadd:Nn \schule_aufgaben_zusatzpunkte_int {\_str_to_int_with_zero:n{\GetExerciseProperty{bonus-points}}}}
+		\GetExercisePropertyTF{erwartungen}{\PropertyValue}{\int_gadd:Nn \schule_aufgaben_punkte_int {\_str_to_int_with_zero:n{\GetExerciseProperty{points}}}}
 		
 		%Gesamtaufgabe
 		\tl_gput_right:Nx \schule_aufgaben_erwartungen_str \_ngb_aufgaben_erwartungen_zeile
