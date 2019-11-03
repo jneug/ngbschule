@@ -56,16 +56,36 @@
 }
 
 % Better vector arrow
+\RequirePackage[f]{esvect}
+\def\vec#1{\vv{#1}}
+\def\vect#1{\vv{#1}} % Deprecated
 % See: https://tex.stackexchange.com/a/114636/179614
-\newcommand{\vect}[1]{%
-  \vbox{\m@th \ialign {##\crcr
-  \vectfill\crcr\noalign{\kern-\p@ \nointerlineskip}
-  $\hfil\displaystyle{#1}\hfil$\crcr}}}
-\def\vectfill{%
-  $\m@th\smash-\mkern-7mu%
-  \cleaders\hbox{$\mkern-2mu\smash-\mkern-2mu$}\hfill
-  \mkern-7mu\raisebox{-3.81pt}[\p@][\p@]{$\mathord\mathchar"017E$}$}
-\def\vector(#1|#2|#3){\begin{pmatrix} #1 \\ #2 \\ #3 \end{pmatrix}}
+%\newcommand{\vect}[1]{%
+%  \vbox{\m@th \ialign {##\crcr
+%  \vectfill\crcr\noalign{\kern-\p@ \nointerlineskip}
+%  $\hfil\displaystyle{#1}\hfil$\crcr}}}
+%\def\vectfill{%
+%  $\m@th\smash-\mkern-7mu%
+%  \cleaders\hbox{$\mkern-2mu\smash-\mkern-2mu$}\hfill
+%  \mkern-7mu\raisebox{-3.81pt}[\p@][\p@]{$\mathord\mathchar"017E$}$}
+
+%\def\vector(#1|#2|#3){\begin{pmatrix} #1 \\ #2 \\ #3 \end{pmatrix}}
+
+\RenewDocumentCommand \vector
+	{s >{\SplitArgument{3}{|}} r()}
+	{ \IfBooleanTF{#1}{\@tvector #2}{\@vector #2} }
+\NewDocumentCommand \@vector {m m m m} {
+	\begin{pmatrix}\IfNoValueTF{#3}
+		{ #1 \\ #2 }
+		{ #1 \\ #2 \\ #3 }
+	\end{pmatrix}
+}
+\NewDocumentCommand \@tvector {m m m m} {
+	\left(\begin{smallmatrix}\IfNoValueTF{#3}
+		{ #1 \\ #2 }
+		{ #1 \\ #2 \\ #3 }
+	\end{smallmatrix}\right)
+}
 
 \NewDocumentCommand \gls {s O{\rightsquigarrow} m O{.8em}} {
 	\IfBooleanTF{#1}{
