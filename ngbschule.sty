@@ -87,11 +87,14 @@
 % Seitenabmessungen
 % Todo: Per Option Papiergröße beachten (a4paper)
 \ifdefstring{\schule@typ}{folie}{ % Folien bekommen vom schulepaket besondere Abmessungen
-}{ 
-	\iftoggle{ngb@ohneLochung}{
-		\RequirePackage[top=3cm,left=2cm,bottom=2cm,right=2cm]{geometry}
+}{
+	\ifdefstring{\ngb@typ}{lerntheke}{ % Lerntheken von ngbschule
 	}{
-		\RequirePackage[top=3cm,left=2.5cm,bottom=2cm,right=2cm]{geometry}
+		\iftoggle{ngb@ohneLochung}{
+			\RequirePackage[top=3cm,left=2cm,bottom=2cm,right=2cm]{geometry}
+		}{
+			\RequirePackage[top=3cm,left=2.5cm,bottom=2cm,right=2cm]{geometry}
+		}
 	}
 }
 %% Abstand zur Kopfzeile verringern
@@ -288,7 +291,7 @@
 \def\symLaptop{\usym{1F5B3}}
 \def\symInfo{\usym{1F6C8}}
 \def\symStopp{\usym{1F6AB}}
-\def\symHilfe{\usym{26E8}}
+\def\symHilfe{\usym{1F6A8}}
 \def\symBlitz{\usym{26A1}}
 
 \def\symEinzel{\usym{1F6C9}}
@@ -310,6 +313,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % TODO: Koppeln mit Bearbeitungshinweisen von Aufgaben?
 % TODO: Kopplung mit option loesung lösen und hiwneise o.Ä. als Option einführen?
+\qrset{height=4.5cm, nolink, padding}
+
 \ifdefstring{\ngb@hinweise}{keine}{%
 	% Hinweise werden als QR-Code gesetzt
 	\newcommand{\qrhinweis}[2][]{\ifstrempty{#1}{\qrcode{#2}}{\qrcode{#1}}}%
