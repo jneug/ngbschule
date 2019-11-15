@@ -25,6 +25,10 @@
 
 %\RequirePackage[colorlinks=true,linkcolor=black]{hyperref}
 
+%\usepackage{pgfmorepages}
+%\pgfmorepagesloadextralayouts
+%\pgfpagesuselayout{4 on 2, odd then even}[a4paper]
+
 \tikzset{
 	header/.style={ % requires library shapes.misc
 		draw,
@@ -206,7 +210,7 @@
 \def\loesung{\infotext}
 
 \clearscrheadings
-\addtokomafont{pagefoot}{\footnotesize\color{gray!60}}
+\addtokomafont{pagefoot}{\scriptsize\color{black!40}}
 %\ihead*{\karteKopfLinks}
 %\chead*{\karteKopfMitte}
 %\ohead*{\karteKopfRechts}
