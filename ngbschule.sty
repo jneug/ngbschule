@@ -175,6 +175,13 @@
 	label=\alph{teilaufgabeni}),
 }}{}
 
+% Prettyref Referenzen
+\RequirePackage{prettyref}
+% Kurzform für \prettyref
+\def\pref{\prettyref}
+\newrefformat{afg}{Aufgabe\,\ref{#1}}
+\newrefformat{tafg}{Teilaufgabe\,\ref{#1}}
+
 % Includes basierend auf Typ und Fach und weitere Module werden (fast) zuletzt geladen
 \ngb@modulDateiLaden{\ngb@typ}
 \ngb@modulDateiLaden{\schule@fach}
