@@ -163,6 +163,7 @@
 % See: https://www.overleaf.com/learn/latex/Wrapping_text_around_figures
 \RequirePackage{wrapfig}
 
+
 % Horizontale listen z.B. für Unteraufgaben
 \RequirePackage{tasks}
 %\settasks{
@@ -255,13 +256,31 @@
 %% Auszeichnung für Operatoren des Kernlehrplans
 \newcommand{\operator}[1]{\textsc{#1}}
 
-\RequirePackage{menukeys}
+
+\def\yspace{\hspace{0.2em plus 0.1em}}
+
 %% Auszeichnungen für Funktionen von Apps
+\RequirePackage{menukeys}
+
+\copymenustyle{pathswithfile}{paths}
+\changemenuelement{pathswithfile}{pre}{%
+   \drawtikzfile[\usemenucolor{a}][\usemenucolor{b}]%
+   \hspace{0.2em plus 0.1em}%
+}
 \newcommand{\appfunktion}[1]{\enquote{\textsc{#1}}}
 \newcommand{\taste}[1]{\enquote{\textsc{\uppercase{#1}}}}
-%\newcommand{\ordner}[1]{\enquote{\textsc{#1}}}
-\renewmenumacro{\directory}[/]{pathswithfolder}
-\newcommand{\ordner}[1]{\directory{#1}}
+
+\newmenumacro{\ordner}[/]{pathswithfolder}
+\newmenumacro{\datei}[/]{pathswithfile}
+
+\NewDocumentCommand \drawtikzfile {O{white} O{black}}{
+   \begin{tikzpicture}[rounded corners=0.08ex,scale=.5]
+      \draw [#2,fill=#1] (0,0) |- (.6em,2.5ex) -- (1em,1.8ex) |- cycle;
+      \foreach \i in {1,...,3}
+      	\draw [#2] (.1em,\i*.625ex) -- +(.8em,0);
+     \draw [#2,fill=#1] (.6em,2.5ex) |- (1em,1.8ex) -- cycle;
+   \end{tikzpicture}%
+}
 
 % Rahmen um eine Box
 \tcbuselibrary{skins}
