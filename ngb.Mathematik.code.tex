@@ -151,6 +151,7 @@
 	%	point style/.style={%
 	%		shape=cross out
 	%	}
+	% Pfeilspitzen generell auf latex
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -244,6 +245,7 @@
 
 \NewDocumentCommand \geoLaenge { O{} r() O{} m } {\tkzDrawSegment[|-|,#1](#2)\tkzLabelSegment[#3](#2){#4}}
 
+% See: https://tex.stackexchange.com/questions/285578/how-to-draw-parallelepiped-and-cube-with-latex
 % Args:
 % location: below, above, left, right
 % options for the line
@@ -289,6 +291,8 @@
 %	\draw[fill=#4] (\x,\y+1) -- (\x+\xd,\y+1+\yd) -- (\x+1+\xd,\y+1+\yd) -- (\x+1,\y+1) -- cycle;
 %	\draw[fill=#4] (\x+1,\y+1) -- (\x+1+\xd,\y+1+\yd) -- (\x+1+\xd,\y+\yd) -- (\x+1,\y) -- cycle;
 %}
+% See: https://tex.stackexchange.com/questions/12020/what-is-the-easiest-way-to-draw-a-3d-cube-with-tikz
+% And: https://tex.stackexchange.com/questions/224854/how-to-draw-stacked-cubes-of-different-sizes-and-colors
 \newcommand{\geoWuerfel}[4]{
 	\geoWuerfelVorne{#1}{#2}{#3}{#4}
 	\geoWuerfelOben{#1}{#2}{#3}{#4}
@@ -331,3 +335,65 @@
 %\newcommand{\geoSpiegelnUndZeichnen}[3][']{\Spiegeln[#1]{#2}{#3}\Polygon{\MitSuffixVersehen{#2}{#1}}}
 
 \newcommand{\geoMitSuffixVersehen}[2][']{\foreach \i in {#2}{\i#1,}}
+
+% Anteile zeichnen
+\NewDocumentCommand \tikzRechteck {O{} D(){0,0} m} {\draw[#1] (#2) |- +(#3) |- (#2);}
+\NewDocumentCommand \tikzQuadrat {O{} D(){0,0} m} {\draw[#1] (#2) |- +(#3,#3) |- (#2);}
+
+\def\tikzAnteilFarbe{black!20}
+
+\newcounter{ngb@anteile}
+\NewDocumentCommand \tikzAnteile {s >{\SplitArgument{1}{,}}D(){0,0} >{\SplitArgument{1}{,}}o m m m} {%
+	\IfNoValueTF{#3}{%
+		\IfBooleanTF{#1}{%
+			\@tikzAnteileZeichnen #2 {#4} {#5} {#4} {#5} {#6-(#4*#5)+1}
+		}{%
+			\@tikzAnteileZeichnen #2 {#4} {#5} {#4} {#5} {#6}
+		}
+	}{%
+		\IfBooleanTF{#1}{%
+			\@tikzAnteileZeichnen #2 #3 {#4} {#5} {#6-(#4*#5)+1}
+		}{%
+			\@tikzAnteileZeichnen #2 #3 {#4} {#5} {#6}
+		}
+	}
+}
+\NewDocumentCommand \@tikzAnteileZeichnen {m m m m m m m}{%
+	\pgfmathsetmacro \xMax {#5-1}
+	\pgfmathsetmacro \yMax {#6-1}
+	\pgfmathsetmacro \xs {#3/#5}
+	\pgfmathsetmacro \ys {#4/#6}
+	\pgfmathsetmacro \d {sign(#7)*-1}
+	\setcounter{ngb@anteile}{#7-1}
+	\tikzRechteck(#1,#2){#3,#4};
+	\foreach \x in {0,...,\xMax} {%
+		\foreach \y in {0,...,\yMax} {%
+			\ifnum\value{ngb@anteile}<0
+				\tikzRechteck(#1+\x*\xs,#2+\y*\ys){\xs,\ys};
+			\else
+				\tikzRechteck[fill=\tikzAnteilFarbe](#1+\x*\xs,#2+\y*\ys){\xs,\ys}
+			\fi
+			\addtocounter{ngb@anteile}{\d}
+		}
+	}
+}
+
+\NewDocumentCommand \tikzAnteileKreis {s D(){0,0} O{1} m m O{0}} {%
+	\pgfmathsetmacro \a {#4}
+	\pgfmathsetmacro \b {#5}
+	\pgfmathsetmacro \ang {360/#5}
+	\pgfmathsetmacro \r {#6}
+	\draw (#2) circle (#3);
+	\foreach \i in {1,...,\a} {%
+		\draw[fill=\tikzAnteilFarbe] (#2) -- +({(\i-1)*\ang+\r}:#3) arc ({(\i-1)*\ang+\r}:{\i*\ang+\r}:#3) -- cycle;
+	}
+	\foreach \i in {\a,...,\b} {%
+		\draw (#2) -- +({(\i-1)*\ang+\r}:#3);
+	}
+}
+
+\NewDocumentCommand \tikzWinkel {s D(){0,0} O{1} m} {%
+	\fill[yellow,fill opacity=.5,draw=red,thick] (#2) -- +(0:{#3/2}) arc (0:#4:{#3/2}) -- cycle;
+	\IfBooleanT{#1}{\draw[draw=red,thick,->] (#2)+(0:{#3/2}) arc (0:#4:{#3/2});}
+	\draw[thick] (#2)+(#4:#3) -- (#2) -- +(#3,0);
+}
