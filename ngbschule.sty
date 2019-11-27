@@ -162,7 +162,7 @@
 
 % See: https://www.overleaf.com/learn/latex/Wrapping_text_around_figures
 \RequirePackage{wrapfig}
-
+\NewDocumentEnvironment{wrapfig}{}{\begingroup\setlength\intextsep{0pt}}{\par\endgroup}
 
 % Horizontale listen z.B. für Unteraufgaben
 \RequirePackage{tasks}

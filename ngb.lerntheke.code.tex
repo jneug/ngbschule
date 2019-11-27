@@ -178,6 +178,11 @@
 \loesungKopf{#1}%
 \begin{tcolorbox}[colframe=black,colback=white,rounded corners,width=\textwidth,height=\textheight,left=2mm,right=2mm]}{\end{tcolorbox}\clearpage}
 
+% Farbdefinitionen für Lösungen
+\def\lsgFarbe{orange}
+\def\lsg{\color{\lsgFarbe}}
+\def\lsgText#1{\textcolor{\lsgFarbe}{#1}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %         Hilfekarten          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -224,3 +229,8 @@
 
 %\RequirePackage{rotating}
 %\ofoot[\rotatebox{180}{\@karteFooter}]{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%      Weitere Makros          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
