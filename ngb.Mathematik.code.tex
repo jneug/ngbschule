@@ -397,3 +397,7 @@
 	\IfBooleanT{#1}{\draw[draw=red,thick,->] (#2)+(0:{#3/2}) arc (0:#4:{#3/2});}
 	\draw[thick] (#2)+(#4:#3) -- (#2) -- +(#3,0);
 }
+
+\NewDocumentCommand \tikzBall {s D(){0,0} m O{black!80}} {%
+	\shade[ball color=#4] (#2) circle (#3);
+}
