@@ -1,6 +1,12 @@
 \newcommand{\Dauer}{\makeatletter\ngb@dauer\makeatother\xspace}
 \newcommand{\Variante}{\makeatletter\ngb@variante\makeatother\xspace}
 
+\pgfmathtruncatemacro\ngb@hmt{\ngb@dauer-\ngb@hmft}
+\NewDocumentCommand \Hmft {s} {%
+	\IfBooleanTF{#1}{\makeatletter\ngb@hmt\makeatother}{\makeatletter\ngb@hmft\makeatother}\xspace%
+}
+
+
 \graphicspath{{inc/animal-icons/}}
 \newcommand{\tier}{\raisebox{-.3\height}{\pgfmathrandom{1,46}\includegraphics[height=1.5cm]{\pgfmathresult.png}}}
 \newcommand{\vielErfolg}{\begin{flushright}\bfseries Viel Erfolg \; \tier\end{flushright}}
