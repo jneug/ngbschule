@@ -146,11 +146,10 @@
 %% Wird vor den Unterpaketen geladen, um Überschrieben zu ermöglichen (z.b. ngb.kl.code.tex)
 % TODO: Anders regeln? Als eigenes Paket? Einfach per \input?
 % TODO: Variante (A/B) berücksichtigen ...
-\def\ngb@imgPath{}
-\newcommand{\aufgabeLaden}[2][.]{\def\ngb@imgPath{#1}\InputIfFileExists{\ngb@afgPool/#2.afg.tex}{}{%
+\RequirePackage{import}
+\newcommand{\aufgabeLaden}[2][.]{\IfFileExists{\ngb@afgPool/#2.afg.tex}{\import*{\ngb@afgPool}{#2.afg.tex}}{%
 	\PackageWarning{ngbschule}{Aufgabendatei \ngb@afgPool/#2.afg.tex wurde nicht gefunden!}%
 }}
-\newcommand{\bildLaden}[2][]{\includegraphics[#1]{\ngb@afgPool/\ngb@imgPath/#2}}
 
 % Erste Aufgabennummer setzen
 \ifdef{\theaufgabe}{%
