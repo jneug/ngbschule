@@ -1,0 +1,30 @@
+\begin{tikzpicture}[syntaxdiagramm]
+	\node [] {};
+	\node (if) [terminal] {if};
+	\node [terminal] {(};
+	\node [nonterminal] {Bedingung};
+	\node [terminal] {)};
+	\node (brack) [terminal] {\{};
+	\node [nonterminal] {Anweisungen};
+	\node [terminal] {\}};
+	\node (semi) [point] {};
+	
+	{ [start branch=else going left]
+		\node (semibelow) [point,below=of semi,yshift=-6mm] {};
+		\node (else) [terminal,below=of brack] {else};
+		
+		{ [start branch=elseblock going right]
+			\node (brack2) [terminal,below=of else] {\{};
+			\node [nonterminal] {Anweisungen};
+			\node (brack3) [terminal] {\}};
+		}
+		
+		\node (ifbelow) [point,below=of if,yshift=-2mm] {};
+		\draw [->] (ifbelow) -- (if);
+	}
+	
+	\node (semi2) [point] {};
+	\node (end) [endpoint] {};
+	
+	\draw [->] (brack3) -| (semi2);
+\end{tikzpicture}

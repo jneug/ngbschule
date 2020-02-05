@@ -108,10 +108,11 @@
 	{\input{\ngb@defaultPath/#1.\ngb@defaultLang.lst.tex}%
 }}
 % PAPs
-% Syntaxdiag
+\newcommand{\sydi}[1]{\input{\ngb@defaultPath/#1.synt.tex}}
+% Doku (Rover, Abiklassen, ..)
 
 %% Hack für Listings in tabularx
-\newcommand{\tablelst}[2][]{\lstinline[#1]{#2}}
+\newcommand{\tablelst}[2][]{\lstinline[language=\ngb@defaultLang,#1]{#2}}
 \newenvironment{savelst}[1]
 {\expandafter\newbox\csname lstbox#1\endcsname\lrbox{\csname lstbox#1\endcsname}}
 {\endlrbox}
