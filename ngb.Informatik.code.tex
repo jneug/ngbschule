@@ -1,4 +1,3 @@
-
 %% -----------------
 %%
 %% Makros für Dokumente im Fach Informatik
@@ -62,6 +61,20 @@
 \def\zeilennummernEin{\lstset{numbers=left}}
 \def\setzeSprache#1{\lstset{language=#1}}
 
+% Darstellung von Klassen
+\def\cls#1{\drawtikzclass\hspace{0.2em plus 0.1em}\texttt{#1}}
+\def\func#1{\texttt{#1}}
+\def\attr#1{\texttt{#1}}
+\def\var#1{\texttt{#1}}
+
+\NewDocumentCommand \drawtikzclass {O{white} O{black}}{
+   \begin{tikzpicture}[scale=1]
+      \draw [#2,fill=#1] (0,0) |- (1em,1ex) |- cycle;
+      \draw [#2] (0,.6ex) -- +(1em,0);
+      \draw [#2] (.2em,.8ex) -- +(.6em,0);
+   \end{tikzpicture}%
+}
+
 % Struktogramme (struktex)
 \sBoolValue{\texttt{true}}{\texttt{false}}
 \newcommand{\wenndann}[4][8]{\ifthenelse[#1]{#2}{#3}{#4}{\sTrue}{\sFalse}}
@@ -108,11 +121,10 @@
 	{\input{\ngb@defaultPath/#1.\ngb@defaultLang.lst.tex}%
 }}
 % PAPs
-\newcommand{\sydi}[1]{\input{\ngb@defaultPath/#1.synt.tex}}
-% Doku (Rover, Abiklassen, ..)
+% Syntaxdiag
 
 %% Hack für Listings in tabularx
-\newcommand{\tablelst}[2][]{\lstinline[language=\ngb@defaultLang,#1]{#2}}
+\newcommand{\tablelst}[2][]{\lstinline[#1]{#2}}
 \newenvironment{savelst}[1]
 {\expandafter\newbox\csname lstbox#1\endcsname\lrbox{\csname lstbox#1\endcsname}}
 {\endlrbox}
