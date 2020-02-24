@@ -135,6 +135,12 @@
 \let\ngb@eur\EUR
 \renewcommand{\EUR}[1]{\ngb@eur{\num[round-mode=places,round-precision=2,round-integer-to-decimal,zero-decimal-to-integer]{#1}}}
 %\renewcommand{\EUR}[1]{\SI[round-mode=places,round-precision=2,round-integer-to-decimal,zero-decimal-to-integer]{#1}{\eur}}
+\DeclareUnicodeCharacter{20AC}{\euro}
+
+\newcommand{\tSI}[3]{\tfrac{#1}{#2}\,\si{#3}}
+\newcommand{\dSI}[3]{\dfrac{#1}{#2}\,\si{#3}}
+
+\def\prozent#1{\SI{#1}{\%}}
 
 % Abwärtskompatibilität zum alten unit-Paket
 \def\nicefrac{\tfrac}
@@ -299,8 +305,6 @@
 %\g@addto@macro{\UrlBreaks}{\UrlOrds}
 \RequirePackage{xurl}
 
-\def\prozent#1{\SI{#1}{\%}}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %         Aufzählungen         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -312,6 +316,8 @@
 %\newenvironment{enumeraten}[1][]{\begin{enumerate}[label=\arabic*),#1]}{\end{enumerate}}
 \renewenvironment{smallenumerate}[1][label=\alph*)]{\begin{enumerate}[#1]\itemsep -1.5ex
 	}{\end{enumerate}}
+\newlist{enumeratenn}{enumerate}{1}
+\setlist[enumeratenn,1]{label=(\arabic*)}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
