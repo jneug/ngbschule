@@ -216,7 +216,7 @@
 
 \def\@karteFooter{}
 \newcommand{\infotext}[1]{\gdef\@karteFooter{#1}\thispagestyle{plain.scrheadings}}
-\def\loesung{\infotext}
+\def\loesung#1{\infotext{\raisebox{\depth}{\rotatebox[origin=c]{180}{#1}}}}
 
 \clearscrheadings
 \addtokomafont{pagefoot}{\scriptsize\color{black!40}}
