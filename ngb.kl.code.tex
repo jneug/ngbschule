@@ -206,6 +206,37 @@
 % Angepasster Bewertungsbogen
 \ExplSyntaxOn
 
+% Punkteausgabe von Teilaufgaben an Abi NRW anpassen
+\str_new:N \ngb_teilpunkte_str
+\bool_new:N \ngb_teilpunkte_erste_bool
+\bool_gset_true:N \ngb_teilpunkte_erste_bool
+
+\RenewDocumentCommand{\teilaufgabe}{o}{
+	\IfInsideSolutionTF{\item}{
+		\item%
+		\IfNoValueF{#1}{%
+			\bool_if:NTF \ngb_teilpunkte_erste_bool {%
+			\bool_gset_false:N \ngb_teilpunkte_erste_bool%
+			\tl_gput_right:Nn \ngb_teilpunkte_str {#1}%
+			}{%
+			\tl_gput_right:Nn \ngb_teilpunkte_str {\ +\ #1}%
+			}%
+		\addtocounter{teilpunkte}{#1}\xspace}
+	}
+}
+
+% Teilpunkte zurücksetzen
+\newcommand{\TeilpunkteNeu}{%
+\str_gclear:N \ngb_teilpunkte_str
+\bool_gset_true:N \ngb_teilpunkte_erste_bool
+}
+
+\renewcommand{\Teilpunkte}{\begin{flushright}(\ngb_teilpunkte_str)\end{flushright}}
+
+% Zu Beginn einer Aufgabe Teilpunkte immer auf Null setzen
+\let\oldaufg\aufgabe
+\def\aufgabe{\oldaufg\TeilpunkteNeu}
+
 \newcommand{\setzeName}[1]{\SetExerciseProperty{ID}{#1}}
 
 \newcommand{\ordnungspunkte}[1]{\begin{aufgabe}[print=false,use=true,ID=OP,points=#1]
