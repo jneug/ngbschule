@@ -242,7 +242,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newkomafont{reihe}{\usefontofkomafont{title}\textcolor{ngb.reihe.text}} % \large (?)
 
-\newcommand{\TITEL}{\begin{center}\usekomafont{title}\Titel\end{center}}
+\newcommand{\TITEL}[1][\Titel]{\begin{center}\usekomafont{title}#1\end{center}}
 
 \newcommand{\ReiheTitel}[1][\Titel]{\begin{center}\usekomafont{reihe}\Reihe\\[-1ex]\usekomafont{title}#1\titlerule\end{center}}
 
