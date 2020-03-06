@@ -214,16 +214,17 @@
 \RenewDocumentCommand{\teilaufgabe}{o}{
 	\IfInsideSolutionTF{\item}{
 		\item%
-		\IfNoValueF{#1}{%
-			\bool_if:NTF \ngb_teilpunkte_erste_bool {%
-			\bool_gset_false:N \ngb_teilpunkte_erste_bool%
-			\tl_gput_right:Nn \ngb_teilpunkte_str {#1}%
-			}{%
-			\tl_gput_right:Nn \ngb_teilpunkte_str {\ +\ #1}%
-			}%
-		\addtocounter{teilpunkte}{#1}\xspace}
+		\IfNoValueF{#1}{\TP{#1}\xspace}
 	}
 }
+
+\NewDocumentCommand{\TP}{m}{%
+\bool_if:NTF \ngb_teilpunkte_erste_bool {%
+	\bool_gset_false:N \ngb_teilpunkte_erste_bool%
+	\tl_gput_right:Nn \ngb_teilpunkte_str {#1}%
+}{%
+	\tl_gput_right:Nn \ngb_teilpunkte_str {\ +\ #1}%
+}\addtocounter{teilpunkte}{#1}}
 
 % Teilpunkte zurücksetzen
 \newcommand{\TeilpunkteNeu}{%
@@ -231,6 +232,7 @@
 \bool_gset_true:N \ngb_teilpunkte_erste_bool
 }
 
+% Teilpunkte setzen im Format (a + b + c + ...)
 \renewcommand{\Teilpunkte}{\begin{flushright}(\ngb_teilpunkte_str)\end{flushright}}
 
 % Zu Beginn einer Aufgabe Teilpunkte immer auf Null setzen
