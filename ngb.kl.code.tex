@@ -207,6 +207,7 @@
 \ExplSyntaxOn
 
 % Punkteausgabe von Teilaufgaben an Abi NRW anpassen
+\ifdefstring{\schule@klausurtyp}{klausur}{% Klausuren
 \str_new:N \ngb_teilpunkte_str
 \bool_new:N \ngb_teilpunkte_erste_bool
 \bool_gset_true:N \ngb_teilpunkte_erste_bool
@@ -238,6 +239,7 @@
 % Zu Beginn einer Aufgabe Teilpunkte immer auf Null setzen
 \let\oldaufg\aufgabe
 \def\aufgabe{\oldaufg\TeilpunkteNeu}
+}{}
 
 \newcommand{\setzeName}[1]{\SetExerciseProperty{ID}{#1}}
 
