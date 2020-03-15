@@ -131,6 +131,11 @@
 \DeclareSIUnit\pa{\,p.A.}
 \DeclareSIUnit\are{a} % offiziell keine SI-Einheit
 
+% Pseudo-Einheiten
+\DeclareSIUnit\le{LE}
+\DeclareSIUnit\fe{FE}
+\DeclareSIUnit\ve{VE}
+
 % Euro Beträge mit eurosym
 \let\ngb@eur\EUR
 \renewcommand{\EUR}[1]{\ngb@eur{\num[round-mode=places,round-precision=2,round-integer-to-decimal,zero-decimal-to-integer]{#1}}}
@@ -191,6 +196,7 @@
 \newrefformat{aufg}{Aufgabe\,\ref{#1}}
 \newrefformat{taufg}{Teilaufgabe\,\ref{#1}}
 
+\newrefformat{anh}{Anhang\,\ref{#1}}
 \newrefformat{abb}{Abbildung\,\ref{#1}}
 \newrefformat{tab}{Tabelle\,\ref{#1}}
 
