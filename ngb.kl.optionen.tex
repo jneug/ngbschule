@@ -5,6 +5,9 @@
 
 \newcommand{\ngb@variante}{}
 
+% abrunden, aufrunden, runden
+\newcommand{\ngb@notenBerechnung}{aufrunden}
+
 \newtoggle{ngb@teilpunkteAnzeigen}
 
 \newcommand{\ngb@notenschemaA}{15 = 1,14 = .95,13 = .9,12 = .85,11 = .8,10 = .75,9 = .7,8 = .65,7 = .6,6 = .55,5 = .5,4 = .45,3 = .37,2 = .28,1 = .2}
@@ -25,6 +28,7 @@
 	variante/.store in=\ngb@variante, 
 	dauer/.store in=\ngb@dauer,
 	hmft/.store in=\ngb@hmft,
+	notenBerechnung/.store in=\ngb@notenBerechnung,
 	notenverteilungStil/.store in=\ngb@notenStil,
 	teilpunkteAnzeigen/.value forbidden,
 	teilpunkteAnzeigen/.code=\toggletrue{ngb@teilpunkteAnzeigen},

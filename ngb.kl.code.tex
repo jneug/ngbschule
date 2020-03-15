@@ -206,6 +206,29 @@
 % Angepasster Bewertungsbogen
 \ExplSyntaxOn
 
+% Berechnung der Notenschwellen anpassbar machen
+
+\renewcommand{\schule@punkteZuNote}[1]
+	{ \ifdefstring{\ngb@notenBerechnung}{aufrunden}{\xsim_get_points_for_grade_ceil:n {#1}}{}%
+		\ifdefstring{\ngb@notenBerechnung}{abrunden}{\xsim_get_points_for_grade_floor:n {#1}}{}%
+		\ifdefstring{\ngb@notenBerechnung}{runden}{\xsim_get_points_for_grade_round:n {#1}}{} }
+
+\cs_new_protected:Npn \xsim_get_points_for_grade_ceil:n #1
+{ \prop_get:NnNTF \l__xsim_relative_grades_prop {#1} \l__xsim_tmpa_tl
+	{ \fp_to_decimal:n {ceil(\l__xsim_tmpa_tl*\schule_aufgaben_punkte_ges_int)} }
+	{ \msg_error:nnn {xsim} {grade-unknown} {#1} }%
+}
+\cs_new_protected:Npn \xsim_get_points_for_grade_floor:n #1
+{ \prop_get:NnNTF \l__xsim_relative_grades_prop {#1} \l__xsim_tmpa_tl
+	{ \fp_to_decimal:n {floor(\l__xsim_tmpa_tl*\schule_aufgaben_punkte_ges_int)} }
+	{ \msg_error:nnn {xsim} {grade-unknown} {#1} }%
+}
+\cs_new_protected:Npn \xsim_get_points_for_grade_round:n #1
+{ \prop_get:NnNTF \l__xsim_relative_grades_prop {#1} \l__xsim_tmpa_tl
+	{ \fp_to_decimal:n {round(\l__xsim_tmpa_tl*\schule_aufgaben_punkte_ges_int,0)} }
+	{ \msg_error:nnn {xsim} {grade-unknown} {#1} }%
+}
+
 % Punkteausgabe von Teilaufgaben an Abi NRW anpassen
 \ifdefstring{\schule@klausurtyp}{klausur}{% Klausuren
 \str_new:N \ngb_teilpunkte_str
