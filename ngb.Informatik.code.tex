@@ -134,3 +134,9 @@
 %\newcolumntype{M}[2]{>{\Zeilenhoehe[#1]}m{#2}}
 %\newcolumntype{B}[2]{>{\Zeilenhoehe[#1]}b{#2}}
 %\newcolumntype{Y}[1]{>{\Zeilenhoehe[#1]}X}
+
+%% TikZ Styles für ER Diagramme
+\tikzstyle{entity} = [rectangle,text centered,draw=black]
+\tikzstyle{relation} = [diamond,aspect=2,text centered,draw=black]
+\tikzstyle{attribute} = [ellipse,text centered,draw=black]
+\newcommand{\foreignkey}{\rotatebox{90}{\usymW{2799}{.8em}}\,}
