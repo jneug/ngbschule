@@ -1,0 +1,73 @@
+\RequirePackage{scrlayer-scrpage}
+\pagestyle{scrheadings}
+
+\newcommand{\schule@dokumentTypBezeichnung}{Sitzplan}
+
+\RequirePackage{tikz}
+\usetikzlibrary{matrix,positioning}
+
+\ihead{}\ifoot{}
+\chead{}\cfoot{}
+\ohead{}\ofoot{}
+
+\newcommand{\ngb@splanihead}{%
+\begin{tikzpicture}
+\node[draw,fill=black!20,rounded corners=1mm,align=left,inner sep=2mm,text width=4cm]{\large\Titel \\ \Kurs (\Kuerzel)};
+\end{tikzpicture}
+}
+\newcommand{\ngb@splanohead}{%
+\begin{tikzpicture}
+\node[draw,fill=black!20,rounded corners=1mm,align=left,inner sep=2mm,text width=4cm]{\large Datum: \\Zeit:};
+\end{tikzpicture}
+}
+
+\ihead{\ngb@splanihead}
+\ohead{\ngb@splanohead}
+\chead{\DokumentTyp}
+
+
+
+\newlength{\tsize}
+\setlength{\tsize}{2.4cm}
+
+\newcounter{tischnummer}
+
+
+
+\tikzstyle{name label}=[minimum width=\tsize,minimum height=\tsize,text width=\tsize,align=center,font={\bfseries},anchor=north west]
+
+\tikzstyle{table}=[draw,line width=2pt,rectangle,minimum width=\tsize,minimum height=\tsize,anchor=north west]
+
+\tikzstyle{htable}=[table,minimum width=2\tsize]
+
+\tikzstyle{vtable}=[table,minimum height=2\tsize]
+
+\tikzstyle{seating}=[node distance=0,outer sep=0, inner sep=0]
+
+\tikzstyle{tische}=[column sep=2mm, row sep=2mm]
+
+\NewDocumentEnvironment {sitzplan} {} {%
+\begin{center}\begin{tikzpicture}[seating]
+}{
+\end{tikzpicture}\end{center}
+}
+
+\NewDocumentCommand \tisch {s m} {\stepcounter{tischnummer}%
+	\IfBooleanTF{#1}
+		{\node[table,xshift=\tsize] (t\thetischnummer) []{};}
+		{\node[table] (t\thetischnummer) []{};}
+	\node[name label] (t\thetischnummer-n1) [] at (t\thetischnummer.north west){#2};%
+	}
+\NewDocumentCommand \htisch {m m} {\stepcounter{tischnummer}%
+	\node[htable] (t\thetischnummer) []{};
+	\node[name label] (t\thetischnummer-n1) [] at (t\thetischnummer.north west){#1};
+	\node[name label,right=of t\thetischnummer-n1] (t\thetischnummer-n2) []{#2};%
+}
+\NewDocumentCommand \vtisch {m m} {\stepcounter{tischnummer}%
+	\node[vtable] (t\thetischnummer) []{};
+	\node[name label] (t\thetischnummer-n1) [] at (t\thetischnummer.north west){#1};
+	\node[name label,below=of t\thetischnummer-n1] (t\thetischnummer-n2) []{#2};%
+}
+\NewDocumentCommand \pult {} {
+	\node[htable,fill=black!40] (pult) []{\bfseries Pult};%
+}
