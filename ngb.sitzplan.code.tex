@@ -4,7 +4,7 @@
 \newcommand{\schule@dokumentTypBezeichnung}{Sitzplan}
 
 \RequirePackage{tikz}
-\usetikzlibrary{matrix,positioning}
+\usetikzlibrary{matrix,positioning,shadows}
 
 \ihead{}\ifoot{}
 \chead{}\cfoot{}
@@ -12,12 +12,12 @@
 
 \newcommand{\ngb@splanihead}{%
 \begin{tikzpicture}
-\node[draw,fill=black!20,rounded corners=1mm,align=left,inner sep=2mm,text width=4cm]{\large\Titel \\ \Kurs (\Kuerzel)};
+\node[draw,fill=black!20,rounded corners=1mm,align=left,inner sep=2mm,text width=4cm,drop shadow]{\large\Titel \\ \Kurs (\Kuerzel)};
 \end{tikzpicture}
 }
 \newcommand{\ngb@splanohead}{%
 \begin{tikzpicture}
-\node[draw,fill=black!20,rounded corners=1mm,align=left,inner sep=2mm,text width=4cm]{\large Datum: \\Zeit:};
+\node[draw,fill=black!20,rounded corners=1mm,align=left,inner sep=2mm,text width=6cm,drop shadow]{\large Datum: \\Zeit:};
 \end{tikzpicture}
 }
 
@@ -34,13 +34,13 @@
 
 
 
-\tikzstyle{name label}=[minimum width=\tsize,minimum height=\tsize,text width=\tsize,align=center,font={\bfseries},anchor=north west]
+\tikzstyle{name label}=[minimum height=\tsize,text width=1.2\tsize,align=center,font={\bfseries},anchor=north west]
 
-\tikzstyle{table}=[draw,line width=2pt,rectangle,minimum width=\tsize,minimum height=\tsize,anchor=north west]
+\tikzstyle{table}=[draw,line width=2pt,rectangle,minimum width=1.2\tsize,minimum height=\tsize,anchor=north west]
 
-\tikzstyle{htable}=[table,minimum width=2\tsize]
+\tikzstyle{htable}=[table,minimum width=2.4\tsize]
 
-\tikzstyle{vtable}=[table,minimum height=2\tsize]
+\tikzstyle{vtable}=[table,minimum height=2.4\tsize]
 
 \tikzstyle{seating}=[node distance=0,outer sep=0, inner sep=0]
 
