@@ -246,6 +246,8 @@
 \def\Heute{\leavevmode\hbox{\twodigits\day.\twodigits\month.\the\year}}
 \def\twodigits#1{\ifnum#1<10 0\fi\the#1}
 
+\newcommand{\schneidekante}{\usym{2701}\dotfill}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %    Überschriften und Titel   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -341,6 +343,7 @@
 \def\symHilfe{\usym{1F6A8}}
 \def\symBlitz{\usym{26A1}}
 \def\symIdee{\usym{1F4A1}}
+\def\symStern{$\bigstar$}
 
 \def\symEinzel{\usym{1F6C9}}
 \def\symPartner{\usym{1F46B}}
@@ -374,6 +377,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % xsim Aufgaben Stil anpassen  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newkomafont{aufgabe}{\bfseries\rmfamily}
+
 \ifdef{\DeclareExerciseEnvironmentTemplate}{%
 	\ngb@modulDateiLaden{xsim}
 }{}
