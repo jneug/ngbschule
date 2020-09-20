@@ -1,0 +1,55 @@
+\newcommand{\Dauer}{\makeatletter\ngb@dauer\makeatother\xspace}
+\newcommand{\Variante}{\makeatletter\ngb@variante\makeatother\xspace}
+
+\graphicspath{{inc/animal-icons/}}
+\newcommand{\tier}{\raisebox{-.3\height}{\pgfmathrandom{1,46}\includegraphics[height=1.5cm]{\pgfmathresult.png}}}
+\newcommand{\vielErfolg}{\begin{flushright}\bfseries Viel Erfolg \; \tier\end{flushright}}
+
+
+\newcommand{\TestTitel}[1][none]{\begin{center}\usekomafont{reihe}{\DokumentTyp (\Dauer Minuten)}\\[-1ex]
+\usekomafont{title}\Titel\ifstrequal{#1}{none}{}{- #1}\titlerule\end{center}}
+
+\ihead{\small\Fach \Lerngruppe\ifthenelse{\equal{\ngb@variante}{}}{}{- \Variante} (\Kuerzel)}
+\chead{\small\Datum}
+%\ohead{\DokumentTyp Nr. \DokumentNummer\linebreak\Datum}
+\ohead{\small\Namensfeld}
+
+\KOMAoptions{headsepline=off}
+
+%% Überschreiben von aufgabeLaden, um die Variante
+%% einzubeziehen. Statt <name>.afg.tex wird zuerst nach
+%% <name>-<variante>.afg.tex gesucht.
+\renewcommand{\aufgabeLaden}[2][.]{\def\ngb@imgPath{#1}%
+	\InputIfFileExists{\ngb@afgPool/#2-\ngb@variante.afg.tex}{}{%
+		\InputIfFileExists{\ngb@afgPool/#2.afg.tex}{}{%
+			\PackageWarning{ngbschule}{Aufgabendatei \ngb@afgPool/#2.afg.tex wurde nicht gefunden!}%
+		}%
+}}
+
+% Befehle für A/B-Varianten
+\ifdefstring{\ngb@variante}{B}{%
+	\def\A#1{}
+	\def\B#1{#1}
+	\def\AB#1#2{#2}
+	\NewEnviron{variA}{}
+	\NewEnviron{variB}{\BODY}
+}{%
+	\def\A#1{#1}
+	\def\B#1{}
+	\def\AB#1#2{#1}
+	\NewEnviron{variA}{\BODY}
+	\NewEnviron{variB}{}
+}
+
+
+% Varianten dynamisch in einem Dokument laden
+% TODO: Reset der Aufgabennummern
+%\newcommand{\ngb@vari}[2]{\if\ngb@variante#1 #2\fi}
+%\def\A#1{\ngb@vari{A}{#1}}
+%\def\B#1{\ngb@vari{A}{#1}}
+%\def\AB#1#2{\ngb@vari{A}{#1}\ngb@vari{B}{#2}}
+%\NewEnviron{varianteA}{\ngb@vari{A}{\BODY}}
+%\NewEnviron{varianteB}{\ngb@vari{B}{\BODY}}
+
+%\newcommand{\varianteLaden}[2][inhalt]{\def\ngb@variante{#2}%
+%\InputIfFileExists{6.4-Arbeit.#1.tex}{}{\textbf{Fehler beim Laden der Inhalte für Variante #2!}}}
