@@ -1,14 +1,19 @@
+\RequirePackage[top=4cm,left=2cm,bottom=3cm,right=2cm]{geometry}
+
+\AfterCalculatingTypearea{%
+	\addtolength{\headsep}{-1\baselineskip}%
+%	\addtolength{\topmargin}{.5\baselineskip}%
+}
+%\recalctypearea
+
 \RequirePackage{scrlayer-scrpage}
 \pagestyle{scrheadings}
+\clearpairofpagestyles
 
 \newcommand{\schule@dokumentTypBezeichnung}{Sitzplan}
 
 \RequirePackage{tikz}
 \usetikzlibrary{matrix,positioning,shadows}
-
-\ihead{}\ifoot{}
-\chead{}\cfoot{}
-\ohead{}\ofoot{}
 
 \newcommand{\ngb@splanihead}{%
 \begin{tikzpicture}
@@ -27,20 +32,22 @@
 
 
 
-\newlength{\tsize}
-\setlength{\tsize}{2.4cm}
+\newlength{\theight}
+\setlength{\theight}{2cm}
+\newlength{\twidth}
+\setlength{\twidth}{1.33\theight}
 
 \newcounter{tischnummer}
 
 
 
-\tikzstyle{name label}=[minimum height=\tsize,text width=1.2\tsize,align=center,font={\bfseries},anchor=north west]
+\tikzstyle{name label}=[minimum height=\theight,text width=\twidth,align=center,font={\bfseries},anchor=north west]
 
-\tikzstyle{table}=[draw,line width=2pt,rectangle,minimum width=1.2\tsize,minimum height=\tsize,anchor=north west]
+\tikzstyle{table}=[draw,line width=2pt,rectangle,minimum width=\twidth,minimum height=\theight,anchor=north west]
 
-\tikzstyle{htable}=[table,minimum width=2.4\tsize]
+\tikzstyle{htable}=[table,minimum width=2\twidth]
 
-\tikzstyle{vtable}=[table,minimum height=2.4\tsize]
+\tikzstyle{vtable}=[table,minimum height=2\twidth]
 
 \tikzstyle{seating}=[node distance=0,outer sep=0, inner sep=0]
 
@@ -54,7 +61,7 @@
 
 \NewDocumentCommand \tisch {s m} {\stepcounter{tischnummer}%
 	\IfBooleanTF{#1}
-		{\node[table,xshift=\tsize] (t\thetischnummer) []{};}
+		{\node[table,xshift=\theight] (t\thetischnummer) []{};}
 		{\node[table] (t\thetischnummer) []{};}
 	\node[name label] (t\thetischnummer-n1) [] at (t\thetischnummer.north west){#2};%
 	}
