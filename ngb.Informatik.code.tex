@@ -112,6 +112,7 @@
 %% Laden von vordefinierten Struktogrammen, 
 %% Klassendiagrammen und Quelltexten aus der internen
 %% Bibliothek
+\RequirePackage{pdfpages}
 \def\ngb@defaultPath{inc/if}
 \def\ngb@defaultLang{java}
 \newcommand{\nss}[1]{\centernssfile{\ngb@defaultPath/#1}}
@@ -120,6 +121,10 @@
 	{\input{\ngb@defaultPath/#1.lst.tex}}%
 	{\input{\ngb@defaultPath/#1.\ngb@defaultLang.lst.tex}%
 }}
+\newcommand{\doc}[1]{\input{\ngb@defaultPath/#1.doc.tex}}
+\newcommand{\doku}[3][GK]{%
+\includepdf[pages=#2,pagecommand={#3},height=.9\textheight]{\ngb@defaultPath/Dokumentation #1.pdf}
+}
 % PAPs
 % Syntaxdiag
 
