@@ -5,7 +5,7 @@
 %%
 %% -----------------
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{ngbschule}[2018/11/28  Paket mit eigenen Erweiterungen zum schule-Paket]
+\ProvidesPackage{ngbschule}[2020/09/16 Paket mit eigenen Erweiterungen zum schule-Paket]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %          Modullader          %
@@ -86,6 +86,7 @@
 
 % Seitenabmessungen
 % Todo: Per Option Papiergröße beachten (a4paper)
+\ifdefstring{\schule@typ}{ohne}{}{%
 \ifdefstring{\schule@typ}{folie}{ % Folien bekommen vom schulepaket besondere Abmessungen
 }{
 	\ifdefstring{\ngb@typ}{lerntheke}{ % Lerntheken von ngbschule
@@ -96,6 +97,7 @@
 			\RequirePackage[top=3cm,left=2.5cm,bottom=2cm,right=2cm]{geometry}
 		}
 	}
+}%
 }
 %% Abstand zur Kopfzeile verringern
 %% https://texwelt.de/wissen/fragen/15050/abstand-zwischen-kopfzeile-und-textkorper
