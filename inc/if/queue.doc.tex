@@ -1,0 +1,19 @@
+\subsection{Dokumentation der generischen Klasse \code{Queue<ContentType>}}\label{subsec:doc-queue}
+
+\begin{klassenDokumentation}
+	\methodenDokumentation{Konstruktor}{\code{Queue()}}{
+		Eine leere Schlange wird erzeugt. Objekte, die in dieser Schlange verwaltet werden, müssen vom Typ \textbf{ContentType} sein.
+	}
+	\methodenDokumentation{Anfrage}{\code{boolean isEmpty()}}{
+		Die Anfrage liefert den Wert \code{true}, wenn die Schlange keine Objekte enthält, sonst liefert sie den Wert \code{false}.
+	}
+	\methodenDokumentation{Auftrag}{\code{void enqueue(ContentType pContent)}}{
+		Das Objekt \code{pContent} wird an die Schlange angehängt. Falls \code{pContent} gleich \code{null} ist, bleibt die Schlange unverändert.
+	}
+	\methodenDokumentation{Auftrag}{\code{void dequeue()}}{
+		Das erste Objekt wird aus der Schlange entfernt. Falls die Schlange leer ist, wird sie nicht verändert.
+	}
+	\methodenDokumentation{Anfrage}{\code{ContentType front()}}{
+		Die Anfrage liefert das erste Objekt der Schlange. Die Schlange bleibt unverändert. Falls die Schlange leer ist, wird \code{null} zurückgegeben.
+	}
+\end{klassenDokumentation}

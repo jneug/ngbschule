@@ -1,0 +1,19 @@
+\subsection{Dokumentation der generischen Klasse \code{Stack<ContentType>}}\label{subsec:doc-stack}
+
+\begin{klassenDokumentation}
+	\methodenDokumentation{Konstruktor}{\code{Stack()}}{
+		Ein leerer Stapel wird erzeugt. Objekte, die in diesem Stapel verwaltet werden, müssen vom Typ \textbf{ContentType} sein.
+	}
+	\methodenDokumentation{Anfrage}{\code{boolean isEmpty()}}{
+		Die Anfrage liefert den Wert \code{true}, wenn der Stapel keine Objekte enthält, sonst liefert sie den Wert \code{false}.
+	}
+	\methodenDokumentation{Auftrag}{\code{void push(ContentType pContent)}}{
+		Das Objekt \code{pContent} wird oben auf den Stapel gelegt. Falls \code{pContent} gleich \code{null} ist, bleibt der Stapel unverändert.
+	}
+	\methodenDokumentation{Auftrag}{\code{void pop()}}{
+		Das zuletzt eingefügte Objekt wird von dem Stapel entfernt. Falls der Stapel leer ist, bleibt er unverändert.
+	}
+	\methodenDokumentation{Anfrage}{\code{ContentType top()}}{
+		Die Anfrage liefert das oberste Stapelobjekt. Der Stapel bleibt unverändert. Falls der Stapel leer ist, wird \code{null} zurückgegeben.
+	}
+\end{klassenDokumentation}
