@@ -260,9 +260,10 @@
 \renewcommand{\Teilpunkte}{\begin{flushright}(\ngb_teilpunkte_str)\end{flushright}}
 
 % Zu Beginn einer Aufgabe Teilpunkte immer auf Null setzen
-%\let\oldaufg\aufgabe
-%\def\aufgabe{\oldaufg\TeilpunkteNeu}
-}{}
+\let\oldaufg\aufgabe
+\def\aufgabe#1{\oldaufg[#1]\TeilpunkteNeu}
+
+}{} % End \ifdefstring{\schule@klausurtyp}{klausur}
 
 \newcommand{\setzeName}[1]{\SetExerciseProperty{ID}{#1}}
 
