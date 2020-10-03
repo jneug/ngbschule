@@ -259,9 +259,18 @@
 % Teilpunkte setzen im Format (a + b + c + ...)
 \renewcommand{\Teilpunkte}{\begin{flushright}(\ngb_teilpunkte_str)\end{flushright}}
 
-% Zu Beginn einer Aufgabe Teilpunkte immer auf Null setzen
-\let\oldaufg\aufgabe
-\def\aufgabe#1{\oldaufg[#1]\TeilpunkteNeu}
+%% Zu Beginn einer Aufgabe Teilpunkte immer auf Null
+%% setzen
+\xsimsetup{
+	aufgabe/pre-hook={\TeilpunkteNeu}
+}
+%% Teilpunkte immer am Ende anzeigen, wenn die Option
+%% teilpunkteAnzeigen angegeben wurde
+\iftoggle{ngb@teilpunkteAnzeigen}{
+	\xsimsetup{
+		aufgabe/end-hook={\Teilpunkte}
+	}
+}{}
 
 }{} % End \ifdefstring{\schule@klausurtyp}{klausur}
 
