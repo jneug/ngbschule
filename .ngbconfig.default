@@ -1,3 +1,4 @@
 \def\ngb@afgPool{}
 \def\ngb@notenschemaSekI{}
 \def\ngb@notenschemaSekII{}
+\def\ngb@basePath{}
