@@ -21,6 +21,11 @@
 	seitenzahlen=auto
 }{schule}
 
+% Fix für die "LetzteINhaltsseite". Muss geladen werden, bevor andere
+% Pakete \AtEndDocument aufrufen, damit Lösungsseiten und EWH nicht 
+% mitgezählt werden.
+\RequirePackage{lastpage}
+
 % http://tex.stackexchange.com/questions/26490/latex-datatool-problems
 \RequirePackage{bookmark}
 

@@ -385,3 +385,31 @@
 \ifdef{\DeclareExerciseEnvironmentTemplate}{%
 	\ngb@modulDateiLaden{xsim}
 }{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    Seitenzahlen anpassen     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Fix für falsche "letzte" Seitenzahlen bei autoGesamt und immerGesamt.
+% Benutzt das Paket "lastpage", das in vorschule.sty geladen wird.
+\renewcommand{\Seitenzahlen}{
+	\IfEqCase{\schule@seitenzahlen}{%
+		{keine}{}%
+		{immer}{\thepage}%
+		{immerGesamt}{%
+			\thepage\xspace von \pageref*{LastPage}%
+		}%
+		{auto}{%
+			\ifnum\ztotpages=1%
+			\else
+				\thepage%
+			\fi%
+		}%
+		{autoGesamt}{%
+			\ifnum\theschule@seitenzahl=1%
+			\else
+				\thepage\xspace von	\pageref*{LastPage}%
+			\fi%
+		}%
+	}%
+}%
