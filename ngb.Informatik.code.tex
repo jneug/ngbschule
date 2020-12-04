@@ -14,6 +14,18 @@
 \def\methodenDoku#1#2{%
 	\texttt{\textbf{#1}} & #2 \\ \hline
 }
+%% Umstellung der klassenDokumentation auf longtable, um Seitenumbrüche zuzulassen
+%\renewenvironment{klassenDokumentation}{%
+%	\longtable{lp{13.5cm}}}{\endlongtable}
+
+% Anpassung auf neue Dokumentation (ab 2021)
+\renewenvironment{klassenDokumentation}{}{}
+% see: https://tex.stackexchange.com/questions/136742/changing-background-color-of-text-in-latex
+\renewcommand{\methodenDokumentation}[3]{%
+	\colorbox{gray!30}{\parbox{\dimexpr\textwidth-2\fboxsep\relax}{\bfseries \code{#2}}} \\
+	#3
+	
+}
 
 %% Styling von Quelltexten
 \lstset{
@@ -56,16 +68,45 @@
 	captionpos=b,
 	breaklines=true
 }
+% Sprache KnowHowPC für Quelltexte einfügen
+\lstdefinelanguage{KnowHowPC}{%
+	morekeywords={isz,stp,inc,dec,jmp},
+	sensitive=false,
+	morecomment=[l]{;}
+}[keywords]
+\lstdefinestyle{KnowHowPC}{
+	language={KnowHowPC},
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=3,
+	extendedchars=true,
+	basicstyle=\ttfamily\small,		keywordstyle={\color{blue}\underbar},
+	identifierstyle=,
+	commentstyle=\color{gray},
+	backgroundcolor=\color{white},
+	numbers=left,
+	numberstyle=\sffamily\tiny\color{gray},
+	stepnumber=1,
+	numbersep=5pt,
+	captionpos=b,
+	breaklines=true
+}
 
 \def\zeilennummernAus{\lstset{numbers=none}}
 \def\zeilennummernEin{\lstset{numbers=left}}
 \def\setzeSprache#1{\lstset{language=#1}}
 
+\newrefformat{lst}{Listing\,\ref{#1}}
+\newrefformat{line}{Zeile\,\ref{#1}}
+
 % Darstellung von Klassen
-\def\cls#1{\drawtikzclass\hspace{0.2em plus 0.1em}\texttt{#1}}
-\def\func#1{\texttt{#1}}
-\def\attr#1{\texttt{#1}}
-\def\var#1{\texttt{#1}}
+%\def\cls#1{\drawtikzclass\hspace{0.2em plus 0.1em}\texttt{#1}}
+\def\cls#1{\code{#1}}
+\def\obj#1{\code{#1}}
+\def\func#1{\code{#1}}
+\def\attr#1{\code{#1}}
+\def\var#1{\code{#1}}
 
 \NewDocumentCommand \drawtikzclass {O{white} O{black}}{
    \begin{tikzpicture}[scale=1]
@@ -93,6 +134,7 @@
 %% Notizen/Templates für Inhaltsobjekte!
 \def\attribut{\attribute}
 \def\methode{\operation}
+\newcommand{\inhaltsobjekt}[2]{\node[draw,dashed,rectangle,fill=white,anchor=west,xshift=-1cm] at (#1.north east) {#2};}
 \newenvironment{klasse}[3][text]{\begin{class}[#1]{#2}{#3}}{\end{class}}
 \newenvironment{objekt}[3][text]{\begin{object}[#1]{#2}{#3}}{\end{object}}
 \def\benutzt{\unidirectionalAssociation}
