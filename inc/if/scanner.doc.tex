@@ -1,0 +1,22 @@
+\subsection{Dokumentation der Klasse \code{Scanner}}\label{subsec:doc-scanner}
+
+\begin{klassenDokumentation}
+	\methodenDokumentation{Konstruktor}{\code{Scanner(InputStream in)}}{
+		Erstellt einen neuen Scanner, der Eingaben vom übergebenen \code{InputStream} liest. In der Regel erzeugt man einen Scanner für die Standard-Konsole mit \code{new Scanner(System.in)}.
+	}
+	\methodenDokumentation{Anfrage}{\code{boolean hasNext()}}{
+		Prüft, ob im Scanner eine neue Eingabe vorliegt.
+	}
+	\methodenDokumentation{Anfrage}{\code{int nextInt()}}{
+		Wartet, bis eine neue Eingabe gemacht wurde und versucht sie als Zahl zu lesen. Ist die Eingabe keine Zahl, wird eine \code{InputMismatchException} geworfen.
+	}
+	\methodenDokumentation{Anfrage}{\code{String nextLine()}}{
+		Wartet, bis eine neue Eingabe gemacht wurde, und gibt sie als String zurück.
+	}
+	\methodenDokumentation{Anfrage}{\code{boolean nextBoolean()}}{
+		Wartet, bis eine neue Eingabe gemacht wurde und versucht sie als Wahrheitswert zu lesen. Ist die Eingabe kein Wahrheitswert, wird eine \code{InputMismatchException} geworfen.
+	}
+	\methodenDokumentation{Anfrage}{\code{double nextDouble()}}{
+		Wartet, bis eine neue Eingabe gemacht wurde und versucht sie als Gleitkommazahl zu lesen. Ist die Eingabe keine Gleitkommazahl, wird eine \code{InputMismatchException} geworfen.
+	}
+\end{klassenDokumentation}

@@ -1,0 +1,19 @@
+\subsection{Dokumentation der generischen Klasse \code{Hashtable<KeyType, ContentType>}}\label{subsec:doc-hashtable}
+
+\begin{klassenDokumentation}
+	\methodenDokumentation{Konstruktor}{\code{Hashtable(int pSize)}}{
+		Eine leere Hashtabelle der Größe \code{pSize} wird erzeugt. Objekte, die in dieser Hashtabelle verwaltet werden, müssen vom Typ \textbf{ContentType} sein und mit Schlüsseln vom Typ \textbf{KeyType} abgespeichert werden.
+	}
+	\methodenDokumentation{Anfrage}{\code{boolean hasKey(pKey: KeyType)}}{
+		Die Anfrage liefert den Wert \code{true}, wenn die Hashtabelle ein Inhaltsobjekt zum Schlüssel \code{pKey} enthält, sonst liefert sie den Wert \code{false}.
+	}
+	\methodenDokumentation{Auftrag}{\code{void put(KeyType pKey, ContentType pContent)}}{
+		Das Objekt \code{pContent} wird an die Hashtabelle mit dem Schlüssel \code{pKey} eingefügt. Falls \code{pContent} gleich \code{null} ist oder in der Hashtabelle kein Platz mehr ist, bleibt die Hashtabelle unverändert.
+	}
+	\methodenDokumentation{Anfrage}{\code{ContentType get(KeyType pKey)}}{
+		Die Anfrage liefert das Objekt der Hashtabelle für den Schlüssel \code{pKey}. Die Hashtabelle bleibt unverändert. Falls es für den Schlüssel \code{pKey} kein Objekt in der Hashtabelle gibt, wird \code{null} zurückgegeben.
+	}
+	\methodenDokumentation{Auftrag}{\code{void delete(KeyType pKey)}}{
+		Das Objekt für den Schlüssel \code{pKey} wird aus der Hashtabelle entfernt. Falls es für den Schlüssel \code{pKey} kein Objekt in der Hashtabelle gibt, wird sie nicht verändert.
+	}
+\end{klassenDokumentation}

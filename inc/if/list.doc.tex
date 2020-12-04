@@ -1,0 +1,46 @@
+\subsection{Dokumentation der generischen Klasse \code{List<ContentType>}}\label{subsec:doc-list}
+
+\begin{klassenDokumentation}
+	\methodenDokumentation{Konstruktor}{\code{List()}}{
+		Eine leere Liste wird erzeugt.
+	}
+	\methodenDokumentation{Anfrage}{\code{boolean isEmpty()}}{
+		Die Anfrage liefert den Wert \code{true}, wenn die Liste keine Objekte enthält, sonst liefert sie den Wert \code{false}.
+	}
+	\methodenDokumentation{Anfrage}{\code{boolean hasAccess()}}{
+		Die Anfrage liefert den Wert \code{true}, wenn es ein aktuelles Objekt gibt, sonst liefert sie den Wert \code{false}.
+	}
+	\methodenDokumentation{Auftrag}{\code{void next()}}{
+		Falls die Liste nicht leer ist, es ein aktuelles Objekt gibt und dieses nicht das letzte Objekt der Liste ist, wird das dem aktuellen Objekt in der Liste folgende Objekt zum aktuellen Objekt, andernfalls gibt es nach Ausführung des Auftrags kein aktuelles Objekt, d.h. \code{hasAccess()} liefert den Wert \code{false}.
+	}
+	\methodenDokumentation{Anfrage}{\code{void toFirst()}}{
+		Falls die Liste nicht leer ist, wird das erste Objekt der Liste aktuelles Objekt. Ist die Liste leer, geschieht nichts.
+	}
+	\methodenDokumentation{Anfrage}{\code{void toLast()}}{
+		Falls die Liste nicht leer ist, wird das letzte Objekt der Liste aktuelles Objekt. Ist die Liste leer, geschieht nichts.
+	}
+	\methodenDokumentation{Anfrage}{\code{ContentType getContent()}}{
+		Falls es ein aktuelles Objekt gibt (\code{hasAccess()==true}), wird das aktuelle Objekt zurückgegeben. Andernfalls (\code{hasAccess()==false}) gibt die Anfrage den Wert \code{null} zurück.
+	}
+	\methodenDokumentation{Auftrag}{\code{void setContent(ContentType pContent)}}{
+		Falls es ein aktuelles Objekt gibt (\code{hasAccess()==true}), und \code{pContent} ungleich \code{null} ist, wird das aktuelle Objekt durch \code{pContent} ersetzt. Sonst bleibt die Liste unverändert.
+	}
+	\methodenDokumentation{Auftrag}{\code{void append(ContentType pContent)}}{
+		Ein neues Objekt \code{pContent} wird am Ende der Liste eingefügt. Das aktuelle Objekt bleibt unverändert. Wenn die Liste leer ist, wird das Objekt \code{pContent} in die Liste eingefügt und es gibt weiterhin kein aktuelles Objekt (\code{hasAccess()==false}).
+		
+		Falls \code{pContent} gleich \code{null} ist, bleibt die Liste unverändert.
+	}
+	\methodenDokumentation{Auftrag}{\code{void insert(ContentType pContent)}}{
+		Falls es ein aktuelles Objekt gibt (\code{hasAccess()==true}), wird ein neues Objekt \code{pContent} vor dem aktuellen Objekt in die Liste eingefügt. Das aktuelle Objekt bleibt unverändert.
+		
+		Falls die Liste leer ist und es somit kein aktuelles Objekt gibt (\code{hasAccess()==false}), wird \code{pContent} in die Liste eingefügt und es gibt weiterhin kein aktuelles Objekt.
+		
+		Falls es kein aktuelles Objekt gibt (\code{hasAccess()==false}) und die Liste nicht leer ist oder \code{pContent==null} ist, bleibt die Liste unverändert.
+	}
+	\methodenDokumentation{Auftrag}{\code{void concat(List<ContentType> pList)}}{
+		Die Liste \code{pList} wird an die Liste angehängt. Anschließend wird \code{pList} eine leere Liste. Das aktuelle Objekt bleibt unverändert. Falls es sich bei der Liste und \code{pList} um dasselbe Objekt handelt, \code{pList==null} oder eine leere Liste ist, bleibt die Liste unverändert.
+	}
+	\methodenDokumentation{Auftrag}{\code{void remove()}}{
+		Falls es ein aktuelles Objekt gibt (\code{hasAccess()==true}), wird das aktuelle Objekt gelöscht und das Objekt hinter dem gelöschten Objekt wird zum aktuellen Objekt. Wird das Objekt, das am Ende der Liste steht, gelöscht, gibt es kein aktuelles Objekt mehr (\code{hasAccess() == false}). Wenn die Liste leer ist oder es kein aktuelles Objekt gibt (\code{hasAccess() == false}), bleibt die Liste unverändert.
+	}
+\end{klassenDokumentation}

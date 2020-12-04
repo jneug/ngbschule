@@ -1,0 +1,35 @@
+\subsection{Dokumentation der generischen Klasse \code{BinaryTree<ContentType>}}\label{subsec:doc-binarytree}
+
+\begin{klassenDokumentation}
+	\methodenDokumentation{Konstruktor}{\code{BinaryTree()}}{
+		Nach dem Aufruf des Konstruktors existiert ein leerer Binärbaum.
+	}
+	\methodenDokumentation{Konstruktor}{\code{BinaryTree<ContentType>(ContentType pContent)}}{
+		Wenn der Parameter \code{pContent} ungleich \code{null} ist, existiert nach dem Aufruf des Konstruktors der Binärbaum und hat pContent als Inhaltsobjekt und zwei leere Teilbäume. Falls der Parameter \code{null} ist, wird ein leerer Binärbaum erzeugt.
+	}
+	\methodenDokumentation{Konstruktor}{\code{BinaryTree<ContentType>(ContentType pContent, BinaryTree<ContentType> pLeftTree, BinaryTree<ContentType> pRightTree)}}{
+		Wenn der Parameter \code{pContent} ungleich \code{null} ist, wird ein Binärbaum mit \code{pContent} als Inhaltsobjekt und den beiden Teilbäume \code{pLeftTree} und \code{pRightTree} erzeugt. Sind \code{pLeftTree} oder \code{pRightTree} gleich \code{null}, wird der entsprechende Teilbaum als leerer Binärbaum eingefügt. Wenn der Parameter \code{pContent} gleich \code{null} ist, wird ein leerer Binärbaum erzeugt.
+	}
+	\methodenDokumentation{Anfrage}{\code{boolean isEmpty()}}{
+		Die Anfrage liefert den Wert \code{true}, wenn der Binärbaum leer ist, sonst liefert sie den Wert \code{false}.
+	}
+	\methodenDokumentation{Auftrag}{\code{void setContent(ContentType pContent)}}{
+		Wenn der Binärbaum leer ist, wird der Parameter \code{pContent} als Inhaltsobjekt sowie ein leerer linker und rechter Teilbaum eingefügt. Ist der Binärbaum nicht leer, wird das Inhaltsobjekt durch \code{pContent} ersetzt. Die Teilbäume werden nicht geändert. Wenn \code{pContent} \code{null} ist, bleibt der Binärbaum unverändert.
+	}
+	\methodenDokumentation{Anfrage}{\code{ContentType getContent()}}{
+		Diese Anfrage liefert das Inhaltsobjekt des Binärbaums. Wenn der Binärbaum leer ist, wird \code{null} zurückgegeben.
+	}
+	\methodenDokumentation{Auftrag}{\code{void setLeftTree(BinaryTree<ContentType> pTree)}}{
+		Wenn der Binärbaum leer ist, wird \code{pTree} nicht angehängt. Andernfalls erhält der Binärbaum den übergebenen Baum als linken Teilbaum. Falls der Parameter \code{null} ist, ändert sich nichts.
+	}
+	\methodenDokumentation{Auftrag}{\code{void setRightTree(BinaryTree<ContentType> pTree)}}{
+		Wenn der Binärbaum leer ist, wird \code{pTree} nicht angehängt. Andernfalls erhält der Binärbaum den übergebenen Baum als rechten Teilbaum. Falls der Parameter \code{null} ist, ändert sich nichts.
+	}
+	\methodenDokumentation{Anfrage}{\code{BinaryTree<ContentType> getLeftTree()}}{
+		Diese Anfrage liefert den linken Teilbaum des Binärbaumes. Der Binärbaum ändert sich nicht. Wenn der Binärbaum leer ist, wird \code{null} zurückgegeben.
+	}
+	\methodenDokumentation{Anfrage}{\code{BinaryTree<ContentType> getRightTree()}}{
+		Diese Anfrage liefert den rechten Teilbaum des Binärbaumes. Der Binärbaum ändert sich nicht. Wenn der Binärbaum leer ist, wird \code{null} zurückgegeben.
+	}
+	
+\end{klassenDokumentation}
