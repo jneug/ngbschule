@@ -87,6 +87,8 @@
 	\end{smallmatrix}\right)
 }
 
+\newenvironment{systeme}{\begin{align*}}{\end{align*}}
+
 \NewDocumentCommand \gls {s O{\rightsquigarrow} m O{.8em}} {
 	\IfBooleanTF{#1}{
 		\begin{gmatrix}[v]
@@ -109,6 +111,8 @@
 		\end{gmatrix}\\[#4]
 	}
 }
+
+\newenvironment{terme}{\begin{alignat*}{3}}{\end{alignat*}}
 
 \NewDocumentCommand \gl {O{\Leftrightarrow} m O{=} m} {
 	#1\quad&& #2 &#3 #4 && 

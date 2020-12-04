@@ -6,7 +6,6 @@
 	\IfBooleanTF{#1}{\makeatletter\ngb@hmt\makeatother}{\makeatletter\ngb@hmft\makeatother}\xspace%
 }
 
-
 \graphicspath{{inc/animal-icons/}}
 \newcommand{\tier}{\raisebox{-.3\height}{\pgfmathrandom{1,46}\includegraphics[height=1.5cm]{\pgfmathresult.png}}}
 \newcommand{\vielErfolg}{\begin{flushright}\bfseries Viel Erfolg \; \tier\end{flushright}}
@@ -25,7 +24,7 @@
 	
 	\renewcommand{\vielErfolg}{\begin{flushright}\bfseries Viel Erfolg\end{flushright}}
 	
-	\schule@notenschemaSetzen{\ngb@notenschemaB}
+	\schule@notenschemaSetzen{\notenschemaC}
 }{ % Klassen- und Kursarbeiten
 	\newcommand{\KlausurTitel}[1][none]{\begin{center}\LARGE\rmfamily\Titel\ifstrequal{#1}{none}{}{- #1}\end{center}}
 	\newcommand{\ArbeitTitel}[1][none]{\KlausurTitel[#1]}
@@ -37,7 +36,9 @@
 	
 	\KOMAoptions{headsepline=off}
 	
-	\schule@notenschemaSetzen{\ngb@notenschemaA}
+	\ifdefstring{\schule@fach}{Informatik}
+		{\schule@notenschemaSetzen{\notenschemaB}}
+		{\schule@notenschemaSetzen{\notenschemaA}}
 }
 
 \newcommand{\notenschemaSetzen}[1]{\schule@notenschemaSetzen{#1}}
