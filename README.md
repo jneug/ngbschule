@@ -1,3 +1,6 @@
+**Das Paket wird nicht mehr weiterentwickelt und wurde durch das Paket [arbeitsblatt](https://www.github.com/jneug/arbeitsblatt) ersetzt.** 
+
+
 Ein LaTeX-Paket als Ergänzung zum [schule-Paket](https://www.ctan.org/pkg/schule?lang=de).
 
 Das Paket ergänzt viele Makros und Hilfen, um Dokumente für die Schule zu setzen. Dabei passt es das Schule-Paket auf meine eigenen Vorlieben an, die nicht unbedingt für alle sinnvoll sind. Trotzdem können die Quelldateien anderen vielleicht als Grundlage für eigene Anpassungen dienen.
